@@ -10,10 +10,10 @@ import { Switch } from '@/components/ui/switch';
 interface AccessibilitySettingsProps {
   theme: string;
   onThemeChange: (theme: string) => void;
-  buttonSize: string;
-  onButtonSizeChange: (size: string) => void;
-  gridSize: string;
-  onGridSizeChange: (size: string) => void;
+  buttonSize: 'small' | 'medium' | 'large';
+  onButtonSizeChange: (size: 'small' | 'medium' | 'large') => void;
+  gridSize: 'small' | 'medium' | 'large';
+  onGridSizeChange: (size: 'small' | 'medium' | 'large') => void;
   soundEnabled: boolean;
   onSoundToggle: (enabled: boolean) => void;
   volume: number;

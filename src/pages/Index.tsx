@@ -10,8 +10,8 @@ import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
   const [theme, setTheme] = useState('autism');
-  const [buttonSize, setButtonSize] = useState('medium');
-  const [gridSize, setGridSize] = useState('medium');
+  const [buttonSize, setButtonSize] = useState<'small' | 'medium' | 'large'>('medium');
+  const [gridSize, setGridSize] = useState<'small' | 'medium' | 'large'>('medium');
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [volume, setVolume] = useState(70);
   const [textSize, setTextSize] = useState('medium');

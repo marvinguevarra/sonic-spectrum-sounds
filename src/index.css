@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -36,48 +37,125 @@
 
     --radius: 0.5rem;
 
+    /* Default autism-friendly theme */
+    --autism-primary: 200 80% 85%;
+    --autism-secondary: 180 60% 90%;
+    --autism-accent: 160 50% 80%;
+    --autism-calm: 220 20% 95%;
+    --autism-text: 220 40% 20%;
+    --autism-border: 200 30% 85%;
+
+    /* High visibility theme */
+    --high-vis-bg: 0 0% 0%;
+    --high-vis-text: 60 100% 100%;
+    --high-vis-primary: 60 100% 50%;
+    --high-vis-secondary: 280 100% 70%;
+    --high-vis-accent: 120 100% 50%;
+    --high-vis-border: 0 0% 100%;
+
+    /* Low visibility theme */
+    --low-vis-bg: 220 15% 25%;
+    --low-vis-text: 220 15% 85%;
+    --low-vis-primary: 200 30% 60%;
+    --low-vis-secondary: 180 25% 70%;
+    --low-vis-accent: 160 20% 65%;
+    --low-vis-border: 220 15% 40%;
+
+    /* Color-blind friendly theme */
+    --cb-bg: 0 0% 98%;
+    --cb-text: 0 0% 10%;
+    --cb-primary: 220 90% 50%;
+    --cb-secondary: 35 95% 55%;
+    --cb-accent: 0 0% 40%;
+    --cb-border: 0 0% 80%;
+
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  /* Autism-friendly theme */
+  .theme-autism {
+    --background: var(--autism-calm);
+    --foreground: var(--autism-text);
+    --primary: var(--autism-primary);
+    --primary-foreground: var(--autism-text);
+    --secondary: var(--autism-secondary);
+    --secondary-foreground: var(--autism-text);
+    --accent: var(--autism-accent);
+    --accent-foreground: var(--autism-text);
+    --border: var(--autism-border);
+    --card: var(--autism-calm);
+    --card-foreground: var(--autism-text);
+  }
+
+  /* High visibility theme */
+  .theme-high-vis {
+    --background: var(--high-vis-bg);
+    --foreground: var(--high-vis-text);
+    --primary: var(--high-vis-primary);
+    --primary-foreground: var(--high-vis-bg);
+    --secondary: var(--high-vis-secondary);
+    --secondary-foreground: var(--high-vis-bg);
+    --accent: var(--high-vis-accent);
+    --accent-foreground: var(--high-vis-bg);
+    --border: var(--high-vis-border);
+    --card: var(--high-vis-bg);
+    --card-foreground: var(--high-vis-text);
+  }
+
+  /* Low visibility theme */
+  .theme-low-vis {
+    --background: var(--low-vis-bg);
+    --foreground: var(--low-vis-text);
+    --primary: var(--low-vis-primary);
+    --primary-foreground: var(--low-vis-text);
+    --secondary: var(--low-vis-secondary);
+    --secondary-foreground: var(--low-vis-bg);
+    --accent: var(--low-vis-accent);
+    --accent-foreground: var(--low-vis-bg);
+    --border: var(--low-vis-border);
+    --card: var(--low-vis-bg);
+    --card-foreground: var(--low-vis-text);
+  }
+
+  /* Color-blind friendly theme */
+  .theme-colorblind {
+    --background: var(--cb-bg);
+    --foreground: var(--cb-text);
+    --primary: var(--cb-primary);
+    --primary-foreground: var(--cb-bg);
+    --secondary: var(--cb-secondary);
+    --secondary-foreground: var(--cb-text);
+    --accent: var(--cb-accent);
+    --accent-foreground: var(--cb-bg);
+    --border: var(--cb-border);
+    --card: var(--cb-bg);
+    --card-foreground: var(--cb-text);
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
@@ -98,6 +176,41 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+@layer components {
+  .soundboard-button {
+    @apply relative overflow-hidden rounded-2xl border-2 border-primary/20 bg-card hover:bg-primary/10 active:bg-primary/20 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl;
+  }
+
+  .soundboard-button-large {
+    @apply min-h-[120px] p-6;
+  }
+
+  .soundboard-button-medium {
+    @apply min-h-[100px] p-4;
+  }
+
+  .soundboard-button-small {
+    @apply min-h-[80px] p-3;
+  }
+
+  .category-grid {
+    @apply grid gap-4 auto-fit-minmax;
+  }
+
+  .category-grid-large {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .category-grid-medium {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .category-grid-small {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
 }

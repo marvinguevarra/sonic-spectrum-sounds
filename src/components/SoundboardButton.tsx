@@ -5,22 +5,27 @@ import { Card } from '@/components/ui/card';
 
 interface SoundboardButtonProps {
   label: string;
+  labelFilipino?: string;
   icon?: string;
   category: string;
   soundFile?: string;
   size?: 'small' | 'medium' | 'large';
+  bilingualMode?: boolean;
   onClick: () => void;
 }
 
 const SoundboardButton = ({ 
   label, 
+  labelFilipino,
   icon, 
   category, 
   soundFile, 
   size = 'medium',
+  bilingualMode = false,
   onClick 
 }: SoundboardButtonProps) => {
   const sizeClass = `soundboard-button-${size}`;
+  const displayLabel = bilingualMode && labelFilipino ? labelFilipino : label;
 
   const playSound = () => {
     if (soundFile) {
@@ -41,8 +46,13 @@ const SoundboardButton = ({
         </div>
       )}
       <div className="font-semibold text-lg leading-tight text-foreground">
-        {label}
+        {displayLabel}
       </div>
+      {bilingualMode && labelFilipino && (
+        <div className="text-sm text-muted-foreground mt-1 opacity-80">
+          {label}
+        </div>
+      )}
       <div className="text-xs text-muted-foreground mt-1 opacity-70">
         {category}
       </div>

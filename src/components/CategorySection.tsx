@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card';
 interface CategoryItem {
   id: string;
   label: string;
+  labelFilipino?: string;
   icon: string;
   soundFile?: string;
 }
@@ -15,6 +16,7 @@ interface CategorySectionProps {
   items: CategoryItem[];
   gridSize?: 'small' | 'medium' | 'large';
   buttonSize?: 'small' | 'medium' | 'large';
+  bilingualMode?: boolean;
   onItemClick: (item: CategoryItem) => void;
 }
 
@@ -23,6 +25,7 @@ const CategorySection = ({
   items, 
   gridSize = 'medium',
   buttonSize = 'medium',
+  bilingualMode = false,
   onItemClick 
 }: CategorySectionProps) => {
   const gridClass = `category-grid-${gridSize}`;
@@ -35,10 +38,12 @@ const CategorySection = ({
           <SoundboardButton
             key={item.id}
             label={item.label}
+            labelFilipino={item.labelFilipino}
             icon={item.icon}
             category={title}
             soundFile={item.soundFile}
             size={buttonSize}
+            bilingualMode={bilingualMode}
             onClick={() => onItemClick(item)}
           />
         ))}

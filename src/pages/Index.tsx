@@ -30,14 +30,25 @@ const Index = () => {
   // Sample AAC categories and items with improved Filipino grammar
   const categories = [
     {
+      title: 'Good Manners / Magagandang Asal',
+      items: [
+        { id: '40', label: 'Please', labelFilipino: 'Paki', icon: '🙏', soundFile: '/sounds/please.mp3' },
+        { id: '41', label: 'Thank you', labelFilipino: 'Salamat', icon: '💖', soundFile: '/sounds/thank-you.mp3' },
+        { id: '42', label: 'Excuse me', labelFilipino: 'Excuse me po', icon: '✋', soundFile: '/sounds/excuse-me.mp3' },
+        { id: '43', label: 'Sorry', labelFilipino: 'Pasensya na po', icon: '😔', soundFile: '/sounds/sorry.mp3' },
+        { id: '44', label: 'You\'re welcome', labelFilipino: 'Walang anuman', icon: '😊', soundFile: '/sounds/youre-welcome.mp3' },
+        { id: '45', label: 'Good morning', labelFilipino: 'Magandang umaga po', icon: '🌅', soundFile: '/sounds/good-morning.mp3' },
+        { id: '46', label: 'Good night', labelFilipino: 'Magandang gabi po', icon: '🌙', soundFile: '/sounds/good-night.mp3' },
+        { id: '47', label: 'May I', labelFilipino: 'Pwede po ba', icon: '🤲', soundFile: '/sounds/may-i.mp3' },
+      ]
+    },
+    {
       title: 'Basic Needs',
       items: [
         { id: '1', label: 'I want', labelFilipino: 'Gusto ko', icon: '🙋', soundFile: '/sounds/i-want.mp3' },
         { id: '2', label: 'Help', labelFilipino: 'Tulong', icon: '🤝', soundFile: '/sounds/help.mp3' },
         { id: '3', label: 'More', labelFilipino: 'Dagdag pa', icon: '➕', soundFile: '/sounds/more.mp3' },
         { id: '4', label: 'Stop', labelFilipino: 'Tigil', icon: '✋', soundFile: '/sounds/stop.mp3' },
-        { id: '5', label: 'Please', labelFilipino: 'Paki', icon: '🙏', soundFile: '/sounds/please.mp3' },
-        { id: '6', label: 'Thank you', labelFilipino: 'Salamat', icon: '💖', soundFile: '/sounds/thank-you.mp3' },
         { id: '38', label: 'Yes', labelFilipino: 'Oo', icon: '✅', soundFile: '/sounds/yes.mp3' },
         { id: '39', label: 'No', labelFilipino: 'Hindi', icon: '❌', soundFile: '/sounds/no.mp3' },
       ]

@@ -178,39 +178,75 @@
   body {
     @apply bg-background text-foreground transition-colors duration-300;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Improve touch performance on mobile */
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Improve tap targets for accessibility */
+  button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 
 @layer components {
   .soundboard-button {
     @apply relative overflow-hidden rounded-2xl border-2 border-primary/20 bg-card hover:bg-primary/10 active:bg-primary/20 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl;
+    /* Ensure proper touch targets */
+    min-height: 80px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .soundboard-button-large {
-    @apply min-h-[120px] p-6;
+    @apply min-h-[100px] sm:min-h-[120px] p-4 sm:p-6;
   }
 
   .soundboard-button-medium {
-    @apply min-h-[100px] p-4;
+    @apply min-h-[80px] sm:min-h-[100px] p-3 sm:p-4;
   }
 
   .soundboard-button-small {
-    @apply min-h-[80px] p-3;
+    @apply min-h-[70px] sm:min-h-[80px] p-2 sm:p-3;
   }
 
   .category-grid {
-    @apply grid gap-4;
+    @apply grid gap-3 sm:gap-4;
   }
 
   .category-grid-large {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   }
 
   .category-grid-medium {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
 
   .category-grid-small {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+
+  /* Mobile-specific optimizations */
+  @media (max-width: 640px) {
+    .category-grid-large {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+    
+    .category-grid-medium {
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    }
+    
+    .category-grid-small {
+      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    }
+  }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .soundboard-button {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
   }
 }

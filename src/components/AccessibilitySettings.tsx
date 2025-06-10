@@ -1,52 +1,34 @@
 
 import React from 'react';
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { useSettings } from '@/contexts/SettingsContext';
 
-interface AccessibilitySettingsProps {
-  theme: string;
-  onThemeChange: (theme: string) => void;
-  buttonSize: 'small' | 'medium' | 'large';
-  onButtonSizeChange: (size: 'small' | 'medium' | 'large') => void;
-  gridSize: 'small' | 'medium' | 'large';
-  onGridSizeChange: (size: 'small' | 'medium' | 'large') => void;
-  soundEnabled: boolean;
-  onSoundToggle: (enabled: boolean) => void;
-  volume: number;
-  onVolumeChange: (volume: number) => void;
-  textSize: string;
-  onTextSizeChange: (size: string) => void;
-  voiceType: 'male' | 'female';
-  onVoiceTypeChange: (type: 'male' | 'female') => void;
-  darkMode: boolean;
-  onDarkModeToggle: (enabled: boolean) => void;
-  bilingualMode: boolean;
-}
+const AccessibilitySettings = () => {
+  const {
+    theme,
+    setTheme,
+    buttonSize,
+    setButtonSize,
+    gridSize,
+    setGridSize,
+    soundEnabled,
+    setSoundEnabled,
+    volume,
+    setVolume,
+    textSize,
+    setTextSize,
+    voiceType,
+    setVoiceType,
+    darkMode,
+    setDarkMode,
+    bilingualMode,
+  } = useSettings();
 
-const AccessibilitySettings = ({
-  theme,
-  onThemeChange,
-  buttonSize,
-  onButtonSizeChange,
-  gridSize,
-  onGridSizeChange,
-  soundEnabled,
-  onSoundToggle,
-  volume,
-  onVolumeChange,
-  textSize,
-  onTextSizeChange,
-  voiceType,
-  onVoiceTypeChange,
-  darkMode,
-  onDarkModeToggle,
-  bilingualMode,
-}: AccessibilitySettingsProps) => {
   const themes = [
     { value: 'autism', label: bilingualMode ? 'Autism-Friendly (Mapayapang Kulay)' : 'Autism-Friendly (Calm Colors)' },
     { value: 'high-vis', label: bilingualMode ? 'High Visibility (Mataas na Contrast)' : 'High Visibility (High Contrast)' },
@@ -68,11 +50,7 @@ const AccessibilitySettings = ({
   ];
 
   return (
-    <Card className="p-6 space-y-6">
-      <h3 className="text-xl font-semibold text-foreground mb-4">
-        {bilingualMode ? 'Mga Setting ng Accessibility' : 'Accessibility Settings'}
-      </h3>
-      
+    <div className="space-y-6 max-h-[70vh] overflow-y-auto">
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <Label htmlFor="dark-mode-toggle" className="text-sm font-medium text-foreground">
@@ -81,7 +59,7 @@ const AccessibilitySettings = ({
           <Switch
             id="dark-mode-toggle"
             checked={darkMode}
-            onCheckedChange={onDarkModeToggle}
+            onCheckedChange={setDarkMode}
           />
         </div>
 
@@ -89,7 +67,7 @@ const AccessibilitySettings = ({
           <Label htmlFor="theme-select" className="text-sm font-medium text-foreground mb-2 block">
             {bilingualMode ? 'Visual Theme' : 'Visual Theme'}
           </Label>
-          <Select value={theme} onValueChange={onThemeChange}>
+          <Select value={theme} onValueChange={setTheme}>
             <SelectTrigger id="theme-select">
               <SelectValue placeholder={bilingualMode ? 'Pumili ng theme' : 'Select theme'} />
             </SelectTrigger>
@@ -110,7 +88,7 @@ const AccessibilitySettings = ({
           <ToggleGroup 
             type="single" 
             value={voiceType} 
-            onValueChange={(value) => value && onVoiceTypeChange(value as 'male' | 'female')}
+            onValueChange={(value) => value && setVoiceType(value as 'male' | 'female')}
             className="justify-start"
           >
             <ToggleGroupItem value="female" aria-label={bilingualMode ? 'Babaeng Boses' : 'Female Voice'}>
@@ -126,7 +104,7 @@ const AccessibilitySettings = ({
           <Label htmlFor="button-size" className="text-sm font-medium text-foreground mb-2 block">
             {bilingualMode ? 'Laki ng Button' : 'Button Size'}
           </Label>
-          <Select value={buttonSize} onValueChange={onButtonSizeChange}>
+          <Select value={buttonSize} onValueChange={setButtonSize}>
             <SelectTrigger id="button-size">
               <SelectValue placeholder={bilingualMode ? 'Pumili ng laki ng button' : 'Select button size'} />
             </SelectTrigger>
@@ -144,7 +122,7 @@ const AccessibilitySettings = ({
           <Label htmlFor="grid-size" className="text-sm font-medium text-foreground mb-2 block">
             {bilingualMode ? 'Density ng Grid' : 'Grid Density'}
           </Label>
-          <Select value={gridSize} onValueChange={onGridSizeChange}>
+          <Select value={gridSize} onValueChange={setGridSize}>
             <SelectTrigger id="grid-size">
               <SelectValue placeholder={bilingualMode ? 'Pumili ng grid size' : 'Select grid size'} />
             </SelectTrigger>
@@ -162,7 +140,7 @@ const AccessibilitySettings = ({
           <Label htmlFor="text-size" className="text-sm font-medium text-foreground mb-2 block">
             {bilingualMode ? 'Laki ng Teksto' : 'Text Size'}
           </Label>
-          <Select value={textSize} onValueChange={onTextSizeChange}>
+          <Select value={textSize} onValueChange={setTextSize}>
             <SelectTrigger id="text-size">
               <SelectValue placeholder={bilingualMode ? 'Pumili ng laki ng teksto' : 'Select text size'} />
             </SelectTrigger>
@@ -183,7 +161,7 @@ const AccessibilitySettings = ({
           <Switch
             id="sound-toggle"
             checked={soundEnabled}
-            onCheckedChange={onSoundToggle}
+            onCheckedChange={setSoundEnabled}
           />
         </div>
 
@@ -194,7 +172,7 @@ const AccessibilitySettings = ({
             </Label>
             <Slider
               value={[volume]}
-              onValueChange={(value) => onVolumeChange(value[0])}
+              onValueChange={(value) => setVolume(value[0])}
               max={100}
               min={0}
               step={10}
@@ -203,7 +181,7 @@ const AccessibilitySettings = ({
           </div>
         )}
       </div>
-    </Card>
+    </div>
   );
 };
 

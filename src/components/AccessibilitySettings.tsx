@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 interface AccessibilitySettingsProps {
   theme: string;
@@ -20,6 +21,11 @@ interface AccessibilitySettingsProps {
   onVolumeChange: (volume: number) => void;
   textSize: string;
   onTextSizeChange: (size: string) => void;
+  voiceType: 'male' | 'female';
+  onVoiceTypeChange: (type: 'male' | 'female') => void;
+  darkMode: boolean;
+  onDarkModeToggle: (enabled: boolean) => void;
+  bilingualMode: boolean;
 }
 
 const AccessibilitySettings = ({
@@ -35,39 +41,57 @@ const AccessibilitySettings = ({
   onVolumeChange,
   textSize,
   onTextSizeChange,
+  voiceType,
+  onVoiceTypeChange,
+  darkMode,
+  onDarkModeToggle,
+  bilingualMode,
 }: AccessibilitySettingsProps) => {
   const themes = [
-    { value: 'autism', label: 'Autism-Friendly (Calm Colors)' },
-    { value: 'high-vis', label: 'High Visibility (High Contrast)' },
-    { value: 'low-vis', label: 'Low Visibility (Muted Colors)' },
-    { value: 'colorblind', label: 'Color-Blind Friendly' },
+    { value: 'autism', label: bilingualMode ? 'Autism-Friendly (Mapayapang Kulay)' : 'Autism-Friendly (Calm Colors)' },
+    { value: 'high-vis', label: bilingualMode ? 'High Visibility (Mataas na Contrast)' : 'High Visibility (High Contrast)' },
+    { value: 'low-vis', label: bilingualMode ? 'Low Visibility (Malambot na Kulay)' : 'Low Visibility (Muted Colors)' },
+    { value: 'colorblind', label: bilingualMode ? 'Color-Blind Friendly' : 'Color-Blind Friendly' },
   ];
 
   const sizes = [
-    { value: 'small', label: 'Small' },
-    { value: 'medium', label: 'Medium' },
-    { value: 'large', label: 'Large' },
+    { value: 'small', label: bilingualMode ? 'Maliit' : 'Small' },
+    { value: 'medium', label: bilingualMode ? 'Katamtaman' : 'Medium' },
+    { value: 'large', label: bilingualMode ? 'Malaki' : 'Large' },
   ];
 
   const textSizes = [
-    { value: 'small', label: 'Small Text' },
-    { value: 'medium', label: 'Medium Text' },
-    { value: 'large', label: 'Large Text' },
-    { value: 'xl', label: 'Extra Large Text' },
+    { value: 'small', label: bilingualMode ? 'Maliit na Teksto' : 'Small Text' },
+    { value: 'medium', label: bilingualMode ? 'Katamtamang Teksto' : 'Medium Text' },
+    { value: 'large', label: bilingualMode ? 'Malaking Teksto' : 'Large Text' },
+    { value: 'xl', label: bilingualMode ? 'Sobrang Laking Teksto' : 'Extra Large Text' },
   ];
 
   return (
     <Card className="p-6 space-y-6">
-      <h3 className="text-xl font-semibold text-foreground mb-4">Accessibility Settings</h3>
+      <h3 className="text-xl font-semibold text-foreground mb-4">
+        {bilingualMode ? 'Mga Setting ng Accessibility' : 'Accessibility Settings'}
+      </h3>
       
       <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <Label htmlFor="dark-mode-toggle" className="text-sm font-medium text-foreground">
+            {bilingualMode ? 'Dark Mode' : 'Dark Mode'}
+          </Label>
+          <Switch
+            id="dark-mode-toggle"
+            checked={darkMode}
+            onCheckedChange={onDarkModeToggle}
+          />
+        </div>
+
         <div>
           <Label htmlFor="theme-select" className="text-sm font-medium text-foreground mb-2 block">
-            Visual Theme
+            {bilingualMode ? 'Visual Theme' : 'Visual Theme'}
           </Label>
           <Select value={theme} onValueChange={onThemeChange}>
             <SelectTrigger id="theme-select">
-              <SelectValue placeholder="Select theme" />
+              <SelectValue placeholder={bilingualMode ? 'Pumili ng theme' : 'Select theme'} />
             </SelectTrigger>
             <SelectContent>
               {themes.map((t) => (
@@ -80,12 +104,31 @@ const AccessibilitySettings = ({
         </div>
 
         <div>
+          <Label className="text-sm font-medium text-foreground mb-3 block">
+            {bilingualMode ? 'Uri ng Boses' : 'Voice Type'}
+          </Label>
+          <ToggleGroup 
+            type="single" 
+            value={voiceType} 
+            onValueChange={(value) => value && onVoiceTypeChange(value as 'male' | 'female')}
+            className="justify-start"
+          >
+            <ToggleGroupItem value="female" aria-label={bilingualMode ? 'Babaeng Boses' : 'Female Voice'}>
+              👩 {bilingualMode ? 'Babae' : 'Female'}
+            </ToggleGroupItem>
+            <ToggleGroupItem value="male" aria-label={bilingualMode ? 'Lalaking Boses' : 'Male Voice'}>
+              👨 {bilingualMode ? 'Lalaki' : 'Male'}
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+
+        <div>
           <Label htmlFor="button-size" className="text-sm font-medium text-foreground mb-2 block">
-            Button Size
+            {bilingualMode ? 'Laki ng Button' : 'Button Size'}
           </Label>
           <Select value={buttonSize} onValueChange={onButtonSizeChange}>
             <SelectTrigger id="button-size">
-              <SelectValue placeholder="Select button size" />
+              <SelectValue placeholder={bilingualMode ? 'Pumili ng laki ng button' : 'Select button size'} />
             </SelectTrigger>
             <SelectContent>
               {sizes.map((s) => (
@@ -99,11 +142,11 @@ const AccessibilitySettings = ({
 
         <div>
           <Label htmlFor="grid-size" className="text-sm font-medium text-foreground mb-2 block">
-            Grid Density
+            {bilingualMode ? 'Density ng Grid' : 'Grid Density'}
           </Label>
           <Select value={gridSize} onValueChange={onGridSizeChange}>
             <SelectTrigger id="grid-size">
-              <SelectValue placeholder="Select grid size" />
+              <SelectValue placeholder={bilingualMode ? 'Pumili ng grid size' : 'Select grid size'} />
             </SelectTrigger>
             <SelectContent>
               {sizes.map((s) => (
@@ -117,11 +160,11 @@ const AccessibilitySettings = ({
 
         <div>
           <Label htmlFor="text-size" className="text-sm font-medium text-foreground mb-2 block">
-            Text Size
+            {bilingualMode ? 'Laki ng Teksto' : 'Text Size'}
           </Label>
           <Select value={textSize} onValueChange={onTextSizeChange}>
             <SelectTrigger id="text-size">
-              <SelectValue placeholder="Select text size" />
+              <SelectValue placeholder={bilingualMode ? 'Pumili ng laki ng teksto' : 'Select text size'} />
             </SelectTrigger>
             <SelectContent>
               {textSizes.map((s) => (
@@ -135,7 +178,7 @@ const AccessibilitySettings = ({
 
         <div className="flex items-center justify-between">
           <Label htmlFor="sound-toggle" className="text-sm font-medium text-foreground">
-            Sound Feedback
+            {bilingualMode ? 'Sound Feedback' : 'Sound Feedback'}
           </Label>
           <Switch
             id="sound-toggle"
@@ -147,7 +190,7 @@ const AccessibilitySettings = ({
         {soundEnabled && (
           <div>
             <Label className="text-sm font-medium text-foreground mb-2 block">
-              Volume: {volume}%
+              {bilingualMode ? `Lakas ng Tunog: ${volume}%` : `Volume: ${volume}%`}
             </Label>
             <Slider
               value={[volume]}

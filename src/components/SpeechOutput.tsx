@@ -7,9 +7,10 @@ interface SpeechOutputProps {
   selectedWords: string[];
   onClear: () => void;
   onSpeak: () => void;
+  bilingualMode?: boolean;
 }
 
-const SpeechOutput = ({ selectedWords, onClear, onSpeak }: SpeechOutputProps) => {
+const SpeechOutput = ({ selectedWords, onClear, onSpeak, bilingualMode = false }: SpeechOutputProps) => {
   const sentence = selectedWords.join(' ');
 
   return (
@@ -17,7 +18,10 @@ const SpeechOutput = ({ selectedWords, onClear, onSpeak }: SpeechOutputProps) =>
       <div className="flex items-center justify-between">
         <div className="flex-1 min-h-[50px] p-3 bg-background rounded-lg border flex items-center">
           <p className="text-lg font-medium text-foreground">
-            {sentence || 'Tap buttons to build a sentence...'}
+            {sentence || (bilingualMode 
+              ? 'Pindutin ang mga button para makagawa ng pangungusap...' 
+              : 'Tap buttons to build a sentence...'
+            )}
           </p>
         </div>
         <div className="flex gap-2 ml-4">
@@ -26,14 +30,14 @@ const SpeechOutput = ({ selectedWords, onClear, onSpeak }: SpeechOutputProps) =>
             onClick={onClear}
             disabled={selectedWords.length === 0}
           >
-            Clear
+            {bilingualMode ? 'Burahin' : 'Clear'}
           </Button>
           <Button 
             onClick={onSpeak}
             disabled={selectedWords.length === 0}
             className="bg-primary hover:bg-primary/90"
           >
-            🔊 Speak
+            🔊 {bilingualMode ? 'Magsalita' : 'Speak'}
           </Button>
         </div>
       </div>

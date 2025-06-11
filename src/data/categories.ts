@@ -1,3 +1,4 @@
+
 export interface CategoryItem {
   id: string;
   label: string;
@@ -74,6 +75,10 @@ export const categories: Category[] = [
       { id: '16', label: 'Milk', labelFilipino: 'gatas', icon: '🥛', soundFile: '/sounds/milk.mp3' },
       { id: '17', label: 'Cookie', labelFilipino: 'biskwit', icon: '🍪', soundFile: '/sounds/cookie.mp3' },
       { id: '18', label: 'Juice', labelFilipino: 'juice', icon: '🧃', soundFile: '/sounds/juice.mp3' },
+      { id: '48', label: 'Mango', labelFilipino: 'mangga', icon: '🥭', soundFile: '/sounds/mango.mp3' },
+      { id: '49', label: 'Banana', labelFilipino: 'saging', icon: '🍌', soundFile: '/sounds/banana.mp3' },
+      { id: '50', label: 'Coconut', labelFilipino: 'buko', icon: '🥥', soundFile: '/sounds/coconut.mp3' },
+      { id: '51', label: 'Pineapple', labelFilipino: 'pinya', icon: '🍍', soundFile: '/sounds/pineapple.mp3' },
     ]
   },
   {
@@ -86,6 +91,9 @@ export const categories: Category[] = [
       { id: '35', label: 'Sorbetes', labelFilipino: 'sorbetes', icon: '🍦', soundFile: '/sounds/sorbetes.mp3' },
       { id: '36', label: 'Taho', labelFilipino: 'taho', icon: '🥤', soundFile: '/sounds/taho.mp3' },
       { id: '37', label: 'Sinigang', labelFilipino: 'sinigang', icon: '🍲', soundFile: '/sounds/sinigang.mp3' },
+      { id: '52', label: 'Adobo', labelFilipino: 'adobo', icon: '🍖', soundFile: '/sounds/adobo.mp3' },
+      { id: '53', label: 'Lechon', labelFilipino: 'lechon', icon: '🐷', soundFile: '/sounds/lechon.mp3' },
+      { id: '54', label: 'Lumpia', labelFilipino: 'lumpia', icon: '🌯', soundFile: '/sounds/lumpia.mp3' },
     ]
   },
   {
@@ -97,6 +105,14 @@ export const categories: Category[] = [
       { id: '22', label: 'Outside', labelFilipino: 'lumabas', icon: '🌳', soundFile: '/sounds/outside.mp3' },
       { id: '23', label: 'TV', labelFilipino: 'manood ng TV', icon: '📺', soundFile: '/sounds/tv.mp3' },
       { id: '24', label: 'Sleep', labelFilipino: 'matulog', icon: '🛏️', soundFile: '/sounds/sleep.mp3' },
+      { id: '55', label: 'Swimming', labelFilipino: 'lumalangoy', icon: '🏊', soundFile: '/sounds/swimming.mp3' },
+      { id: '56', label: 'Dancing', labelFilipino: 'sayaw', icon: '💃', soundFile: '/sounds/dancing.mp3' },
+      { id: '57', label: 'Singing', labelFilipino: 'kumanta', icon: '🎤', soundFile: '/sounds/singing.mp3' },
+      { id: '58', label: 'Drawing', labelFilipino: 'magkulay', icon: '🎨', soundFile: '/sounds/drawing.mp3' },
+      { id: '59', label: 'Basketball', labelFilipino: 'basketball', icon: '⛹️', soundFile: '/sounds/basketball.mp3' },
+      { id: '60', label: 'Karate', labelFilipino: 'karate', icon: '🥋', soundFile: '/sounds/karate.mp3' },
+      { id: '61', label: 'Biking', labelFilipino: 'magbisikleta', icon: '🚴', soundFile: '/sounds/biking.mp3' },
+      { id: '62', label: 'Festival', labelFilipino: 'pista', icon: '🎉', soundFile: '/sounds/festival.mp3' },
     ]
   }
 ];

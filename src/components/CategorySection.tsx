@@ -35,6 +35,7 @@ const CategorySection = ({ title, items, onItemClick }: CategorySectionProps) =>
         {items.map((item) => (
           <SoundboardButton
             key={item.id}
+            id={item.id}
             label={item.label}
             labelFilipino={item.labelFilipino}
             icon={item.icon}

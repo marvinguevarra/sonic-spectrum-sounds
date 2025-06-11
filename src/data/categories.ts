@@ -1,4 +1,3 @@
-
 export interface CategoryItem {
   id: string;
   label: string;
@@ -18,6 +17,8 @@ export const categories: Category[] = [
     items: [
       { id: 'beach', label: 'I want to go to the beach', labelFilipino: 'Gusto kong pumunta sa dalampasigan', icon: '🏖️', soundFile: '/sounds/beach.mp3' },
       { id: 'graduation', label: 'Happy Graduation Angelo!', labelFilipino: 'Maligayang Pagtatapos Angelo!', icon: '🎓', soundFile: '/sounds/graduation.mp3' },
+      { id: 'proud', label: 'I am so proud of you!', labelFilipino: 'Napaka proud ko sa iyo!', icon: '🌟', soundFile: '/sounds/proud.mp3' },
+      { id: 'celebrate', label: 'Let\'s celebrate!', labelFilipino: 'Mag celebrate tayo!', icon: '🎉', soundFile: '/sounds/celebrate.mp3' },
     ]
   },
   {
@@ -64,6 +65,7 @@ export const categories: Category[] = [
       { id: '10', label: 'Scared', labelFilipino: 'takot ako', icon: '😨', soundFile: '/sounds/scared.mp3' },
       { id: '11', label: 'Excited', labelFilipino: 'excited ako', icon: '🤗', soundFile: '/sounds/excited.mp3' },
       { id: '12', label: 'Tired', labelFilipino: 'pagod ako', icon: '😴', soundFile: '/sounds/tired.mp3' },
+      { id: 'proud-feeling', label: 'Proud', labelFilipino: 'proud ako', icon: '😌', soundFile: '/sounds/proud-feeling.mp3' },
     ]
   },
   {
@@ -113,6 +115,7 @@ export const categories: Category[] = [
       { id: '60', label: 'Karate', labelFilipino: 'karate', icon: '🥋', soundFile: '/sounds/karate.mp3' },
       { id: '61', label: 'Biking', labelFilipino: 'magbisikleta', icon: '🚴', soundFile: '/sounds/biking.mp3' },
       { id: '62', label: 'Festival', labelFilipino: 'pista', icon: '🎉', soundFile: '/sounds/festival.mp3' },
+      { id: 'graduation-walk', label: 'Graduation Walk', labelFilipino: 'graduation walk', icon: '🎓', soundFile: '/sounds/graduation-walk.mp3' },
     ]
   }
 ];

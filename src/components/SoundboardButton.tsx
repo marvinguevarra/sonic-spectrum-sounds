@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { useSoundFeedback } from '@/hooks/useSoundFeedback';
 import { useSettings } from '@/contexts/SettingsContext';
-import ConfettiAnimation from './animations/ConfettiAnimation';
+import GraduationAnimation from './animations/GraduationAnimation';
 import WaveAnimation from './animations/WaveAnimation';
 
 interface SoundboardButtonProps {
@@ -25,21 +25,23 @@ const SoundboardButton = ({
   id 
 }: SoundboardButtonProps) => {
   const { buttonSize, bilingualMode, soundEnabled, volume } = useSettings();
-  const { playClickSound } = useSoundFeedback({ soundEnabled, volume });
-  const [showConfetti, setShowConfetti] = useState(false);
+  const { playClickSound, playCelebrationSound } = useSoundFeedback({ soundEnabled, volume });
+  const [showGraduation, setShowGraduation] = useState(false);
   const [showWave, setShowWave] = useState(false);
   
   const sizeClass = `soundboard-button-${buttonSize}`;
   const displayLabel = bilingualMode && labelFilipino ? labelFilipino : label;
 
   const handleClick = () => {
-    playClickSound();
-    
-    // Trigger specific animations based on button ID
+    // Play different sounds based on button type
     if (id === 'graduation') {
-      setShowConfetti(true);
+      playCelebrationSound();
+      setShowGraduation(true);
     } else if (id === 'beach') {
+      playClickSound();
       setShowWave(true);
+    } else {
+      playClickSound();
     }
     
     onClick();
@@ -48,11 +50,15 @@ const SoundboardButton = ({
   return (
     <>
       <Card 
-        className={`soundboard-button ${sizeClass} cursor-pointer flex flex-col items-center justify-center text-center group touch-manipulation select-none`}
+        className={`soundboard-button ${sizeClass} cursor-pointer flex flex-col items-center justify-center text-center group touch-manipulation select-none ${
+          id === 'graduation' ? 'hover:bg-yellow-50 hover:border-yellow-300 transition-colors' : ''
+        }`}
         onClick={handleClick}
       >
         {icon && (
-          <div className="text-3xl sm:text-4xl mb-2 group-hover:scale-110 group-active:scale-95 transition-transform duration-200">
+          <div className={`text-3xl sm:text-4xl mb-2 group-hover:scale-110 group-active:scale-95 transition-transform duration-200 ${
+            id === 'graduation' ? 'animate-pulse' : ''
+          }`}>
             {icon}
           </div>
         )}
@@ -69,9 +75,9 @@ const SoundboardButton = ({
         </div>
       </Card>
 
-      <ConfettiAnimation 
-        isActive={showConfetti} 
-        onComplete={() => setShowConfetti(false)} 
+      <GraduationAnimation 
+        isActive={showGraduation} 
+        onComplete={() => setShowGraduation(false)} 
       />
       <WaveAnimation 
         isActive={showWave} 

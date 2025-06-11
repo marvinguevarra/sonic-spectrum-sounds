@@ -29,20 +29,22 @@ const WaveAnimation = ({ isActive, onComplete }: WaveAnimationProps) => {
   if (!isActive) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-50 flex items-end justify-center">
-      {waves.map((wave) => (
-        <div
-          key={wave.id}
-          className="absolute bottom-0 w-full h-20 opacity-60"
-          style={{
-            background: 'linear-gradient(to top, #4FC3F7, transparent)',
-            borderRadius: '50%',
-            animationDelay: `${wave.delay}s`,
-            animation: 'wave-rise 2s ease-out forwards'
-          }}
-        />
-      ))}
-      <style jsx>{`
+    <>
+      <div className="fixed inset-0 pointer-events-none z-50 flex items-end justify-center">
+        {waves.map((wave) => (
+          <div
+            key={wave.id}
+            className="absolute bottom-0 w-full h-20 opacity-60"
+            style={{
+              background: 'linear-gradient(to top, #4FC3F7, transparent)',
+              borderRadius: '50%',
+              animationDelay: `${wave.delay}s`,
+              animation: 'wave-rise 2s ease-out forwards'
+            }}
+          />
+        ))}
+      </div>
+      <style>{`
         @keyframes wave-rise {
           0% {
             transform: translateY(100px) scaleX(0.5);
@@ -57,7 +59,7 @@ const WaveAnimation = ({ isActive, onComplete }: WaveAnimationProps) => {
           }
         }
       `}</style>
-    </div>
+    </>
   );
 };
 

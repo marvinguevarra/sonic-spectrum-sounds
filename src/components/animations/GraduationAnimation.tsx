@@ -41,12 +41,12 @@ const GraduationAnimation = ({ isActive, onComplete }: GraduationAnimationProps)
   if (!isActive) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden bg-black/20 backdrop-blur-sm">
+    <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden bg-black/20 backdrop-blur-sm">
       {/* Graduation Photo */}
       {showImage && (
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center p-4">
           <div 
-            className="animate-scale-in bg-white p-4 rounded-lg shadow-2xl border-4 border-yellow-400"
+            className="animate-scale-in bg-white p-2 sm:p-4 rounded-lg shadow-2xl border-4 border-yellow-400 max-w-[90vw] max-h-[90vh] flex flex-col items-center"
             style={{
               animation: 'graduationPhoto 3.5s ease-out forwards'
             }}
@@ -54,9 +54,9 @@ const GraduationAnimation = ({ isActive, onComplete }: GraduationAnimationProps)
             <img 
               src="/lovable-uploads/385fb211-82fd-423c-b8ea-20cbb5017091.png" 
               alt="Angelo's Graduation" 
-              className="max-w-xs sm:max-w-sm md:max-w-md rounded-lg"
+              className="w-full h-auto max-w-[280px] sm:max-w-xs md:max-w-sm rounded-lg object-contain"
             />
-            <div className="text-center mt-2 font-bold text-xl text-yellow-600">
+            <div className="text-center mt-2 font-bold text-sm sm:text-lg md:text-xl text-yellow-600 px-2">
               🎓 Congratulations Angelo! 🎓
             </div>
           </div>

@@ -1,4 +1,3 @@
-
 export interface CategoryItem {
   id: string;
   label: string;
@@ -13,6 +12,13 @@ export interface Category {
 }
 
 export const categories: Category[] = [
+  {
+    title: 'Quick Phrases / Mga Mabilis na Pahayag',
+    items: [
+      { id: 'beach', label: 'I want to go to the beach', labelFilipino: 'Gusto kong pumunta sa dalampasigan', icon: '🏖️', soundFile: '/sounds/beach.mp3' },
+      { id: 'graduation', label: 'Happy Graduation Angelo!', labelFilipino: 'Maligayang Pagtatapos Angelo!', icon: '🎓', soundFile: '/sounds/graduation.mp3' },
+    ]
+  },
   {
     title: 'Good Manners / Magagandang Asal',
     items: [

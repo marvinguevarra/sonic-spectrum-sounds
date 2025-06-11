@@ -7,6 +7,7 @@ import { categories } from '@/data/categories';
 import AppHeader from '@/components/AppHeader';
 import CategorySection from '@/components/CategorySection';
 import SpeechOutput from '@/components/SpeechOutput';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const IndexContent = () => {
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
@@ -41,32 +42,39 @@ const IndexContent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background transition-all duration-300">
+    <div className="min-h-screen bg-background transition-all duration-300 flex flex-col">
       <AppHeader />
 
-      {/* Main Content */}
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-7xl">
-        {/* Speech Output */}
-        <SpeechOutput 
-          selectedWords={selectedWords}
-          onClear={handleClear}
-        />
-
-        {/* Categories */}
-        <div className="space-y-6 sm:space-y-8">
-          {categories.map((category) => (
-            <CategorySection
-              key={category.title}
-              title={category.title}
-              items={category.items}
-              onItemClick={handleItemClick}
-            />
-          ))}
+      {/* Sticky Speech Output */}
+      <div className="sticky top-[73px] z-20 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="container mx-auto px-3 sm:px-4 py-3 max-w-7xl">
+          <SpeechOutput 
+            selectedWords={selectedWords}
+            onClear={handleClear}
+          />
         </div>
       </div>
 
+      {/* Scrollable Categories */}
+      <div className="flex-1">
+        <ScrollArea className="h-[calc(100vh-200px)]">
+          <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-7xl">
+            <div className="space-y-6 sm:space-y-8">
+              {categories.map((category) => (
+                <CategorySection
+                  key={category.title}
+                  title={category.title}
+                  items={category.items}
+                  onItemClick={handleItemClick}
+                />
+              ))}
+            </div>
+          </div>
+        </ScrollArea>
+      </div>
+
       {/* Footer */}
-      <div className="mt-8 sm:mt-12 border-t border-border bg-card/30 py-4 sm:py-6">
+      <div className="border-t border-border bg-card/30 py-4 sm:py-6">
         <div className="container mx-auto px-3 sm:px-4 text-center">
           <p className="text-sm sm:text-base text-muted-foreground">
             {bilingualMode 

@@ -79,20 +79,20 @@ export function CategorySentenceBuilder({ category }: CategorySentenceBuilderPro
         }
       },
       food: {
+        'eat': {
+          completed: 'Kumain ako',
+          ongoing: 'Kumakain ako',
+          contemplated: 'Kakain ako'
+        },
+        'drink': {
+          completed: 'Uminom ako',
+          ongoing: 'Umiinom ako',
+          contemplated: 'Iinom ako'
+        },
         'cook': {
           completed: 'Nagluto ako',
           ongoing: 'Nagluluto ako',
           contemplated: 'Magluluto ako'
-        },
-        'order': {
-          completed: 'Umorder ako',
-          ongoing: 'Umo-order ako',
-          contemplated: 'Mag-oorder ako'
-        },
-        'share': {
-          completed: 'Nagshare ako',
-          ongoing: 'Nagshashare ako',
-          contemplated: 'Magshashare ako'
         }
       },
       feelings: {
@@ -121,53 +121,94 @@ export function CategorySentenceBuilder({ category }: CategorySentenceBuilderPro
     const wordsByCategory: { [key: string]: string[] } = {
       needs: ['ng', 'sa', 'kanin', 'tubig', 'pagkain', 'kama', 'banyo'],
       family: ['kay', 'sa', 'Nanay', 'Tatay', 'Tita', 'Tito', 'Lola', 'Lolo'],
-      food: ['ng', 'sa', 'adobo', 'sinigang', 'kanin', 'ulam', 'dessert'],
+      food: ['ng', 'sa', 'adobo', 'sinigang', 'kanin', 'ulam', 'dessert', 'tubig', 'kape', 'gatas'],
       feelings: ['ng', 'dahil', 'masaya', 'malungkot', 'excited', 'proud']
     };
 
     return wordsByCategory[category] || wordsByCategory.needs;
   };
 
+  const getFoodSentenceStarters = () => {
+    return [
+      'Gusto ko kumain ng',
+      'Gusto ko uminom ng',
+      'Ayaw ko kumain ng',
+      'Ayaw ko uminom ng',
+      'Pwede ba kumain ng',
+      'Pwede ba uminom ng'
+    ];
+  };
+
   const verbs = getCategoryVerbs();
   const commonWords = getCategoryWords();
+  const foodStarters = category === 'food' ? getFoodSentenceStarters() : [];
 
   return (
     <Card className="w-full">
       <CardContent className="p-4 space-y-4">
-        {/* Aspect Selector */}
-        <AspectSelector 
-          currentAspect={currentAspect} 
-          onAspectChange={setCurrentAspect}
-        />
+        {/* Food-specific sentence starters */}
+        {category === 'food' && (
+          <div className="space-y-2">
+            <h4 className="text-sm font-semibold text-muted-foreground">Mga Simula ng Pangungusap (Sentence Starters)</h4>
+            <div className="grid grid-cols-2 gap-2">
+              {foodStarters.map((starter) => (
+                <Button
+                  key={starter}
+                  variant="default"
+                  size="sm"
+                  onClick={() => addWord(starter)}
+                  className="text-xs bg-green-600 hover:bg-green-700"
+                >
+                  {starter}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
 
-        {/* Verb Buttons */}
-        <div className="grid grid-cols-3 gap-2">
-          {Object.entries(verbs).map(([verb, conjugations]) => (
-            <Button
-              key={verb}
-              variant="outline"
-              size="sm"
-              onClick={() => addWord(conjugations[currentAspect])}
-              className="text-xs"
-            >
-              {conjugations[currentAspect].split(' ')[0]}
-            </Button>
-          ))}
-        </div>
+        {/* Aspect Selector - only show for non-food categories */}
+        {category !== 'food' && (
+          <AspectSelector 
+            currentAspect={currentAspect} 
+            onAspectChange={setCurrentAspect}
+          />
+        )}
+
+        {/* Verb Buttons - only show for non-food categories */}
+        {category !== 'food' && (
+          <div className="grid grid-cols-3 gap-2">
+            {Object.entries(verbs).map(([verb, conjugations]) => (
+              <Button
+                key={verb}
+                variant="outline"
+                size="sm"
+                onClick={() => addWord(conjugations[currentAspect])}
+                className="text-xs"
+              >
+                {conjugations[currentAspect].split(' ')[0]}
+              </Button>
+            ))}
+          </div>
+        )}
 
         {/* Common Words */}
-        <div className="grid grid-cols-4 gap-2">
-          {commonWords.map((word) => (
-            <Button
-              key={word}
-              variant="secondary"
-              size="sm"
-              onClick={() => addWord(word)}
-              className="text-xs"
-            >
-              {word}
-            </Button>
-          ))}
+        <div className="space-y-2">
+          <h4 className="text-sm font-semibold text-muted-foreground">
+            {category === 'food' ? 'Mga Pagkain at Inumin (Foods & Drinks)' : 'Mga Salita (Words)'}
+          </h4>
+          <div className="grid grid-cols-4 gap-2">
+            {commonWords.map((word) => (
+              <Button
+                key={word}
+                variant="secondary"
+                size="sm"
+                onClick={() => addWord(word)}
+                className="text-xs"
+              >
+                {word}
+              </Button>
+            ))}
+          </div>
         </div>
         
         {/* Sentence Display */}

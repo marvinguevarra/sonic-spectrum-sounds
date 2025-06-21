@@ -62,11 +62,7 @@ export function AnimatedSoundButton({
     <>
       <Button
         onClick={handleClick}
-        className={`h-20 w-full flex flex-col items-center justify-center gap-1 p-2 hover:scale-105 transition-all duration-200 ${
-          id === 'graduation' ? 'hover:bg-yellow-50 hover:border-yellow-300 bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200' : ''
-        } ${
-          id === 'celebrate' || id === 'proud' ? 'hover:bg-purple-50 hover:border-purple-300 bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200' : ''
-        }`}
+        className="h-20 w-full flex flex-col items-center justify-center gap-1 p-2 hover:scale-105 transition-all duration-200 bg-card hover:bg-primary/10 border border-primary/20 hover:border-primary/30"
         variant="outline"
       >
         {icon && (
@@ -74,7 +70,7 @@ export function AnimatedSoundButton({
             {icon}
           </span>
         )}
-        <span className="font-semibold text-sm leading-tight text-center">
+        <span className="font-semibold text-sm leading-tight text-center text-card-foreground">
           {displayLabel}
         </span>
         {secondaryLabel && (

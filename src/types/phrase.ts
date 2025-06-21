@@ -1,4 +1,3 @@
-
 export interface Phrase {
   id: string;
   filipino: string;
@@ -6,6 +5,7 @@ export interface Phrase {
   category: string;
   respectful?: string;
   emoji?: string;
+  image?: string;
 }
 
 export interface VerbPhrase {

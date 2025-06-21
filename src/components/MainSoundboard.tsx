@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { SoundButton } from './SoundButton';
+import { EnhancedSoundButton } from './EnhancedSoundButton';
 import { SentenceBuilder } from './SentenceBuilder';
 import { CategorySentenceBuilder } from './CategorySentenceBuilder';
 import { ModeToggle } from './ModeToggle';
@@ -42,10 +42,12 @@ export function MainSoundboard() {
     { id: 'activity-10', filipino: 'Magkulay', english: 'Drawing', category: 'activities', emoji: '🎨' },
   ];
 
-  // Food-specific navigation phrases
+  // Food-specific navigation phrases with improved Po/Opo mode
   const FOOD_NAV_PHRASES = [
     { id: 'food-nav-1', filipino: 'Gusto ko pa', english: 'I want more/seconds', category: 'food', respectful: 'Gusto ko pa po', emoji: '➕' },
     { id: 'food-nav-2', filipino: 'Ayaw ko na', english: 'No more/I\'ve had enough', category: 'food', respectful: 'Ayaw ko na po', emoji: '✋' },
+    { id: 'food-nav-3', filipino: 'Busog na ako', english: 'I am full', category: 'food', respectful: 'Busog na po ako', emoji: '😋' },
+    { id: 'food-nav-4', filipino: 'Sarap', english: 'Delicious', category: 'food', respectful: 'Masarap po', emoji: '😋' },
   ];
 
   return (
@@ -105,12 +107,12 @@ export function MainSoundboard() {
           ) : (
             <Card>
               <CardContent className="p-4">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                   {BASIC_NEEDS.map(phrase => (
-                    <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                    <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
                   ))}
                   {POLITE_PHRASES.map(phrase => (
-                    <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                    <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
                   ))}
                 </div>
               </CardContent>
@@ -125,9 +127,9 @@ export function MainSoundboard() {
           ) : (
             <Card>
               <CardContent className="p-4">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
                   {FAMILY_TERMS.map(phrase => (
-                    <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                    <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
                   ))}
                 </div>
               </CardContent>
@@ -145,9 +147,9 @@ export function MainSoundboard() {
               <Card>
                 <CardContent className="p-4">
                   <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Quick Actions</h3>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {FOOD_NAV_PHRASES.map(phrase => (
-                      <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                      <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} size="small" />
                     ))}
                   </div>
                 </CardContent>
@@ -157,9 +159,9 @@ export function MainSoundboard() {
               <Card>
                 <CardContent className="p-4">
                   <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Mga Pagkain at Inumin (Foods & Drinks)</h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                     {COMMON_FOODS.map(phrase => (
-                      <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                      <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
                     ))}
                   </div>
                 </CardContent>
@@ -175,9 +177,9 @@ export function MainSoundboard() {
           ) : (
             <Card>
               <CardContent className="p-4">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
                   {FEELINGS_PHRASES.map(phrase => (
-                    <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                    <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
                   ))}
                 </div>
               </CardContent>
@@ -191,9 +193,9 @@ export function MainSoundboard() {
           <Card>
             <CardContent className="p-4">
               <h3 className="text-lg font-semibold mb-4">Mga Gawain (Activities)</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
                 {ACTIVITIES_PHRASES.map(phrase => (
-                  <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                  <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
                 ))}
               </div>
             </CardContent>

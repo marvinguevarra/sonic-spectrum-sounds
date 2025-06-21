@@ -1,12 +1,11 @@
-
 import { Phrase, VerbPhrase } from '@/types/phrase';
 
 export const BASIC_NEEDS: Phrase[] = [
   { id: 'need-1', filipino: 'Gutom ako', english: 'I am hungry', category: 'needs', respectful: 'Gutom po ako', emoji: '🍽️' },
   { id: 'need-2', filipino: 'Uhaw ako', english: 'I am thirsty', category: 'needs', respectful: 'Uhaw po ako', emoji: '💧' },
   { id: 'need-3', filipino: 'Pagod ako', english: 'I am tired', category: 'needs', respectful: 'Pagod po ako', emoji: '😴' },
-  { id: 'need-4', filipino: 'Ihi ako', english: 'I need to pee', category: 'needs', respectful: 'Ihi po ako', emoji: '🚽' },
-  { id: 'need-5', filipino: 'Sakit', english: 'It hurts', category: 'needs', respectful: 'Masakit po', emoji: '🤕' },
+  { id: 'need-4', filipino: 'Kailangan ko umihi', english: 'I need to pee', category: 'needs', respectful: 'Kailangan ko pong umihi', emoji: '🚽' },
+  { id: 'need-5', filipino: 'Masakit', english: 'It hurts', category: 'needs', respectful: 'Masakit po', emoji: '🤕' },
   { id: 'need-6', filipino: 'Lamig ako', english: 'I am cold', category: 'needs', respectful: 'Lamig po ako', emoji: '🥶' },
   { id: 'need-7', filipino: 'Init ako', english: 'I am hot', category: 'needs', respectful: 'Init po ako', emoji: '🥵' },
 ];
@@ -25,22 +24,110 @@ export const FAMILY_TERMS: Phrase[] = [
 ];
 
 export const COMMON_FOODS: Phrase[] = [
-  { id: 'food-1', filipino: 'Kanin', english: 'Rice', category: 'food', emoji: '🍚' },
-  { id: 'food-2', filipino: 'Tubig', english: 'Water', category: 'food', emoji: '💧' },
-  { id: 'food-3', filipino: 'Adobo', english: 'Adobo', category: 'food', emoji: '🍖' },
-  { id: 'food-4', filipino: 'Sinigang', english: 'Sinigang', category: 'food', emoji: '🍲' },
-  { id: 'food-5', filipino: 'Taho', english: 'Taho', category: 'food', emoji: '🥤' },
-  { id: 'food-6', filipino: 'Pancit', english: 'Pancit', category: 'food', emoji: '🍜' },
-  { id: 'food-7', filipino: 'Lechon', english: 'Lechon', category: 'food', emoji: '🍖' },
-  { id: 'food-8', filipino: 'Halo-halo', english: 'Halo-halo', category: 'food', emoji: '🍧' },
+  { 
+    id: 'food-1', 
+    filipino: 'Kanin', 
+    english: 'Rice', 
+    category: 'food', 
+    emoji: '🍚',
+    image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&h=200&fit=crop&crop=center'
+  },
+  { 
+    id: 'food-2', 
+    filipino: 'Tubig', 
+    english: 'Water', 
+    category: 'food', 
+    emoji: '💧',
+    image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=200&h=200&fit=crop&crop=center'
+  },
+  { 
+    id: 'food-3', 
+    filipino: 'Adobo', 
+    english: 'Adobo', 
+    category: 'food', 
+    emoji: '🍖',
+    image: 'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=200&h=200&fit=crop&crop=center'
+  },
+  { 
+    id: 'food-4', 
+    filipino: 'Sinigang', 
+    english: 'Sinigang', 
+    category: 'food', 
+    emoji: '🍲',
+    image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=200&h=200&fit=crop&crop=center'
+  },
+  { 
+    id: 'food-5', 
+    filipino: 'Taho', 
+    english: 'Taho', 
+    category: 'food', 
+    emoji: '🥤',
+    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=200&fit=crop&crop=center'
+  },
+  { 
+    id: 'food-6', 
+    filipino: 'Pancit', 
+    english: 'Pancit', 
+    category: 'food', 
+    emoji: '🍜',
+    image: 'https://images.unsplash.com/photo-1569562211093-4ed0d0758f12?w=200&h=200&fit=crop&crop=center'
+  },
+  { 
+    id: 'food-7', 
+    filipino: 'Lechon', 
+    english: 'Lechon', 
+    category: 'food', 
+    emoji: '🍖',
+    image: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=200&h=200&fit=crop&crop=center'
+  },
+  { 
+    id: 'food-8', 
+    filipino: 'Halo-halo', 
+    english: 'Halo-halo', 
+    category: 'food', 
+    emoji: '🍧',
+    image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=200&h=200&fit=crop&crop=center'
+  },
+  { 
+    id: 'food-9', 
+    filipino: 'Gatas', 
+    english: 'Milk', 
+    category: 'food', 
+    emoji: '🥛',
+    image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=200&h=200&fit=crop&crop=center'
+  },
+  { 
+    id: 'food-10', 
+    filipino: 'Kape', 
+    english: 'Coffee', 
+    category: 'food', 
+    emoji: '☕',
+    image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=200&h=200&fit=crop&crop=center'
+  },
+  { 
+    id: 'food-11', 
+    filipino: 'Saging', 
+    english: 'Banana', 
+    category: 'food', 
+    emoji: '🍌',
+    image: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop&crop=center'
+  },
+  { 
+    id: 'food-12', 
+    filipino: 'Mansanas', 
+    english: 'Apple', 
+    category: 'food', 
+    emoji: '🍎',
+    image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=200&h=200&fit=crop&crop=center'
+  },
 ];
 
 export const POLITE_PHRASES: Phrase[] = [
   { id: 'polite-1', filipino: 'Salamat', english: 'Thank you', category: 'polite', respectful: 'Salamat po', emoji: '🙏' },
-  { id: 'polite-2', filipino: 'Pasensya', english: 'Sorry', category: 'polite', respectful: 'Pasensya po', emoji: '🙏' },
-  { id: 'polite-3', filipino: 'Pakiusap', english: 'Please', category: 'polite', respectful: 'Pakiusap po', emoji: '🙏' },
-  { id: 'polite-4', filipino: 'Opo', english: 'Yes (respectful)', category: 'polite', emoji: '✅' },
-  { id: 'polite-5', filipino: 'Hindi po', english: 'No (respectful)', category: 'polite', emoji: '❌' },
+  { id: 'polite-2', filipino: 'Pasensya na', english: 'Sorry/Excuse me', category: 'polite', respectful: 'Pasensya na po', emoji: '🙏' },
+  { id: 'polite-3', filipino: 'Pakisuyo', english: 'Please', category: 'polite', respectful: 'Pakisuyo po', emoji: '🙏' },
+  { id: 'polite-4', filipino: 'Oo', english: 'Yes', category: 'polite', respectful: 'Opo', emoji: '✅' },
+  { id: 'polite-5', filipino: 'Hindi', english: 'No', category: 'polite', respectful: 'Hindi po', emoji: '❌' },
 ];
 
 export const COMMON_VERBS: VerbPhrase[] = [

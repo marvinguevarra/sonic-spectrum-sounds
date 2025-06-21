@@ -7,6 +7,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { SoundButton } from './SoundButton';
 import { AspectSelector } from './AspectSelector';
 import { SentenceBuilder } from './SentenceBuilder';
+import { PersonalPhrasesTab } from './PersonalPhrasesTab';
 import { 
   BASIC_NEEDS, 
   FAMILY_TERMS, 
@@ -46,8 +47,11 @@ export function MainSoundboard() {
       <SentenceBuilder />
 
       {/* Categories */}
-      <Tabs defaultValue="needs" className="w-full">
-        <TabsList className="grid grid-cols-5 w-full h-auto p-1">
+      <Tabs defaultValue="personal" className="w-full">
+        <TabsList className="grid grid-cols-6 w-full h-auto p-1">
+          <TabsTrigger value="personal" className="text-xs sm:text-sm">
+            ⭐ Personal
+          </TabsTrigger>
           <TabsTrigger value="needs" className="text-xs sm:text-sm">
             🍽️ Pangangailangan
           </TabsTrigger>
@@ -64,6 +68,10 @@ export function MainSoundboard() {
             ⚡ Aksyon
           </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="personal" className="mt-4">
+          <PersonalPhrasesTab />
+        </TabsContent>
 
         <TabsContent value="needs" className="mt-4">
           <Card>

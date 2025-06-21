@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useResponsive } from '@/hooks/use-responsive';
 import {
   Accordion,
   AccordionContent,
@@ -30,7 +30,7 @@ const tabs: TabConfig[] = [
 ];
 
 export function MobileTabNavigation({ activeTab, onTabChange }: MobileTabNavigationProps) {
-  const isMobile = useIsMobile();
+  const { isMobile, getTextSize, getGridCols } = useResponsive();
 
   if (!isMobile) {
     return null; // Don't show on desktop
@@ -38,20 +38,38 @@ export function MobileTabNavigation({ activeTab, onTabChange }: MobileTabNavigat
 
   const activeTabConfig = tabs.find(tab => tab.id === activeTab);
 
+  const titleSize = getTextSize({
+    mobile: 'text-base',
+    tablet: 'text-lg',
+    desktop: 'text-lg'
+  });
+
+  const iconSize = getTextSize({
+    mobile: 'text-lg',
+    tablet: 'text-xl',
+    desktop: 'text-xl'
+  });
+
+  const gridCols = getGridCols({
+    mobile: 'grid-cols-2',
+    tablet: 'grid-cols-3',
+    desktop: 'grid-cols-3'
+  });
+
   return (
     <div className="mb-4">
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="categories" className="border rounded-lg">
           <AccordionTrigger className="px-4 py-3 hover:no-underline bg-blue-50 rounded-t-lg data-[state=open]:rounded-b-none">
             <div className="flex items-center gap-3">
-              <span className="text-xl">{activeTabConfig?.icon}</span>
-              <span className="font-medium text-lg">
+              <span className={iconSize}>{activeTabConfig?.icon}</span>
+              <span className={`font-medium ${titleSize}`}>
                 {activeTabConfig?.label || 'Select Category'}
               </span>
             </div>
           </AccordionTrigger>
           <AccordionContent className="px-2 pb-2">
-            <div className="grid grid-cols-2 gap-2">
+            <div className={`grid gap-2 ${gridCols}`}>
               {tabs.map((tab) => (
                 <button
                   key={tab.id}

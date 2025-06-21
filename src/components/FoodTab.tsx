@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { EnhancedSoundButton } from './EnhancedSoundButton';
 import { ModeToggle } from './ModeToggle';
 import { CategorySentenceBuilder } from './CategorySentenceBuilder';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useResponsive } from '@/hooks/use-responsive';
 import { COMMON_FOODS } from '@/data/phrases';
 import { Phrase } from '@/types/phrase';
 
@@ -22,7 +22,21 @@ const FOOD_NAV_PHRASES: Phrase[] = [
 ];
 
 export function FoodTab({ mode, onModeChange, respectMode }: FoodTabProps) {
-  const isMobile = useIsMobile();
+  const { getGridCols, deviceType } = useResponsive();
+
+  const quickActionsCols = getGridCols({
+    mobile: 'grid-cols-2',
+    tablet: 'grid-cols-4',
+    desktop: 'grid-cols-4'
+  });
+
+  const foodItemsCols = getGridCols({
+    mobile: 'grid-cols-2',
+    tablet: 'grid-cols-3',
+    desktop: 'grid-cols-4'
+  });
+
+  const buttonSize = deviceType === 'mobile' ? 'small' : 'medium';
 
   return (
     <div className="space-y-4">
@@ -35,7 +49,7 @@ export function FoodTab({ mode, onModeChange, respectMode }: FoodTabProps) {
           <Card>
             <CardContent className="p-4">
               <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Quick Actions</h3>
-              <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-4'}`}>
+              <div className={`grid gap-3 ${quickActionsCols}`}>
                 {FOOD_NAV_PHRASES.map(phrase => (
                   <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} size="small" />
                 ))}
@@ -47,13 +61,13 @@ export function FoodTab({ mode, onModeChange, respectMode }: FoodTabProps) {
           <Card>
             <CardContent className="p-4">
               <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Mga Pagkain at Inumin (Foods & Drinks)</h3>
-              <div className={`grid gap-4 ${isMobile ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'}`}>
+              <div className={`grid gap-4 ${foodItemsCols}`}>
                 {COMMON_FOODS.map(phrase => (
                   <EnhancedSoundButton 
                     key={phrase.id} 
                     phrase={phrase} 
                     respectMode={respectMode}
-                    size={isMobile ? 'small' : 'medium'}
+                    size={buttonSize}
                   />
                 ))}
               </div>

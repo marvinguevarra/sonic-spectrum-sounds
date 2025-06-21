@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { EnhancedSoundButton } from './EnhancedSoundButton';
 import { ModeToggle } from './ModeToggle';
 import { CategorySentenceBuilder } from './CategorySentenceBuilder';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useResponsive } from '@/hooks/use-responsive';
 import { FAMILY_TERMS } from '@/data/phrases';
 
 interface FamilyTabProps {
@@ -14,7 +14,15 @@ interface FamilyTabProps {
 }
 
 export function FamilyTab({ mode, onModeChange, respectMode }: FamilyTabProps) {
-  const isMobile = useIsMobile();
+  const { getGridCols, deviceType } = useResponsive();
+
+  const gridCols = getGridCols({
+    mobile: 'grid-cols-2',
+    tablet: 'grid-cols-3',
+    desktop: 'grid-cols-5'
+  });
+
+  const buttonSize = deviceType === 'mobile' ? 'small' : 'medium';
 
   return (
     <div className="space-y-4">
@@ -24,13 +32,13 @@ export function FamilyTab({ mode, onModeChange, respectMode }: FamilyTabProps) {
       ) : (
         <Card>
           <CardContent className="p-4">
-            <div className={`grid gap-4 ${isMobile ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5'}`}>
+            <div className={`grid gap-4 ${gridCols}`}>
               {FAMILY_TERMS.map(phrase => (
                 <EnhancedSoundButton 
                   key={phrase.id} 
                   phrase={phrase} 
                   respectMode={respectMode}
-                  size={isMobile ? 'small' : 'medium'}
+                  size={buttonSize}
                 />
               ))}
             </div>

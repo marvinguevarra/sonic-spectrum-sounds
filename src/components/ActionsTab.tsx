@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { EnhancedSoundButton } from './EnhancedSoundButton';
 import { SentenceBuilder } from './SentenceBuilder';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useResponsive } from '@/hooks/use-responsive';
 import { Phrase } from '@/types/phrase';
 
 interface ActionsTabProps {
@@ -24,7 +24,15 @@ const ACTIVITIES_PHRASES: Phrase[] = [
 ];
 
 export function ActionsTab({ respectMode }: ActionsTabProps) {
-  const isMobile = useIsMobile();
+  const { getGridCols, deviceType } = useResponsive();
+
+  const gridCols = getGridCols({
+    mobile: 'grid-cols-2',
+    tablet: 'grid-cols-3',
+    desktop: 'grid-cols-5'
+  });
+
+  const buttonSize = deviceType === 'mobile' ? 'small' : 'medium';
 
   return (
     <div className="space-y-4">
@@ -33,13 +41,13 @@ export function ActionsTab({ respectMode }: ActionsTabProps) {
       <Card>
         <CardContent className="p-4">
           <h3 className="text-lg font-semibold mb-4">Mga Gawain (Activities)</h3>
-          <div className={`grid gap-4 ${isMobile ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5'}`}>
+          <div className={`grid gap-4 ${gridCols}`}>
             {ACTIVITIES_PHRASES.map(phrase => (
               <EnhancedSoundButton 
                 key={phrase.id} 
                 phrase={phrase} 
                 respectMode={respectMode}
-                size={isMobile ? 'small' : 'medium'}
+                size={buttonSize}
               />
             ))}
           </div>

@@ -6,6 +6,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { SoundButton } from './SoundButton';
 import { SentenceBuilder } from './SentenceBuilder';
+import { CategorySentenceBuilder } from './CategorySentenceBuilder';
+import { ModeToggle } from './ModeToggle';
 import { PersonalPhrasesTab } from './PersonalPhrasesTab';
 import { 
   BASIC_NEEDS, 
@@ -16,6 +18,7 @@ import {
 
 export function MainSoundboard() {
   const [respectMode, setRespectMode] = useState(false);
+  const [mode, setMode] = useState<'phrases' | 'freestyle'>('phrases');
 
   // Reorganized phrases for better categorization
   const FEELINGS_PHRASES = [
@@ -90,55 +93,75 @@ export function MainSoundboard() {
           <PersonalPhrasesTab />
         </TabsContent>
 
-        <TabsContent value="needs" className="mt-4">
-          <Card>
-            <CardContent className="p-4">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                {BASIC_NEEDS.map(phrase => (
-                  <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
-                ))}
-                {POLITE_PHRASES.map(phrase => (
-                  <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+        <TabsContent value="needs" className="mt-4 space-y-4">
+          <ModeToggle mode={mode} onModeChange={setMode} />
+          {mode === 'freestyle' ? (
+            <CategorySentenceBuilder category="needs" />
+          ) : (
+            <Card>
+              <CardContent className="p-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                  {BASIC_NEEDS.map(phrase => (
+                    <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                  ))}
+                  {POLITE_PHRASES.map(phrase => (
+                    <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </TabsContent>
 
-        <TabsContent value="family" className="mt-4">
-          <Card>
-            <CardContent className="p-4">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                {FAMILY_TERMS.map(phrase => (
-                  <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+        <TabsContent value="family" className="mt-4 space-y-4">
+          <ModeToggle mode={mode} onModeChange={setMode} />
+          {mode === 'freestyle' ? (
+            <CategorySentenceBuilder category="family" />
+          ) : (
+            <Card>
+              <CardContent className="p-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                  {FAMILY_TERMS.map(phrase => (
+                    <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </TabsContent>
 
-        <TabsContent value="food" className="mt-4">
-          <Card>
-            <CardContent className="p-4">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                {COMMON_FOODS.map(phrase => (
-                  <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+        <TabsContent value="food" className="mt-4 space-y-4">
+          <ModeToggle mode={mode} onModeChange={setMode} />
+          {mode === 'freestyle' ? (
+            <CategorySentenceBuilder category="food" />
+          ) : (
+            <Card>
+              <CardContent className="p-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                  {COMMON_FOODS.map(phrase => (
+                    <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </TabsContent>
 
-        <TabsContent value="feelings" className="mt-4">
-          <Card>
-            <CardContent className="p-4">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                {FEELINGS_PHRASES.map(phrase => (
-                  <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+        <TabsContent value="feelings" className="mt-4 space-y-4">
+          <ModeToggle mode={mode} onModeChange={setMode} />
+          {mode === 'freestyle' ? (
+            <CategorySentenceBuilder category="feelings" />
+          ) : (
+            <Card>
+              <CardContent className="p-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                  {FEELINGS_PHRASES.map(phrase => (
+                    <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </TabsContent>
 
         <TabsContent value="actions" className="mt-4 space-y-4">

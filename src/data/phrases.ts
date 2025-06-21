@@ -7,6 +7,8 @@ export const BASIC_NEEDS: Phrase[] = [
   { id: 'need-3', filipino: 'Pagod ako', english: 'I am tired', category: 'needs', respectful: 'Pagod po ako', emoji: '😴' },
   { id: 'need-4', filipino: 'Ihi ako', english: 'I need to pee', category: 'needs', respectful: 'Ihi po ako', emoji: '🚽' },
   { id: 'need-5', filipino: 'Sakit', english: 'It hurts', category: 'needs', respectful: 'Masakit po', emoji: '🤕' },
+  { id: 'need-6', filipino: 'Lamig ako', english: 'I am cold', category: 'needs', respectful: 'Lamig po ako', emoji: '🥶' },
+  { id: 'need-7', filipino: 'Init ako', english: 'I am hot', category: 'needs', respectful: 'Init po ako', emoji: '🥵' },
 ];
 
 export const FAMILY_TERMS: Phrase[] = [
@@ -16,6 +18,10 @@ export const FAMILY_TERMS: Phrase[] = [
   { id: 'fam-4', filipino: 'Kuya', english: 'Older brother', category: 'family', emoji: '👦' },
   { id: 'fam-5', filipino: 'Lola', english: 'Grandma', category: 'family', emoji: '👵' },
   { id: 'fam-6', filipino: 'Lolo', english: 'Grandpa', category: 'family', emoji: '👴' },
+  { id: 'fam-7', filipino: 'Tita', english: 'Aunt', category: 'family', emoji: '👩‍🦱' },
+  { id: 'fam-8', filipino: 'Tito', english: 'Uncle', category: 'family', emoji: '👨‍🦱' },
+  { id: 'fam-9', filipino: 'Pinsan', english: 'Cousin', category: 'family', emoji: '👶' },
+  { id: 'fam-10', filipino: 'Kapatid', english: 'Sibling', category: 'family', emoji: '👫' },
 ];
 
 export const COMMON_FOODS: Phrase[] = [
@@ -24,6 +30,9 @@ export const COMMON_FOODS: Phrase[] = [
   { id: 'food-3', filipino: 'Adobo', english: 'Adobo', category: 'food', emoji: '🍖' },
   { id: 'food-4', filipino: 'Sinigang', english: 'Sinigang', category: 'food', emoji: '🍲' },
   { id: 'food-5', filipino: 'Taho', english: 'Taho', category: 'food', emoji: '🥤' },
+  { id: 'food-6', filipino: 'Pancit', english: 'Pancit', category: 'food', emoji: '🍜' },
+  { id: 'food-7', filipino: 'Lechon', english: 'Lechon', category: 'food', emoji: '🍖' },
+  { id: 'food-8', filipino: 'Halo-halo', english: 'Halo-halo', category: 'food', emoji: '🍧' },
 ];
 
 export const POLITE_PHRASES: Phrase[] = [

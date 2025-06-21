@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
@@ -41,6 +40,12 @@ export function MainSoundboard() {
     { id: 'activity-8', filipino: 'Sayaw', english: 'Dancing', category: 'activities', emoji: '💃' },
     { id: 'activity-9', filipino: 'Kumanta', english: 'Singing', category: 'activities', emoji: '🎤' },
     { id: 'activity-10', filipino: 'Magkulay', english: 'Drawing', category: 'activities', emoji: '🎨' },
+  ];
+
+  // Food-specific navigation phrases
+  const FOOD_NAV_PHRASES = [
+    { id: 'food-nav-1', filipino: 'Gusto ko pa', english: 'I want more/seconds', category: 'food', respectful: 'Gusto ko pa po', emoji: '➕' },
+    { id: 'food-nav-2', filipino: 'Ayaw ko na', english: 'No more/I\'ve had enough', category: 'food', respectful: 'Ayaw ko na po', emoji: '✋' },
   ];
 
   return (
@@ -135,15 +140,31 @@ export function MainSoundboard() {
           {mode === 'freestyle' ? (
             <CategorySentenceBuilder category="food" />
           ) : (
-            <Card>
-              <CardContent className="p-4">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {COMMON_FOODS.map(phrase => (
-                    <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            <>
+              {/* Food Navigation Bar */}
+              <Card>
+                <CardContent className="p-4">
+                  <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Quick Actions</h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    {FOOD_NAV_PHRASES.map(phrase => (
+                      <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Food Items */}
+              <Card>
+                <CardContent className="p-4">
+                  <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Mga Pagkain at Inumin (Foods & Drinks)</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                    {COMMON_FOODS.map(phrase => (
+                      <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </>
           )}
         </TabsContent>
 

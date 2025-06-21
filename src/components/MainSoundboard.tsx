@@ -5,20 +5,40 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { SoundButton } from './SoundButton';
-import { AspectSelector } from './AspectSelector';
 import { SentenceBuilder } from './SentenceBuilder';
 import { PersonalPhrasesTab } from './PersonalPhrasesTab';
 import { 
   BASIC_NEEDS, 
   FAMILY_TERMS, 
   COMMON_FOODS, 
-  POLITE_PHRASES,
-  COMMON_VERBS 
+  POLITE_PHRASES 
 } from '@/data/phrases';
 
 export function MainSoundboard() {
   const [respectMode, setRespectMode] = useState(false);
-  const [currentAspect, setCurrentAspect] = useState<'completed' | 'ongoing' | 'contemplated'>('ongoing');
+
+  // Reorganized phrases for better categorization
+  const FEELINGS_PHRASES = [
+    { id: 'feeling-1', filipino: 'Masaya ako', english: 'I am happy', category: 'feelings', respectful: 'Masaya po ako', emoji: '😊' },
+    { id: 'feeling-2', filipino: 'Malungkot ako', english: 'I am sad', category: 'feelings', respectful: 'Malungkot po ako', emoji: '😢' },
+    { id: 'feeling-3', filipino: 'Galit ako', english: 'I am angry', category: 'feelings', respectful: 'Galit po ako', emoji: '😠' },
+    { id: 'feeling-4', filipino: 'Takot ako', english: 'I am scared', category: 'feelings', respectful: 'Takot po ako', emoji: '😨' },
+    { id: 'feeling-5', filipino: 'Excited ako', english: 'I am excited', category: 'feelings', respectful: 'Excited po ako', emoji: '🤗' },
+    { id: 'feeling-6', filipino: 'Proud ako', english: 'I am proud', category: 'feelings', respectful: 'Proud po ako', emoji: '😌' },
+  ];
+
+  const ACTIVITIES_PHRASES = [
+    { id: 'activity-1', filipino: 'Maglaro', english: 'Play', category: 'activities', emoji: '🎮' },
+    { id: 'activity-2', filipino: 'Magbasa', english: 'Read', category: 'activities', emoji: '📚' },
+    { id: 'activity-3', filipino: 'Makinig ng musika', english: 'Listen to music', category: 'activities', emoji: '🎵' },
+    { id: 'activity-4', filipino: 'Lumabas', english: 'Go outside', category: 'activities', emoji: '🌳' },
+    { id: 'activity-5', filipino: 'Manood ng TV', english: 'Watch TV', category: 'activities', emoji: '📺' },
+    { id: 'activity-6', filipino: 'Matulog', english: 'Sleep', category: 'activities', emoji: '🛏️' },
+    { id: 'activity-7', filipino: 'Lumalangoy', english: 'Swimming', category: 'activities', emoji: '🏊' },
+    { id: 'activity-8', filipino: 'Sayaw', english: 'Dancing', category: 'activities', emoji: '💃' },
+    { id: 'activity-9', filipino: 'Kumanta', english: 'Singing', category: 'activities', emoji: '🎤' },
+    { id: 'activity-10', filipino: 'Magkulay', english: 'Drawing', category: 'activities', emoji: '🎨' },
+  ];
 
   return (
     <div className="max-w-6xl mx-auto p-4 space-y-6">
@@ -43,9 +63,6 @@ export function MainSoundboard() {
         </CardHeader>
       </Card>
 
-      {/* Sentence Builder */}
-      <SentenceBuilder />
-
       {/* Categories */}
       <Tabs defaultValue="personal" className="w-full">
         <TabsList className="grid grid-cols-6 w-full h-auto p-1">
@@ -61,10 +78,10 @@ export function MainSoundboard() {
           <TabsTrigger value="food" className="text-xs sm:text-sm">
             🍚 Pagkain
           </TabsTrigger>
-          <TabsTrigger value="polite" className="text-xs sm:text-sm">
-            🙏 Magalang
+          <TabsTrigger value="feelings" className="text-xs sm:text-sm">
+            😊 Damdamin
           </TabsTrigger>
-          <TabsTrigger value="verbs" className="text-xs sm:text-sm">
+          <TabsTrigger value="actions" className="text-xs sm:text-sm">
             ⚡ Aksyon
           </TabsTrigger>
         </TabsList>
@@ -78,6 +95,9 @@ export function MainSoundboard() {
             <CardContent className="p-4">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                 {BASIC_NEEDS.map(phrase => (
+                  <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                ))}
+                {POLITE_PHRASES.map(phrase => (
                   <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
                 ))}
               </div>
@@ -109,11 +129,11 @@ export function MainSoundboard() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="polite" className="mt-4">
+        <TabsContent value="feelings" className="mt-4">
           <Card>
             <CardContent className="p-4">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                {POLITE_PHRASES.map(phrase => (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                {FEELINGS_PHRASES.map(phrase => (
                   <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
                 ))}
               </div>
@@ -121,31 +141,16 @@ export function MainSoundboard() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="verbs" className="mt-4 space-y-4">
-          <Card>
-            <CardContent className="p-4">
-              <AspectSelector 
-                currentAspect={currentAspect} 
-                onAspectChange={setCurrentAspect} 
-              />
-            </CardContent>
-          </Card>
+        <TabsContent value="actions" className="mt-4 space-y-4">
+          <SentenceBuilder />
           
           <Card>
             <CardContent className="p-4">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {COMMON_VERBS.map((verb, index) => {
-                  const phrase = {
-                    id: `verb-${index}`,
-                    filipino: verb.aspects[currentAspect].filipino,
-                    english: verb.aspects[currentAspect].english,
-                    category: 'verbs',
-                    emoji: verb.root === 'kain' ? '🍽️' : verb.root === 'inom' ? '💧' : '😴'
-                  };
-                  return (
-                    <SoundButton key={phrase.id} phrase={phrase} respectMode={false} />
-                  );
-                })}
+              <h3 className="text-lg font-semibold mb-4">Mga Gawain (Activities)</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                {ACTIVITIES_PHRASES.map(phrase => (
+                  <SoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                ))}
               </div>
             </CardContent>
           </Card>

@@ -1,3 +1,4 @@
+
 import { Phrase, VerbPhrase } from '@/types/phrase';
 
 export const BASIC_NEEDS: Phrase[] = [
@@ -30,7 +31,7 @@ export const COMMON_FOODS: Phrase[] = [
     english: 'Rice', 
     category: 'food', 
     emoji: '🍚',
-    image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&h=200&fit=crop&crop=center'
+    image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=200&h=200&fit=crop&crop=center'
   },
   { 
     id: 'food-2', 
@@ -38,7 +39,7 @@ export const COMMON_FOODS: Phrase[] = [
     english: 'Water', 
     category: 'food', 
     emoji: '💧',
-    image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=200&h=200&fit=crop&crop=center'
+    image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=200&h=200&fit=crop&crop=center'
   },
   { 
     id: 'food-3', 
@@ -46,7 +47,7 @@ export const COMMON_FOODS: Phrase[] = [
     english: 'Adobo', 
     category: 'food', 
     emoji: '🍖',
-    image: 'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=200&h=200&fit=crop&crop=center'
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=200&h=200&fit=crop&crop=center'
   },
   { 
     id: 'food-4', 
@@ -62,7 +63,7 @@ export const COMMON_FOODS: Phrase[] = [
     english: 'Taho', 
     category: 'food', 
     emoji: '🥤',
-    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&h=200&fit=crop&crop=center'
+    image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=200&h=200&fit=crop&crop=center'
   },
   { 
     id: 'food-6', 
@@ -86,7 +87,7 @@ export const COMMON_FOODS: Phrase[] = [
     english: 'Halo-halo', 
     category: 'food', 
     emoji: '🍧',
-    image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=200&h=200&fit=crop&crop=center'
+    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=200&fit=crop&crop=center'
   },
   { 
     id: 'food-9', 

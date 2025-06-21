@@ -188,6 +188,14 @@
     min-height: 44px;
     min-width: 44px;
   }
+
+  /* Mobile-specific optimizations */
+  @media (max-width: 767px) {
+    body {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+  }
 }
 
 @layer components {
@@ -211,7 +219,7 @@
     @apply min-h-[70px] sm:min-h-[80px] p-2 sm:p-3;
   }
 
-  /* CBOARD-inspired enhanced button styles */
+  /* CBOARD-inspired enhanced button styles - Mobile optimized */
   .enhanced-sound-button {
     @apply relative overflow-hidden rounded-xl border-2 border-blue-200 bg-white hover:bg-blue-50 active:bg-blue-100 transition-all duration-200 hover:scale-105 active:scale-95 shadow-md hover:shadow-lg;
     min-height: 112px;
@@ -227,6 +235,22 @@
   .enhanced-sound-button:active {
     @apply border-blue-600 shadow-md;
     transform: translateY(0) scale(0.98);
+  }
+
+  /* Mobile-specific button adjustments */
+  @media (max-width: 767px) {
+    .enhanced-sound-button {
+      min-height: 96px;
+      border-width: 1.5px;
+    }
+
+    .enhanced-sound-button:hover {
+      transform: translateY(-1px) scale(1.01);
+    }
+
+    .soundboard-button {
+      min-height: 70px;
+    }
   }
 
   /* Image container styles */
@@ -268,10 +292,11 @@
     .category-grid-small {
       grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
     }
+  }
 
-    .enhanced-sound-button {
-      min-height: 96px;
-    }
+  /* Safe area for mobile devices with notches */
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   /* High contrast mode support */
@@ -298,6 +323,18 @@
     .enhanced-sound-button:active {
       transform: none;
     }
+
+    .soundboard-button {
+      @apply transition-none;
+    }
+
+    .soundboard-button:hover {
+      transform: none;
+    }
+
+    .soundboard-button:active {
+      transform: none;
+    }
   }
 }
 
@@ -306,5 +343,12 @@
   .soundboard-button, .enhanced-sound-button {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
+  }
+}
+
+/* Viewport height fix for mobile browsers */
+@supports (height: 100dvh) {
+  .min-h-screen {
+    min-height: 100dvh;
   }
 }

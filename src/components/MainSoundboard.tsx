@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
@@ -8,6 +9,8 @@ import { SentenceBuilder } from './SentenceBuilder';
 import { CategorySentenceBuilder } from './CategorySentenceBuilder';
 import { ModeToggle } from './ModeToggle';
 import { PersonalPhrasesTab } from './PersonalPhrasesTab';
+import { MobileTabNavigation } from './MobileTabNavigation';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { 
   BASIC_NEEDS, 
   FAMILY_TERMS, 
@@ -18,6 +21,8 @@ import {
 export function MainSoundboard() {
   const [respectMode, setRespectMode] = useState(false);
   const [mode, setMode] = useState<'phrases' | 'freestyle'>('phrases');
+  const [activeTab, setActiveTab] = useState('personal');
+  const isMobile = useIsMobile();
 
   // Reorganized phrases for better categorization
   const FEELINGS_PHRASES = [
@@ -51,12 +56,12 @@ export function MainSoundboard() {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto p-4 space-y-6">
+    <div className={`max-w-6xl mx-auto p-4 space-y-6 ${isMobile ? 'pb-20' : ''}`}>
       {/* Header */}
       <Card>
         <CardHeader>
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <CardTitle className="text-2xl font-bold text-primary">
+            <CardTitle className={`font-bold text-primary ${isMobile ? 'text-xl' : 'text-2xl'}`}>
               🇵🇭 AAC Soundboard - Filipino
             </CardTitle>
             <div className="flex items-center space-x-2">
@@ -73,28 +78,34 @@ export function MainSoundboard() {
         </CardHeader>
       </Card>
 
+      {/* Mobile Navigation */}
+      <MobileTabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+
       {/* Categories */}
-      <Tabs defaultValue="personal" className="w-full">
-        <TabsList className="grid grid-cols-6 w-full h-auto p-1">
-          <TabsTrigger value="personal" className="text-xs sm:text-sm">
-            ⭐ Personal
-          </TabsTrigger>
-          <TabsTrigger value="needs" className="text-xs sm:text-sm">
-            🍽️ Pangangailangan
-          </TabsTrigger>
-          <TabsTrigger value="family" className="text-xs sm:text-sm">
-            👨‍👩‍👧‍👦 Pamilya
-          </TabsTrigger>
-          <TabsTrigger value="food" className="text-xs sm:text-sm">
-            🍚 Pagkain
-          </TabsTrigger>
-          <TabsTrigger value="feelings" className="text-xs sm:text-sm">
-            😊 Damdamin
-          </TabsTrigger>
-          <TabsTrigger value="actions" className="text-xs sm:text-sm">
-            ⚡ Aksyon
-          </TabsTrigger>
-        </TabsList>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        {/* Desktop Tab List - Hidden on Mobile */}
+        {!isMobile && (
+          <TabsList className="grid grid-cols-6 w-full h-auto p-1">
+            <TabsTrigger value="personal" className="text-xs sm:text-sm">
+              ⭐ Personal
+            </TabsTrigger>
+            <TabsTrigger value="needs" className="text-xs sm:text-sm">
+              🍽️ Pangangailangan
+            </TabsTrigger>
+            <TabsTrigger value="family" className="text-xs sm:text-sm">
+              👨‍👩‍👧‍👦 Pamilya
+            </TabsTrigger>
+            <TabsTrigger value="food" className="text-xs sm:text-sm">
+              🍚 Pagkain
+            </TabsTrigger>
+            <TabsTrigger value="feelings" className="text-xs sm:text-sm">
+              😊 Damdamin
+            </TabsTrigger>
+            <TabsTrigger value="actions" className="text-xs sm:text-sm">
+              ⚡ Aksyon
+            </TabsTrigger>
+          </TabsList>
+        )}
 
         <TabsContent value="personal" className="mt-4">
           <PersonalPhrasesTab />
@@ -107,12 +118,22 @@ export function MainSoundboard() {
           ) : (
             <Card>
               <CardContent className="p-4">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className={`grid gap-4 ${isMobile ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'}`}>
                   {BASIC_NEEDS.map(phrase => (
-                    <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                    <EnhancedSoundButton 
+                      key={phrase.id} 
+                      phrase={phrase} 
+                      respectMode={respectMode}
+                      size={isMobile ? 'small' : 'medium'}
+                    />
                   ))}
                   {POLITE_PHRASES.map(phrase => (
-                    <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                    <EnhancedSoundButton 
+                      key={phrase.id} 
+                      phrase={phrase} 
+                      respectMode={respectMode}
+                      size={isMobile ? 'small' : 'medium'}
+                    />
                   ))}
                 </div>
               </CardContent>
@@ -127,9 +148,14 @@ export function MainSoundboard() {
           ) : (
             <Card>
               <CardContent className="p-4">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div className={`grid gap-4 ${isMobile ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5'}`}>
                   {FAMILY_TERMS.map(phrase => (
-                    <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                    <EnhancedSoundButton 
+                      key={phrase.id} 
+                      phrase={phrase} 
+                      respectMode={respectMode}
+                      size={isMobile ? 'small' : 'medium'}
+                    />
                   ))}
                 </div>
               </CardContent>
@@ -147,7 +173,7 @@ export function MainSoundboard() {
               <Card>
                 <CardContent className="p-4">
                   <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Quick Actions</h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-4'}`}>
                     {FOOD_NAV_PHRASES.map(phrase => (
                       <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} size="small" />
                     ))}
@@ -159,9 +185,14 @@ export function MainSoundboard() {
               <Card>
                 <CardContent className="p-4">
                   <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Mga Pagkain at Inumin (Foods & Drinks)</h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                  <div className={`grid gap-4 ${isMobile ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'}`}>
                     {COMMON_FOODS.map(phrase => (
-                      <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                      <EnhancedSoundButton 
+                        key={phrase.id} 
+                        phrase={phrase} 
+                        respectMode={respectMode}
+                        size={isMobile ? 'small' : 'medium'}
+                      />
                     ))}
                   </div>
                 </CardContent>
@@ -177,9 +208,14 @@ export function MainSoundboard() {
           ) : (
             <Card>
               <CardContent className="p-4">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div className={`grid gap-4 ${isMobile ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-6'}`}>
                   {FEELINGS_PHRASES.map(phrase => (
-                    <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                    <EnhancedSoundButton 
+                      key={phrase.id} 
+                      phrase={phrase} 
+                      respectMode={respectMode}
+                      size={isMobile ? 'small' : 'medium'}
+                    />
                   ))}
                 </div>
               </CardContent>
@@ -193,9 +229,14 @@ export function MainSoundboard() {
           <Card>
             <CardContent className="p-4">
               <h3 className="text-lg font-semibold mb-4">Mga Gawain (Activities)</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+              <div className={`grid gap-4 ${isMobile ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5'}`}>
                 {ACTIVITIES_PHRASES.map(phrase => (
-                  <EnhancedSoundButton key={phrase.id} phrase={phrase} respectMode={respectMode} />
+                  <EnhancedSoundButton 
+                    key={phrase.id} 
+                    phrase={phrase} 
+                    respectMode={respectMode}
+                    size={isMobile ? 'small' : 'medium'}
+                  />
                 ))}
               </div>
             </CardContent>

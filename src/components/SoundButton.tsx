@@ -2,6 +2,8 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Phrase } from '@/types/phrase';
+import { elevenLabsService } from '@/services/elevenLabsService';
+import { useSettings } from '@/contexts/SettingsContext';
 
 interface SoundButtonProps {
   phrase: Phrase;
@@ -11,12 +13,20 @@ interface SoundButtonProps {
 }
 
 export function SoundButton({ phrase, respectMode, size = 'medium', onClick }: SoundButtonProps) {
-  const speakPhrase = () => {
+  const { volume, voiceType } = useSettings();
+
+  const speakPhrase = async () => {
     const text = respectMode && phrase.respectful ? phrase.respectful : phrase.filipino;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'fil-PH';
-    utterance.rate = 0.9; // Slightly slower for clarity
-    speechSynthesis.speak(utterance);
+    
+    try {
+      await elevenLabsService.speak(text, {
+        volume,
+        voiceType,
+        bilingualMode: true, // Always true for Filipino phrases
+      });
+    } catch (error) {
+      console.error('Speech failed:', error);
+    }
     
     if (onClick) onClick();
   };

@@ -3,10 +3,13 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Volume2, X } from 'lucide-react';
+import { elevenLabsService } from '@/services/elevenLabsService';
+import { useSettings } from '@/contexts/SettingsContext';
 
 type Aspect = 'completed' | 'ongoing' | 'contemplated';
 
 export function SentenceBuilder() {
+  const { volume, voiceType } = useSettings();
   const [sentence, setSentence] = useState<string[]>([]);
   const [currentAspect, setCurrentAspect] = useState<Aspect>('ongoing');
 
@@ -14,13 +17,18 @@ export function SentenceBuilder() {
     setSentence([...sentence, word]);
   };
 
-  const speakSentence = () => {
+  const speakSentence = async () => {
     const fullSentence = sentence.join(' ');
     if (fullSentence.trim()) {
-      const utterance = new SpeechSynthesisUtterance(fullSentence);
-      utterance.lang = 'fil-PH';
-      utterance.rate = 0.9;
-      speechSynthesis.speak(utterance);
+      try {
+        await elevenLabsService.speak(fullSentence, {
+          volume,
+          voiceType,
+          bilingualMode: true,
+        });
+      } catch (error) {
+        console.error('Speech failed:', error);
+      }
     }
   };
 

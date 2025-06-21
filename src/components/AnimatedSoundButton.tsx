@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useSettings } from '@/contexts/SettingsContext';
 import { useSoundFeedback } from '@/hooks/useSoundFeedback';
+import { elevenLabsService } from '@/services/elevenLabsService';
 import GraduationAnimation from './animations/GraduationAnimation';
 import WaveAnimation from './animations/WaveAnimation';
 import ConfettiAnimation from './animations/ConfettiAnimation';
@@ -22,7 +23,7 @@ export function AnimatedSoundButton({
   icon, 
   soundFile 
 }: AnimatedSoundButtonProps) {
-  const { bilingualMode, soundEnabled, volume } = useSettings();
+  const { bilingualMode, soundEnabled, volume, voiceType } = useSettings();
   const { playClickSound, playCelebrationSound } = useSoundFeedback({ soundEnabled, volume });
   
   const [showGraduation, setShowGraduation] = useState(false);
@@ -32,15 +33,21 @@ export function AnimatedSoundButton({
   const displayLabel = bilingualMode && labelFilipino ? labelFilipino : label;
   const secondaryLabel = bilingualMode && labelFilipino ? label : labelFilipino;
 
-  const speakPhrase = () => {
+  const speakPhrase = async () => {
     const text = bilingualMode && labelFilipino ? labelFilipino : label;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = bilingualMode ? 'fil-PH' : 'en-US';
-    utterance.rate = 0.9;
-    speechSynthesis.speak(utterance);
+    
+    try {
+      await elevenLabsService.speak(text, {
+        volume,
+        voiceType,
+        bilingualMode,
+      });
+    } catch (error) {
+      console.error('Speech failed:', error);
+    }
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     // Play different sounds and animations based on button type
     if (id === 'graduation') {
       playCelebrationSound();
@@ -55,7 +62,7 @@ export function AnimatedSoundButton({
       playClickSound();
     }
     
-    speakPhrase();
+    await speakPhrase();
   };
 
   return (

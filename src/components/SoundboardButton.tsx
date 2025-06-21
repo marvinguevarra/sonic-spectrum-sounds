@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { useSoundFeedback } from '@/hooks/useSoundFeedback';
 import { useSettings } from '@/contexts/SettingsContext';
+import { elevenLabsService } from '@/services/elevenLabsService';
 import GraduationAnimation from './animations/GraduationAnimation';
 import WaveAnimation from './animations/WaveAnimation';
 
@@ -24,7 +25,7 @@ const SoundboardButton = ({
   onClick,
   id 
 }: SoundboardButtonProps) => {
-  const { buttonSize, bilingualMode, soundEnabled, volume } = useSettings();
+  const { buttonSize, bilingualMode, soundEnabled, volume, voiceType } = useSettings();
   const { playClickSound, playCelebrationSound } = useSoundFeedback({ soundEnabled, volume });
   const [showGraduation, setShowGraduation] = useState(false);
   const [showWave, setShowWave] = useState(false);
@@ -32,7 +33,7 @@ const SoundboardButton = ({
   const sizeClass = `soundboard-button-${buttonSize}`;
   const displayLabel = bilingualMode && labelFilipino ? labelFilipino : label;
 
-  const handleClick = () => {
+  const handleClick = async () => {
     // Play different sounds based on button type
     if (id === 'graduation') {
       playCelebrationSound();
@@ -42,6 +43,18 @@ const SoundboardButton = ({
       setShowWave(true);
     } else {
       playClickSound();
+    }
+    
+    // Speak the label using ElevenLabs
+    const textToSpeak = bilingualMode && labelFilipino ? labelFilipino : label;
+    try {
+      await elevenLabsService.speak(textToSpeak, {
+        volume,
+        voiceType,
+        bilingualMode,
+      });
+    } catch (error) {
+      console.error('Speech failed:', error);
     }
     
     onClick();

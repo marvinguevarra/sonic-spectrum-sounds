@@ -79,66 +79,7 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  /* Autism-friendly theme */
-  .theme-autism {
-    --background: var(--autism-calm);
-    --foreground: var(--autism-text);
-    --primary: var(--autism-primary);
-    --primary-foreground: var(--autism-text);
-    --secondary: var(--autism-secondary);
-    --secondary-foreground: var(--autism-text);
-    --accent: var(--autism-accent);
-    --accent-foreground: var(--autism-text);
-    --border: var(--autism-border);
-    --card: var(--autism-calm);
-    --card-foreground: var(--autism-text);
-  }
-
-  /* High visibility theme */
-  .theme-high-vis {
-    --background: var(--high-vis-bg);
-    --foreground: var(--high-vis-text);
-    --primary: var(--high-vis-primary);
-    --primary-foreground: var(--high-vis-bg);
-    --secondary: var(--high-vis-secondary);
-    --secondary-foreground: var(--high-vis-bg);
-    --accent: var(--high-vis-accent);
-    --accent-foreground: var(--high-vis-bg);
-    --border: var(--high-vis-border);
-    --card: var(--high-vis-bg);
-    --card-foreground: var(--high-vis-text);
-  }
-
-  /* Low visibility theme */
-  .theme-low-vis {
-    --background: var(--low-vis-bg);
-    --foreground: var(--low-vis-text);
-    --primary: var(--low-vis-primary);
-    --primary-foreground: var(--low-vis-text);
-    --secondary: var(--low-vis-secondary);
-    --secondary-foreground: var(--low-vis-bg);
-    --accent: var(--low-vis-accent);
-    --accent-foreground: var(--low-vis-bg);
-    --border: var(--low-vis-border);
-    --card: var(--low-vis-bg);
-    --card-foreground: var(--low-vis-text);
-  }
-
-  /* Color-blind friendly theme */
-  .theme-colorblind {
-    --background: var(--cb-bg);
-    --foreground: var(--cb-text);
-    --primary: var(--cb-primary);
-    --primary-foreground: var(--cb-bg);
-    --secondary: var(--cb-secondary);
-    --secondary-foreground: var(--cb-text);
-    --accent: var(--cb-accent);
-    --accent-foreground: var(--cb-bg);
-    --border: var(--cb-border);
-    --card: var(--cb-bg);
-    --card-foreground: var(--cb-text);
-  }
-
+  /* Dark mode base - applies to all themes when dark mode is enabled */
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -167,6 +108,130 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  /* Autism-friendly theme */
+  .theme-autism {
+    --background: var(--autism-calm);
+    --foreground: var(--autism-text);
+    --primary: var(--autism-primary);
+    --primary-foreground: var(--autism-text);
+    --secondary: var(--autism-secondary);
+    --secondary-foreground: var(--autism-text);
+    --accent: var(--autism-accent);
+    --accent-foreground: var(--autism-text);
+    --border: var(--autism-border);
+    --card: var(--autism-calm);
+    --card-foreground: var(--autism-text);
+  }
+
+  /* Autism-friendly theme in dark mode */
+  .theme-autism.dark {
+    --background: 220 20% 8%;
+    --foreground: 220 20% 92%;
+    --card: 220 20% 12%;
+    --card-foreground: 220 20% 92%;
+    --primary: 200 60% 60%;
+    --primary-foreground: 220 20% 8%;
+    --secondary: 220 20% 18%;
+    --secondary-foreground: 220 20% 92%;
+    --accent: 160 30% 50%;
+    --accent-foreground: 220 20% 8%;
+    --border: 220 20% 20%;
+    --input: 220 20% 20%;
+  }
+
+  /* High visibility theme */
+  .theme-high-vis {
+    --background: var(--high-vis-bg);
+    --foreground: var(--high-vis-text);
+    --primary: var(--high-vis-primary);
+    --primary-foreground: var(--high-vis-bg);
+    --secondary: var(--high-vis-secondary);
+    --secondary-foreground: var(--high-vis-bg);
+    --accent: var(--high-vis-accent);
+    --accent-foreground: var(--high-vis-bg);
+    --border: var(--high-vis-border);
+    --card: var(--high-vis-bg);
+    --card-foreground: var(--high-vis-text);
+  }
+
+  /* High visibility theme in dark mode - already dark, so keep similar */
+  .theme-high-vis.dark {
+    --background: 0 0% 0%;
+    --foreground: 60 100% 100%;
+    --card: 0 0% 5%;
+    --card-foreground: 60 100% 100%;
+    --primary: 60 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 280 100% 70%;
+    --secondary-foreground: 0 0% 0%;
+    --accent: 120 100% 50%;
+    --accent-foreground: 0 0% 0%;
+    --border: 0 0% 100%;
+    --input: 0 0% 10%;
+  }
+
+  /* Low visibility theme */
+  .theme-low-vis {
+    --background: var(--low-vis-bg);
+    --foreground: var(--low-vis-text);
+    --primary: var(--low-vis-primary);
+    --primary-foreground: var(--low-vis-text);
+    --secondary: var(--low-vis-secondary);
+    --secondary-foreground: var(--low-vis-bg);
+    --accent: var(--low-vis-accent);
+    --accent-foreground: var(--low-vis-bg);
+    --border: var(--low-vis-border);
+    --card: var(--low-vis-bg);
+    --card-foreground: var(--low-vis-text);
+  }
+
+  /* Low visibility theme in dark mode - make even darker */
+  .theme-low-vis.dark {
+    --background: 220 15% 8%;
+    --foreground: 220 15% 90%;
+    --card: 220 15% 12%;
+    --card-foreground: 220 15% 90%;
+    --primary: 200 30% 50%;
+    --primary-foreground: 220 15% 8%;
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 220 15% 90%;
+    --accent: 160 20% 55%;
+    --accent-foreground: 220 15% 8%;
+    --border: 220 15% 25%;
+    --input: 220 15% 20%;
+  }
+
+  /* Color-blind friendly theme */
+  .theme-colorblind {
+    --background: var(--cb-bg);
+    --foreground: var(--cb-text);
+    --primary: var(--cb-primary);
+    --primary-foreground: var(--cb-bg);
+    --secondary: var(--cb-secondary);
+    --secondary-foreground: var(--cb-text);
+    --accent: var(--cb-accent);
+    --accent-foreground: var(--cb-bg);
+    --border: var(--cb-border);
+    --card: var(--cb-bg);
+    --card-foreground: var(--cb-text);
+  }
+
+  /* Color-blind friendly theme in dark mode */
+  .theme-colorblind.dark {
+    --background: 0 0% 8%;
+    --foreground: 0 0% 92%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 92%;
+    --primary: 220 90% 60%;
+    --primary-foreground: 0 0% 8%;
+    --secondary: 35 70% 45%;
+    --secondary-foreground: 0 0% 8%;
+    --accent: 0 0% 50%;
+    --accent-foreground: 0 0% 8%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
   }
 }
 

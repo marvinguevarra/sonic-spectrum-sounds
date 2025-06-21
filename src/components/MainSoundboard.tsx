@@ -56,7 +56,7 @@ export function MainSoundboard() {
   ];
 
   return (
-    <div className={`max-w-6xl mx-auto p-4 space-y-6 ${isMobile ? 'pb-20' : ''}`}>
+    <div className="max-w-6xl mx-auto p-4 space-y-6">
       {/* Header */}
       <Card>
         <CardHeader>
@@ -78,7 +78,7 @@ export function MainSoundboard() {
         </CardHeader>
       </Card>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Accordion Navigation */}
       <MobileTabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
 
       {/* Categories */}

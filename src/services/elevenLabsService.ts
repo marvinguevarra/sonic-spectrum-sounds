@@ -1,3 +1,4 @@
+
 import { audioCacheService } from './audioCacheService';
 
 interface ElevenLabsOptions {
@@ -27,7 +28,10 @@ class ElevenLabsService {
       
       if (cachedAudio) {
         console.log('Using cached audio for:', text);
-        await this.playAudioBlob(cachedAudio, options.volume);
+        // Only play if volume > 0 (for silent caching)
+        if (options.volume > 0) {
+          await this.playAudioBlob(cachedAudio, options.volume);
+        }
         return;
       }
 
@@ -36,7 +40,9 @@ class ElevenLabsService {
       // Check if we're online
       if (!navigator.onLine) {
         console.log('Offline and no cached audio, using web speech');
-        this.fallbackToWebSpeech(text, options);
+        if (options.volume > 0) {
+          this.fallbackToWebSpeech(text, options);
+        }
         return;
       }
 
@@ -48,13 +54,43 @@ class ElevenLabsService {
       await audioCacheService.cacheAudio(text, options.voiceType, audioBlob);
       console.log('Audio cached for future use');
       
-      // Play the audio
-      await this.playAudioBlob(audioBlob, options.volume);
+      // Play the audio only if volume > 0
+      if (options.volume > 0) {
+        await this.playAudioBlob(audioBlob, options.volume);
+      }
       
     } catch (error) {
       console.error('ElevenLabs speech failed:', error);
       console.log('Falling back to web speech for text:', text);
-      this.fallbackToWebSpeech(text, options);
+      if (options.volume > 0) {
+        this.fallbackToWebSpeech(text, options);
+      }
+    }
+  }
+
+  async generateAndCachePhrase(text: string, voiceTypes: ('male' | 'female')[] = ['male', 'female']): Promise<void> {
+    console.log('Pre-generating and caching phrase:', text);
+    
+    for (const voiceType of voiceTypes) {
+      try {
+        // Check if already cached
+        const cached = await audioCacheService.getCachedAudio(text, voiceType);
+        if (cached) {
+          console.log(`Already cached: ${text} (${voiceType})`);
+          continue;
+        }
+
+        // Generate and cache silently
+        await this.speak(text, {
+          volume: 0, // Silent generation
+          voiceType,
+          bilingualMode: true,
+        });
+        
+        console.log(`Successfully cached: ${text} (${voiceType})`);
+      } catch (error) {
+        console.error(`Failed to cache ${text} (${voiceType}):`, error);
+      }
     }
   }
 
@@ -117,6 +153,14 @@ class ElevenLabsService {
       ...COMMON_FOODS.map(phrase => phrase.filipino),
       ...POLITE_PHRASES.flatMap(phrase => [phrase.filipino, phrase.respectful].filter(Boolean)),
     ] as string[];
+    
+    // Add personal phrases
+    const personalPhrases = [
+      'Ako si', 'Taga dito ako', 'Gusto ko', 'Ayaw ko', 'Kailangan ko ng tulong',
+      'Salamat sa tulong', 'Pwede ba', 'Hindi ko alam', 'Naiintindihan ko', 'Hindi ko naiintindihan'
+    ];
+    
+    allTexts.push(...personalPhrases);
     
     // Remove duplicates
     const uniqueTexts = [...new Set(allTexts)];

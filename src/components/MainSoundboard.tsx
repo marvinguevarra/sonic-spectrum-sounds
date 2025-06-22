@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { SoundboardHeader } from './SoundboardHeader';
-import { PersonalPhrasesTab } from './PersonalPhrasesTab';
+import { PersonalPhrasesInput } from './PersonalPhrasesInput';
 import { NeedsTab } from './NeedsTab';
 import { FamilyTab } from './FamilyTab';
 import { FoodTab } from './FoodTab';
@@ -55,7 +55,7 @@ export function MainSoundboard() {
         )}
 
         <TabsContent value="personal" className="mt-4">
-          <PersonalPhrasesTab />
+          <PersonalPhrasesInput />
         </TabsContent>
 
         <TabsContent value="needs" className="mt-4">

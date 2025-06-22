@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { SoundboardHeader } from './SoundboardHeader';
@@ -9,7 +10,6 @@ import { FeelingsTab } from './FeelingsTab';
 import { ActionsTab } from './ActionsTab';
 import { MobileTabNavigation } from './MobileTabNavigation';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { AudioCacheManager } from './AudioCacheManager';
 
 export function MainSoundboard() {
   const [respectMode, setRespectMode] = useState(false);
@@ -94,11 +94,6 @@ export function MainSoundboard() {
           <ActionsTab respectMode={respectMode} />
         </TabsContent>
       </Tabs>
-
-      {/* Add AudioCacheManager somewhere accessible, like in settings or as a floating panel */}
-      <div className="fixed bottom-4 right-4 z-50 max-w-sm">
-        <AudioCacheManager />
-      </div>
     </div>
   );
 }

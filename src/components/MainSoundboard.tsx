@@ -12,7 +12,7 @@ import { MobileTabNavigation } from './MobileTabNavigation';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 export function MainSoundboard() {
-  const [respectMode, setRespectMode] = useState(false);
+  const [respectMode, setRespectMode] = useState(true); // Default to true for Filipino language
   const [mode, setMode] = useState<'phrases' | 'freestyle'>('phrases');
   const [activeTab, setActiveTab] = useState('personal');
   const isMobile = useIsMobile();

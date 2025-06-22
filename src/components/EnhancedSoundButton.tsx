@@ -20,6 +20,14 @@ export function EnhancedSoundButton({ phrase, respectMode, size = 'medium', onCl
   const speakPhrase = async () => {
     const text = respectMode && phrase.respectful ? phrase.respectful : phrase.filipino;
     
+    console.log('EnhancedSoundButton speaking phrase:', {
+      phraseId: phrase.id,
+      text: text,
+      respectMode,
+      respectful: phrase.respectful,
+      filipino: phrase.filipino
+    }); // Debug log
+    
     try {
       await elevenLabsService.speak(text, {
         volume,

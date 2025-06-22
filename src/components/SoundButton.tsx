@@ -18,6 +18,14 @@ export function SoundButton({ phrase, respectMode, size = 'medium', onClick }: S
   const speakPhrase = async () => {
     const text = respectMode && phrase.respectful ? phrase.respectful : phrase.filipino;
     
+    console.log('SoundButton speaking phrase:', {
+      phraseId: phrase.id,
+      text: text,
+      respectMode,
+      respectful: phrase.respectful,
+      filipino: phrase.filipino
+    }); // Debug log
+    
     try {
       await elevenLabsService.speak(text, {
         volume,

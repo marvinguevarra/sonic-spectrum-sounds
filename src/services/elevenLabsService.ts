@@ -18,6 +18,15 @@ class ElevenLabsService {
   async speak(text: string, options: ElevenLabsOptions): Promise<void> {
     if (!text.trim()) return;
 
+    console.log('ElevenLabs speaking text:', text); // Debug log
+
+    // Check if we're online first
+    if (!navigator.onLine) {
+      console.log('Offline detected, using web speech directly');
+      this.fallbackToWebSpeech(text, options);
+      return;
+    }
+
     try {
       const voiceId = this.getVoiceId(options.voiceType);
       
@@ -64,19 +73,48 @@ class ElevenLabsService {
       });
     } catch (error) {
       console.error('ElevenLabs speech failed:', error);
+      console.log('Falling back to web speech for text:', text); // Debug log
       // Fallback to browser speech
       this.fallbackToWebSpeech(text, options);
     }
   }
 
   private fallbackToWebSpeech(text: string, options: ElevenLabsOptions): void {
-    if (!('speechSynthesis' in window)) return;
+    console.log('Web speech synthesis speaking text:', text); // Debug log
+    
+    if (!('speechSynthesis' in window)) {
+      console.error('Speech synthesis not supported');
+      return;
+    }
+
+    // Cancel any ongoing speech
+    speechSynthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = options.bilingualMode ? 'fil-PH' : 'en-US';
     utterance.rate = options.bilingualMode ? 0.7 : 0.9;
     utterance.volume = options.volume / 100;
     
+    // Try to find a suitable voice
+    const voices = speechSynthesis.getVoices();
+    if (voices.length > 0) {
+      // Look for Filipino voice first
+      const filipinoVoice = voices.find(voice => 
+        voice.lang.includes('fil') || voice.lang.includes('tl')
+      );
+      
+      if (filipinoVoice) {
+        utterance.voice = filipinoVoice;
+      } else {
+        // Fallback to any available voice
+        utterance.voice = voices[0];
+      }
+    }
+
+    utterance.onerror = (event) => {
+      console.error('Speech synthesis error:', event.error);
+    };
+
     speechSynthesis.speak(utterance);
   }
 }

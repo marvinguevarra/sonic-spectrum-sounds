@@ -1,3 +1,4 @@
+import { audioCacheService } from './audioCacheService';
 
 interface ElevenLabsOptions {
   volume: number;
@@ -18,69 +19,119 @@ class ElevenLabsService {
   async speak(text: string, options: ElevenLabsOptions): Promise<void> {
     if (!text.trim()) return;
 
-    console.log('ElevenLabs speaking text:', text); // Debug log
-
-    // Check if we're online first
-    if (!navigator.onLine) {
-      console.log('Offline detected, using web speech directly');
-      this.fallbackToWebSpeech(text, options);
-      return;
-    }
+    console.log('ElevenLabs speaking text:', text);
 
     try {
-      const voiceId = this.getVoiceId(options.voiceType);
+      // First, try to get cached audio
+      const cachedAudio = await audioCacheService.getCachedAudio(text, options.voiceType);
       
-      const response = await fetch(`${this.baseUrl}/text-to-speech/${voiceId}`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'audio/mpeg',
-          'Content-Type': 'application/json',
-          'xi-api-key': this.apiKey,
-        },
-        body: JSON.stringify({
-          text: text,
-          model_id: 'eleven_multilingual_v2', // Best for Filipino
-          voice_settings: {
-            stability: 0.6,
-            similarity_boost: 0.8,
-            style: 0.2,
-            use_speaker_boost: true
-          }
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`ElevenLabs API error: ${response.status}`);
+      if (cachedAudio) {
+        console.log('Using cached audio for:', text);
+        await this.playAudioBlob(cachedAudio, options.volume);
+        return;
       }
 
-      const audioBlob = await response.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
-      const audio = new Audio(audioUrl);
+      console.log('No cached audio found, checking online status...');
+
+      // Check if we're online
+      if (!navigator.onLine) {
+        console.log('Offline and no cached audio, using web speech');
+        this.fallbackToWebSpeech(text, options);
+        return;
+      }
+
+      // Generate and cache new audio
+      console.log('Generating new audio via ElevenLabs API...');
+      const audioBlob = await this.generateAudioBlob(text, options.voiceType);
       
-      audio.volume = options.volume / 100;
+      // Cache for future use
+      await audioCacheService.cacheAudio(text, options.voiceType, audioBlob);
+      console.log('Audio cached for future use');
       
-      return new Promise((resolve, reject) => {
-        audio.onended = () => {
-          URL.revokeObjectURL(audioUrl);
-          resolve();
-        };
-        audio.onerror = () => {
-          URL.revokeObjectURL(audioUrl);
-          reject(new Error('Audio playback failed'));
-        };
-        
-        audio.play().catch(reject);
-      });
+      // Play the audio
+      await this.playAudioBlob(audioBlob, options.volume);
+      
     } catch (error) {
       console.error('ElevenLabs speech failed:', error);
-      console.log('Falling back to web speech for text:', text); // Debug log
-      // Fallback to browser speech
+      console.log('Falling back to web speech for text:', text);
       this.fallbackToWebSpeech(text, options);
     }
   }
 
+  private async generateAudioBlob(text: string, voiceType: 'male' | 'female'): Promise<Blob> {
+    const voiceId = this.getVoiceId(voiceType);
+    
+    const response = await fetch(`${this.baseUrl}/text-to-speech/${voiceId}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'audio/mpeg',
+        'Content-Type': 'application/json',
+        'xi-api-key': this.apiKey,
+      },
+      body: JSON.stringify({
+        text: text,
+        model_id: 'eleven_multilingual_v2',
+        voice_settings: {
+          stability: 0.6,
+          similarity_boost: 0.8,
+          style: 0.2,
+          use_speaker_boost: true
+        }
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`ElevenLabs API error: ${response.status}`);
+    }
+
+    return await response.blob();
+  }
+
+  private async playAudioBlob(audioBlob: Blob, volume: number): Promise<void> {
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audio = new Audio(audioUrl);
+    
+    audio.volume = volume / 100;
+    
+    return new Promise((resolve, reject) => {
+      audio.onended = () => {
+        URL.revokeObjectURL(audioUrl);
+        resolve();
+      };
+      audio.onerror = () => {
+        URL.revokeObjectURL(audioUrl);
+        reject(new Error('Audio playback failed'));
+      };
+      
+      audio.play().catch(reject);
+    });
+  }
+
+  async preGenerateAllPhrases(): Promise<void> {
+    // Import phrases data
+    const { BASIC_NEEDS, FAMILY_TERMS, COMMON_FOODS, POLITE_PHRASES } = await import('@/data/phrases');
+    
+    const allTexts = [
+      ...BASIC_NEEDS.flatMap(phrase => [phrase.filipino, phrase.respectful].filter(Boolean)),
+      ...FAMILY_TERMS.map(phrase => phrase.filipino),
+      ...COMMON_FOODS.map(phrase => phrase.filipino),
+      ...POLITE_PHRASES.flatMap(phrase => [phrase.filipino, phrase.respectful].filter(Boolean)),
+    ] as string[];
+    
+    // Remove duplicates
+    const uniqueTexts = [...new Set(allTexts)];
+    
+    console.log(`Pre-generating audio for ${uniqueTexts.length} phrases...`);
+    
+    await audioCacheService.preGenerateAudio(
+      uniqueTexts,
+      ['male', 'female'],
+      this.apiKey
+    );
+  }
+
   private fallbackToWebSpeech(text: string, options: ElevenLabsOptions): void {
-    console.log('Web speech synthesis speaking text:', text); // Debug log
+    console.log('Web speech synthesis speaking text:', text);
     
     if (!('speechSynthesis' in window)) {
       console.error('Speech synthesis not supported');

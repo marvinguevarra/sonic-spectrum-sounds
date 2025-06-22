@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { EnhancedSoundButton } from './EnhancedSoundButton';
+import { GoodNightVariations } from './GoodNightVariations';
 import { CustomPhraseInput } from './CustomPhraseInput';
 import { useSettings } from '@/contexts/SettingsContext';
 import { Phrase } from '@/types/phrase';
@@ -20,7 +21,6 @@ const PERSONAL_PHRASES: Phrase[] = [
   { id: 'personal-11', filipino: 'Magandang umaga', english: 'Good morning', category: 'personal', respectful: 'Magandang umaga po', emoji: '🌅' },
   { id: 'personal-12', filipino: 'Magandang tanghali', english: 'Good afternoon', category: 'personal', respectful: 'Magandang tanghali po', emoji: '☀️' },
   { id: 'personal-13', filipino: 'Magandang gabi', english: 'Good evening', category: 'personal', respectful: 'Magandang gabi po', emoji: '🌆' },
-  { id: 'personal-14', filipino: 'Magandang gabi', english: 'Good night', category: 'personal', respectful: 'Magandang gabi po', emoji: '🌙' },
 ];
 
 export function PersonalPhrasesInput() {
@@ -48,6 +48,9 @@ export function PersonalPhrasesInput() {
                 size="medium"
               />
             ))}
+            
+            {/* Special Good Night button with variations */}
+            <GoodNightVariations />
           </div>
         </CardContent>
       </Card>

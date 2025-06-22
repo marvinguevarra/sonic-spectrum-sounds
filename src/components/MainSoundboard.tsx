@@ -10,15 +10,22 @@ import { FeelingsTab } from './FeelingsTab';
 import { ActionsTab } from './ActionsTab';
 import { MobileTabNavigation } from './MobileTabNavigation';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useSettings } from '@/contexts/SettingsContext';
 
 export function MainSoundboard() {
   const [respectMode, setRespectMode] = useState(true); // Default to true for Filipino language
   const [mode, setMode] = useState<'phrases' | 'freestyle'>('phrases');
   const [activeTab, setActiveTab] = useState('personal');
   const isMobile = useIsMobile();
+  const { theme, darkMode } = useSettings();
+
+  // Use seamless background for autism dark mode
+  const backgroundClass = theme === 'autism' && darkMode 
+    ? 'min-h-screen bg-background' 
+    : 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+    <div className={backgroundClass}>
       {/* Header */}
       <SoundboardHeader 
         respectMode={respectMode} 

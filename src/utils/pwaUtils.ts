@@ -4,10 +4,25 @@
 export const registerServiceWorker = async (): Promise<void> => {
   if ('serviceWorker' in navigator) {
     try {
-      const registration = await navigator.serviceWorker.register('/sw.js');
-      console.log('SW registered: ', registration);
+      const registration = await navigator.serviceWorker.register('/sw.js', {
+        scope: '/'
+      });
+      console.log('SW registered successfully: ', registration);
+      
+      // Handle updates
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        if (newWorker) {
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // New content is available, refresh the page
+              window.location.reload();
+            }
+          });
+        }
+      });
     } catch (registrationError) {
-      console.log('SW registration failed: ', registrationError);
+      console.error('SW registration failed: ', registrationError);
     }
   }
 };
@@ -49,6 +64,7 @@ export const isFullScreen = (): boolean => {
 
 export const isPWAInstalled = (): boolean => {
   return window.matchMedia('(display-mode: standalone)').matches ||
+         window.matchMedia('(display-mode: fullscreen)').matches ||
          (window.navigator as any).standalone === true;
 };
 
@@ -80,17 +96,31 @@ export const initializePWA = (): void => {
   // Set up viewport height for mobile
   setViewportHeight();
   window.addEventListener('resize', setViewportHeight);
+  window.addEventListener('orientationchange', setViewportHeight);
   
   // Hide address bar on mobile
   window.addEventListener('load', hideAddressBar);
   window.addEventListener('orientationchange', () => {
-    setTimeout(hideAddressBar, 100);
+    setTimeout(() => {
+      setViewportHeight();
+      hideAddressBar();
+    }, 100);
   });
   
   // Prevent zoom on iOS
   document.addEventListener('gesturestart', (e) => {
     e.preventDefault();
   });
+  
+  // Prevent double-tap zoom
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (e) => {
+    const now = (new Date()).getTime();
+    if (now - lastTouchEnd <= 300) {
+      e.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, false);
   
   // Handle PWA installation
   window.addEventListener('beforeinstallprompt', (e) => {

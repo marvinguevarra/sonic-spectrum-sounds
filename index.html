@@ -47,6 +47,8 @@
         -webkit-overflow-scrolling: touch;
         -webkit-user-select: none;
         -webkit-tap-highlight-color: transparent;
+        margin: 0;
+        padding: 0;
       }
       
       /* Handle safe areas for devices with notches */
@@ -55,9 +57,16 @@
         padding-bottom: env(safe-area-inset-bottom);
         padding-left: env(safe-area-inset-left);
         padding-right: env(safe-area-inset-right);
-        margin: 0;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Safe area padding utility class */
+      .safe-area-padding {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
       }
 
       /* Hide scrollbars while keeping functionality */
@@ -68,6 +77,13 @@
       /* Prevent iOS bounce effect */
       body {
         overscroll-behavior: none;
+      }
+
+      /* PWA fullscreen optimization */
+      #root {
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
+        overflow-x: hidden;
       }
     </style>
   </head>

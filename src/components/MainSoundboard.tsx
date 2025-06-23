@@ -25,7 +25,7 @@ export function MainSoundboard() {
     : 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50';
 
   return (
-    <div className={backgroundClass}>
+    <div className={`${backgroundClass} safe-area-padding`}>
       {/* Header */}
       <SoundboardHeader 
         respectMode={respectMode} 
@@ -101,6 +101,15 @@ export function MainSoundboard() {
           <ActionsTab respectMode={respectMode} />
         </TabsContent>
       </Tabs>
+
+      <style jsx>{`
+        .safe-area-padding {
+          padding-top: env(safe-area-inset-top);
+          padding-bottom: env(safe-area-inset-bottom);
+          padding-left: env(safe-area-inset-left);
+          padding-right: env(safe-area-inset-right);
+        }
+      `}</style>
     </div>
   );
 }

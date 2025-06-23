@@ -3,8 +3,9 @@
   "name": "AAC Soundboard - Filipino",
   "short_name": "AAC Soundboard",
   "description": "Autism-friendly soundboard for Filipino communication",
-  "start_url": "/",
-  "display": "standalone",
+  "start_url": "/?source=pwa",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone", "minimal-ui"],
   "orientation": "portrait",
   "theme_color": "#3b82f6",
   "background_color": "#ffffff",
@@ -12,6 +13,7 @@
   "categories": ["accessibility", "communication", "education"],
   "lang": "en-US",
   "dir": "ltr",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/favicon.ico",
@@ -29,6 +31,23 @@
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Personal Phrases",
+      "short_name": "Personal",
+      "description": "Quick access to personal phrases",
+      "url": "/?tab=personal",
+      "icons": [{ "src": "/placeholder.svg", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/placeholder.svg",
+      "type": "image/svg+xml",
+      "sizes": "540x720",
+      "form_factor": "narrow"
     }
   ]
 }

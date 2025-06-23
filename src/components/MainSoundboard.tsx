@@ -102,7 +102,7 @@ export function MainSoundboard() {
         </TabsContent>
       </Tabs>
 
-      <style jsx>{`
+      <style>{`
         .safe-area-padding {
           padding-top: env(safe-area-inset-top);
           padding-bottom: env(safe-area-inset-bottom);

@@ -19,7 +19,7 @@ export function MainSoundboard() {
   const isMobile = useIsMobile();
   const { theme, darkMode } = useSettings();
 
-  // Use seamless background for autism dark mode
+  // Use seamless background for autism dark mode - no gaps
   const backgroundClass = theme === 'autism' && darkMode 
     ? 'min-h-screen bg-background' 
     : 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50';

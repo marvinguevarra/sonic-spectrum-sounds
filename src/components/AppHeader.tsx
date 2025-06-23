@@ -99,26 +99,28 @@ const AppHeader = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 flex-1 min-w-0">
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground truncate">
-              {bilingualMode ? 'AAC Soundboard' : 'AAC Soundboard'}
+              {bilingualMode ? '🇵🇭 AAC Soundboard Filipino' : '🇺🇸 AAC Soundboard English'}
             </h1>
             <Button
               variant={bilingualMode ? "default" : "outline"}
               onClick={() => setBilingualMode(!bilingualMode)}
               className="text-sm font-medium whitespace-nowrap"
               size="sm"
+              aria-label={bilingualMode ? 'Switch to English mode' : 'Switch to Filipino mode'}
             >
-              {bilingualMode ? '🇵🇭' : '🇺🇸'}
+              {bilingualMode ? '🇵🇭 FIL' : '🇺🇸 ENG'}
             </Button>
           </div>
           
           <div className="flex items-center gap-2">
             {/* Connection Status Indicator */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1" aria-label={isOnline ? 'Online' : 'Offline'}>
               {isOnline ? (
-                <Wifi className="h-4 w-4 text-green-600" />
+                <Wifi className="h-4 w-4 text-green-600" aria-hidden="true" />
               ) : (
-                <WifiOff className="h-4 w-4 text-red-600" />
+                <WifiOff className="h-4 w-4 text-red-600" aria-hidden="true" />
               )}
+              <span className="sr-only">{isOnline ? 'Connected' : 'Disconnected'}</span>
             </div>
 
             {/* Pre-Generate Audio Button */}
@@ -129,15 +131,28 @@ const AppHeader = () => {
                 onClick={handlePreGenerate}
                 disabled={isGenerating || !isOnline}
                 className="font-medium"
+                aria-describedby="cache-audio-desc"
               >
-                <Download className="h-4 w-4" />
+                <Download className="h-4 w-4" aria-hidden="true" />
                 <span className="hidden sm:inline ml-2">
-                  {isGenerating ? 'Generating...' : 'Cache Audio'}
+                  {isGenerating 
+                    ? (bilingualMode ? 'Gumagawa...' : 'Generating...') 
+                    : (bilingualMode ? 'I-cache ang Audio' : 'Cache Audio')
+                  }
                 </span>
               </Button>
+              <span id="cache-audio-desc" className="sr-only">
+                {bilingualMode 
+                  ? 'I-download ang lahat ng audio para sa offline na paggamit'
+                  : 'Download all audio files for offline use'
+                }
+              </span>
               {isGenerating && (
                 <div className="w-full max-w-[100px]">
                   <Progress value={generationProgress} className="h-1" />
+                  <span className="sr-only">
+                    {bilingualMode ? `Progreso: ${generationProgress}%` : `Progress: ${generationProgress}%`}
+                  </span>
                 </div>
               )}
             </div>
@@ -145,10 +160,15 @@ const AppHeader = () => {
             {/* Settings */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" size="sm" className="font-medium">
-                  <Settings className="h-4 w-4" />
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="font-medium"
+                  aria-label={bilingualMode ? 'Buksan ang mga setting' : 'Open settings'}
+                >
+                  <Settings className="h-4 w-4" aria-hidden="true" />
                   <span className="hidden sm:inline ml-2">
-                    {bilingualMode ? 'Settings' : 'Settings'}
+                    {bilingualMode ? 'Mga Setting' : 'Settings'}
                   </span>
                 </Button>
               </SheetTrigger>
@@ -163,17 +183,23 @@ const AppHeader = () => {
                   
                   {/* Cache Stats in Settings */}
                   <div className="border-t pt-6">
-                    <h3 className="text-lg font-semibold mb-4">Audio Cache</h3>
+                    <h3 className="text-lg font-semibold mb-4">
+                      {bilingualMode ? 'Audio Cache' : 'Audio Cache'}
+                    </h3>
                     <div className="grid grid-cols-2 gap-4 mb-4">
                       <div className="text-center">
                         <div className="text-2xl font-bold text-blue-600">{cacheStats.totalFiles}</div>
-                        <div className="text-sm text-muted-foreground">Cached Files</div>
+                        <div className="text-sm text-muted-foreground">
+                          {bilingualMode ? 'Naka-cache na Files' : 'Cached Files'}
+                        </div>
                       </div>
                       <div className="text-center">
                         <div className="text-2xl font-bold text-blue-600">
                           {(cacheStats.totalSize / 1024 / 1024).toFixed(1)} MB
                         </div>
-                        <div className="text-sm text-muted-foreground">Storage Used</div>
+                        <div className="text-sm text-muted-foreground">
+                          {bilingualMode ? 'Storage na Ginagamit' : 'Storage Used'}
+                        </div>
                       </div>
                     </div>
                     <Button 
@@ -181,15 +207,17 @@ const AppHeader = () => {
                         await audioCacheService.clearCache();
                         await loadCacheStats();
                         toast({
-                          title: "Cache Cleared",
-                          description: "All cached audio files have been removed.",
+                          title: bilingualMode ? "Cache Cleared" : "Cache Cleared",
+                          description: bilingualMode 
+                            ? "Lahat ng naka-cache na audio files ay natanggal na."
+                            : "All cached audio files have been removed.",
                         });
                       }} 
                       variant="outline"
                       disabled={cacheStats.totalFiles === 0}
                       className="w-full"
                     >
-                      Clear Cache
+                      {bilingualMode ? 'I-clear ang Cache' : 'Clear Cache'}
                     </Button>
                   </div>
                 </div>

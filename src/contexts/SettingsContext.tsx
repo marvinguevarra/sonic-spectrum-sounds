@@ -45,7 +45,7 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
   const [textSize, setTextSize] = useState('large'); // Default to large for mobile
   const [voiceType, setVoiceType] = useState<'male' | 'female'>('female');
   const [darkMode, setDarkMode] = useState(false);
-  const [bilingualMode, setBilingualMode] = useState(false);
+  const [bilingualMode, setBilingualMode] = useState(true); // Default to Filipino-first (bilingual mode ON)
 
   // Apply theme to document
   useEffect(() => {

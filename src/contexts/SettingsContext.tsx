@@ -20,6 +20,8 @@ interface SettingsContextType {
   setDarkMode: (enabled: boolean) => void;
   bilingualMode: boolean;
   setBilingualMode: (enabled: boolean) => void;
+  controlStyle: 'switches' | 'buttons';
+  setControlStyle: (style: 'switches' | 'buttons') => void;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -38,14 +40,15 @@ interface SettingsProviderProps {
 
 export const SettingsProvider = ({ children }: SettingsProviderProps) => {
   const [theme, setTheme] = useState('autism');
-  const [buttonSize, setButtonSize] = useState<'small' | 'medium' | 'large'>('large'); // Default to large for mobile
+  const [buttonSize, setButtonSize] = useState<'small' | 'medium' | 'large'>('large');
   const [gridSize, setGridSize] = useState<'small' | 'medium' | 'large'>('medium');
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [volume, setVolume] = useState(70);
-  const [textSize, setTextSize] = useState('large'); // Default to large for mobile
+  const [textSize, setTextSize] = useState('large');
   const [voiceType, setVoiceType] = useState<'male' | 'female'>('female');
   const [darkMode, setDarkMode] = useState(false);
-  const [bilingualMode, setBilingualMode] = useState(true); // Default to Filipino-first (bilingual mode ON)
+  const [bilingualMode, setBilingualMode] = useState(true);
+  const [controlStyle, setControlStyle] = useState<'switches' | 'buttons'>('buttons'); // Default to buttons for better accessibility
 
   // Apply theme to document
   useEffect(() => {
@@ -72,6 +75,8 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
     setDarkMode,
     bilingualMode,
     setBilingualMode,
+    controlStyle,
+    setControlStyle,
   };
 
   return (

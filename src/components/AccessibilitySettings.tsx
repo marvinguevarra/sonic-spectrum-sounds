@@ -4,8 +4,8 @@ import { Card } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
-import { Switch } from '@/components/ui/switch';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { UniversalToggle } from '@/components/ui/universal-toggle';
 import { useSettings } from '@/contexts/SettingsContext';
 
 const AccessibilitySettings = () => {
@@ -27,6 +27,8 @@ const AccessibilitySettings = () => {
     darkMode,
     setDarkMode,
     bilingualMode,
+    controlStyle,
+    setControlStyle,
   } = useSettings();
 
   const themes = [
@@ -68,29 +70,57 @@ const AccessibilitySettings = () => {
           </div>
         </Card>
 
+        {/* Control Style Preference */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold border-b pb-2">
+            {bilingualMode ? '🎛️ Estilo ng Control' : '🎛️ Control Style'}
+          </h3>
+          
+          <div>
+            <Label className="text-base font-medium text-foreground mb-3 block">
+              {bilingualMode ? 'Uri ng Toggle Control' : 'Toggle Control Type'}
+            </Label>
+            <ToggleGroup 
+              type="single" 
+              value={controlStyle} 
+              onValueChange={(value) => value && setControlStyle(value as 'switches' | 'buttons')}
+              className="justify-start gap-3"
+            >
+              <ToggleGroupItem 
+                value="buttons" 
+                aria-label={bilingualMode ? 'Malaking Button' : 'Large Buttons'}
+                className="focus:ring-2 focus:ring-primary px-4 py-2"
+              >
+                🔘 {bilingualMode ? 'Malaking Button' : 'Large Buttons'}
+              </ToggleGroupItem>
+              <ToggleGroupItem 
+                value="switches" 
+                aria-label={bilingualMode ? 'Maliliit na Switch' : 'Small Switches'}
+                className="focus:ring-2 focus:ring-primary px-4 py-2"
+              >
+                🎚️ {bilingualMode ? 'Maliliit na Switch' : 'Small Switches'}
+              </ToggleGroupItem>
+            </ToggleGroup>
+            <span className="text-xs text-muted-foreground mt-1 block">
+              {bilingualMode ? 'Malaking button ay mas madaling gamitin' : 'Large buttons are easier to use'}
+            </span>
+          </div>
+        </div>
+
         {/* Visual Accessibility */}
         <div className="space-y-4">
           <h3 className="text-lg font-semibold border-b pb-2">
             {bilingualMode ? '👁️ Visual na Accessibility' : '👁️ Visual Accessibility'}
           </h3>
           
-          <div className="flex items-center justify-between py-2">
-            <div className="flex flex-col">
-              <Label htmlFor="dark-mode-toggle" className="text-base font-medium text-foreground cursor-pointer">
-                {bilingualMode ? 'Dark Mode' : 'Dark Mode'}
-              </Label>
-              <span className="text-sm text-muted-foreground">
-                {bilingualMode ? 'Madilim na tema para sa mata' : 'Easier on the eyes'}
-              </span>
-            </div>
-            <Switch
-              id="dark-mode-toggle"
-              checked={darkMode}
-              onCheckedChange={setDarkMode}
-              aria-describedby="dark-mode-desc"
-              className="focus-visible:ring-2 focus-visible:ring-primary"
-            />
-          </div>
+          <UniversalToggle
+            id="dark-mode-toggle"
+            checked={darkMode}
+            onCheckedChange={setDarkMode}
+            label={bilingualMode ? 'Dark Mode' : 'Dark Mode'}
+            description={bilingualMode ? 'Madilim na tema para sa mata' : 'Easier on the eyes'}
+            size="large"
+          />
 
           <div>
             <Label htmlFor="theme-select" className="text-base font-medium text-foreground mb-3 block">
@@ -233,22 +263,14 @@ const AccessibilitySettings = () => {
             </ToggleGroup>
           </div>
 
-          <div className="flex items-center justify-between py-2">
-            <div className="flex flex-col">
-              <Label htmlFor="sound-toggle" className="text-base font-medium text-foreground cursor-pointer">
-                {bilingualMode ? 'Sound Feedback' : 'Sound Feedback'}
-              </Label>
-              <span className="text-sm text-muted-foreground">
-                {bilingualMode ? 'Tunog kapag nag-click' : 'Audio cues when tapping'}
-              </span>
-            </div>
-            <Switch
-              id="sound-toggle"
-              checked={soundEnabled}
-              onCheckedChange={setSoundEnabled}
-              className="focus-visible:ring-2 focus-visible:ring-primary"
-            />
-          </div>
+          <UniversalToggle
+            id="sound-toggle"
+            checked={soundEnabled}
+            onCheckedChange={setSoundEnabled}
+            label={bilingualMode ? 'Sound Feedback' : 'Sound Feedback'}
+            description={bilingualMode ? 'Tunog kapag nag-click' : 'Audio cues when tapping'}
+            size="large"
+          />
 
           {soundEnabled && (
             <div>

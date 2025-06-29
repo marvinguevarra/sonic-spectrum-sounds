@@ -2,8 +2,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { EnhancedSoundButton } from './EnhancedSoundButton';
-import { CustomPhraseInput } from './CustomPhraseInput';
-import { MobileCustomPhraseAccordion } from './MobileCustomPhraseAccordion';
 import { useSettings } from '@/contexts/SettingsContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useResponsive } from '@/hooks/use-responsive';
@@ -45,12 +43,14 @@ export function PersonalPhrasesInput() {
 
   return (
     <div className="space-y-6">
-      {/* Custom Phrase Input - Accordion on mobile, regular on desktop */}
+      {/* Custom Phrase Input - Hidden temporarily until proper guardrails are implemented */}
+      {/* 
       {isMobile ? (
         <MobileCustomPhraseAccordion />
       ) : (
         <CustomPhraseInput />
       )}
+      */}
       
       {/* Pre-defined Personal Phrases */}
       <Card>

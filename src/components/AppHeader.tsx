@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -11,7 +10,7 @@ import { elevenLabsService } from '@/services/elevenLabsService';
 import { useToast } from '@/hooks/use-toast';
 
 const AppHeader = () => {
-  const { bilingualMode, setBilingualMode } = useSettings();
+  const { bilingualMode } = useSettings();
   const { toast } = useToast();
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationProgress, setGenerationProgress] = useState(0);
@@ -99,17 +98,8 @@ const AppHeader = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 flex-1 min-w-0">
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground truncate">
-              {bilingualMode ? '🇵🇭 AAC Soundboard Filipino' : '🇺🇸 AAC Soundboard English'}
+              {bilingualMode ? '🇵🇭 Filipino AAC Soundboard' : '🇺🇸 English AAC Soundboard'}
             </h1>
-            <Button
-              variant={bilingualMode ? "default" : "outline"}
-              onClick={() => setBilingualMode(!bilingualMode)}
-              className="text-sm font-medium whitespace-nowrap"
-              size="sm"
-              aria-label={bilingualMode ? 'Switch to English mode' : 'Switch to Filipino mode'}
-            >
-              {bilingualMode ? '🇵🇭 FIL' : '🇺🇸 ENG'}
-            </Button>
           </div>
           
           <div className="flex items-center gap-2">

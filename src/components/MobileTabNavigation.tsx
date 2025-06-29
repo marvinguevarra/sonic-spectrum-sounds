@@ -32,8 +32,9 @@ const tabs: TabConfig[] = [
 export function MobileTabNavigation({ activeTab, onTabChange }: MobileTabNavigationProps) {
   const { isMobile, getTextSize, getGridCols } = useResponsive();
 
+  // Only show on mobile devices, not tablets
   if (!isMobile) {
-    return null; // Don't show on desktop
+    return null;
   }
 
   const activeTabConfig = tabs.find(tab => tab.id === activeTab);

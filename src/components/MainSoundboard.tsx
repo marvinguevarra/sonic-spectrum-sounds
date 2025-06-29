@@ -10,7 +10,9 @@ import { FoodTab } from './FoodTab';
 import { FeelingsTab } from './FeelingsTab';
 import { ActionsTab } from './ActionsTab';
 import { MobileTabNavigation } from './MobileTabNavigation';
+import { TabletTabNavigation } from './TabletTabNavigation';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useResponsive } from '@/hooks/use-responsive';
 import { useSettings } from '@/contexts/SettingsContext';
 
 export function MainSoundboard() {
@@ -18,6 +20,7 @@ export function MainSoundboard() {
   const [mode, setMode] = useState<'phrases' | 'freestyle'>('phrases');
   const [activeTab, setActiveTab] = useState('personal');
   const isMobile = useIsMobile();
+  const { isTablet } = useResponsive();
   const { theme, darkMode } = useSettings();
 
   // Use seamless background for autism dark mode - no gaps
@@ -39,10 +42,13 @@ export function MainSoundboard() {
       {/* Mobile Accordion Navigation */}
       <MobileTabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
 
+      {/* Tablet Horizontal Scroll Navigation */}
+      <TabletTabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+
       {/* Categories */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        {/* Desktop Tab List - Hidden on Mobile */}
-        {!isMobile && (
+        {/* Desktop Tab List - Hidden on Mobile and Tablet */}
+        {!isMobile && !isTablet && (
           <TabsList className="grid grid-cols-6 w-full h-auto p-1">
             <TabsTrigger value="personal" className="text-xs sm:text-sm">
               ⭐ Personal

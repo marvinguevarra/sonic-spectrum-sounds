@@ -36,7 +36,7 @@ export function MainSoundboard() {
         onRespectModeChange={setRespectMode} 
       />
 
-      {/* Special Buttons - Always visible at top */}
+      {/* Special Buttons - Moved to top, above all navigation */}
       <SpecialButtons />
 
       {/* Mobile Accordion Navigation */}

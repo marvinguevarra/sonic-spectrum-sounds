@@ -15,7 +15,7 @@ export function FamilyTab({ respectMode }: FamilyTabProps) {
   const gridCols = getGridCols({
     mobile: 'grid-cols-2',
     tablet: 'grid-cols-3',
-    desktop: 'grid-cols-5'
+    desktop: 'grid-cols-4' // Reduced from 5 to 4 for better text accommodation
   });
 
   const buttonSize = deviceType === 'mobile' ? 'small' : 'medium';

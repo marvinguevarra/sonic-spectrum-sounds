@@ -4,12 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { EnhancedSoundButton } from './EnhancedSoundButton';
 import { GoodNightVariations } from './GoodNightVariations';
 import { CustomPhraseInput } from './CustomPhraseInput';
+import { MobileCustomPhraseAccordion } from './MobileCustomPhraseAccordion';
 import { useSettings } from '@/contexts/SettingsContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Phrase } from '@/types/phrase';
 
 const PERSONAL_PHRASES: Phrase[] = [
-  { id: 'personal-1', filipino: 'Ako si', english: 'My name is', category: 'personal', respectful: 'Ako po si', emoji: '👋' },
-  { id: 'personal-2', filipino: 'Taga dito ako', english: 'I am from here', category: 'personal', respectful: 'Taga dito po ako', emoji: '🏠' },
+  { id: 'personal-1', filipino: 'Ako Po Si Angelo', english: 'My name is Angelo', category: 'personal', respectful: 'Ako Po Si Angelo', emoji: '👋' },
+  { id: 'personal-2', filipino: 'Taga US po Ako', english: 'I am from US', category: 'personal', respectful: 'Taga US po Ako', emoji: '🇺🇸' },
   { id: 'personal-3', filipino: 'Gusto ko', english: 'I like', category: 'personal', respectful: 'Gusto ko po', emoji: '❤️' },
   { id: 'personal-4', filipino: 'Ayaw ko', english: 'I don\'t like', category: 'personal', respectful: 'Ayaw ko po', emoji: '❌' },
   { id: 'personal-5', filipino: 'Kailangan ko ng tulong', english: 'I need help', category: 'personal', respectful: 'Kailangan ko po ng tulong', emoji: '🆘' },
@@ -25,11 +27,16 @@ const PERSONAL_PHRASES: Phrase[] = [
 
 export function PersonalPhrasesInput() {
   const { bilingualMode } = useSettings();
+  const isMobile = useIsMobile();
 
   return (
     <div className="space-y-6">
-      {/* Custom Phrase Input */}
-      <CustomPhraseInput />
+      {/* Custom Phrase Input - Accordion on mobile, regular on desktop */}
+      {isMobile ? (
+        <MobileCustomPhraseAccordion />
+      ) : (
+        <CustomPhraseInput />
+      )}
       
       {/* Pre-defined Personal Phrases */}
       <Card>

@@ -41,62 +41,61 @@ export function EnhancedSoundButton({ phrase, respectMode, size = 'medium', onCl
     if (onClick) onClick();
   };
 
-  // Enhanced dynamic sizing with better mobile support
+  // More aggressive height increases for better text accommodation
   const getResponsiveHeight = () => {
     const baseSizes = {
       small: { 
-        mobile: 'min-h-[88px]', // Increased for better text wrapping
-        tablet: 'min-h-[96px]', 
+        mobile: 'min-h-[110px]', // Increased significantly
+        tablet: 'min-h-[100px]', 
         desktop: 'min-h-[104px]' 
       },
       medium: { 
-        mobile: 'min-h-[100px]', // Increased for longer phrases
-        tablet: 'min-h-[112px]', 
+        mobile: 'min-h-[120px]', // Increased significantly
+        tablet: 'min-h-[115px]', 
         desktop: 'min-h-[120px]' 
       },
       large: { 
-        mobile: 'min-h-[112px]', 
-        tablet: 'min-h-[128px]', 
+        mobile: 'min-h-[130px]', // Increased significantly
+        tablet: 'min-h-[125px]', 
         desktop: 'min-h-[144px]' 
       }
     };
     return getButtonSize(baseSizes[size]);
   };
 
-  // Enhanced text sizing with better readability
+  // More conservative text sizing to prevent overflow
   const primaryTextSize = getTextSize({
-    mobile: size === 'small' ? 'text-xs' : size === 'medium' ? 'text-sm' : 'text-base',
-    tablet: size === 'small' ? 'text-sm' : size === 'medium' ? 'text-base' : 'text-lg',
+    mobile: size === 'small' ? 'text-[10px]' : size === 'medium' ? 'text-[11px]' : 'text-xs',
+    tablet: size === 'small' ? 'text-xs' : size === 'medium' ? 'text-sm' : 'text-base',
     desktop: size === 'small' ? 'text-sm' : size === 'medium' ? 'text-base' : 'text-lg'
   });
 
   const secondaryTextSize = getTextSize({
-    mobile: 'text-[11px]', // Slightly larger for better readability
-    tablet: 'text-xs',
+    mobile: 'text-[9px]', // Smaller to prevent overflow
+    tablet: 'text-[10px]',
     desktop: 'text-xs'
   });
 
   const emojiSize = getTextSize({
-    mobile: size === 'small' ? 'text-xl' : size === 'medium' ? 'text-2xl' : 'text-3xl',
-    tablet: size === 'small' ? 'text-2xl' : size === 'medium' ? 'text-3xl' : 'text-4xl',
+    mobile: size === 'small' ? 'text-lg' : size === 'medium' ? 'text-xl' : 'text-2xl',
+    tablet: size === 'small' ? 'text-xl' : size === 'medium' ? 'text-2xl' : 'text-3xl',
     desktop: size === 'small' ? 'text-2xl' : size === 'medium' ? 'text-3xl' : 'text-4xl'
   });
 
   const imageSize = getTextSize({
-    mobile: size === 'small' ? 'w-10 h-10' : size === 'medium' ? 'w-12 h-12' : 'w-14 h-14',
-    tablet: size === 'small' ? 'w-12 h-12' : size === 'medium' ? 'w-16 h-16' : 'w-20 h-20',
+    mobile: size === 'small' ? 'w-8 h-8' : size === 'medium' ? 'w-10 h-10' : 'w-12 h-12',
+    tablet: size === 'small' ? 'w-10 h-10' : size === 'medium' ? 'w-12 h-12' : 'w-16 h-16',
     desktop: size === 'small' ? 'w-12 h-12' : size === 'medium' ? 'w-16 h-16' : 'w-20 h-20'
   });
 
   const padding = getTextSize({
-    mobile: 'p-2', // Increased padding for better touch targets
+    mobile: 'p-1.5', // Reduced padding on mobile to give more text space
     tablet: 'p-3',
     desktop: 'p-4'
   });
 
-  // Enhanced gap spacing for mobile
   const gapSize = getTextSize({
-    mobile: 'gap-1.5',
+    mobile: 'gap-1',
     tablet: 'gap-2',
     desktop: 'gap-2'
   });
@@ -129,12 +128,14 @@ export function EnhancedSoundButton({ phrase, respectMode, size = 'medium', onCl
         )}
       </div>
 
-      {/* Enhanced Text Content with better wrapping */}
-      <div className="flex flex-col items-center justify-center min-h-0 flex-1 w-full px-1">
-        <span className={`font-bold text-center leading-tight text-gray-800 ${primaryTextSize} break-words hyphens-auto max-w-full`}>
+      {/* Enhanced Text Content with aggressive wrapping and overflow prevention */}
+      <div className="flex flex-col items-center justify-center min-h-0 flex-1 w-full px-1 overflow-hidden">
+        <span className={`font-bold text-center leading-tight text-gray-800 ${primaryTextSize} break-words hyphens-auto overflow-wrap-anywhere line-clamp-3 max-w-full`}
+              style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
           {respectMode && phrase.respectful ? phrase.respectful : phrase.filipino}
         </span>
-        <span className={`text-center leading-tight text-gray-600 ${secondaryTextSize} break-words max-w-full mt-0.5`}>
+        <span className={`text-center leading-tight text-gray-600 ${secondaryTextSize} break-words overflow-wrap-anywhere line-clamp-2 max-w-full mt-0.5`}
+              style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
           {phrase.english}
         </span>
       </div>

@@ -2,7 +2,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { EnhancedSoundButton } from './EnhancedSoundButton';
-import { GoodNightVariations } from './GoodNightVariations';
 import { CustomPhraseInput } from './CustomPhraseInput';
 import { MobileCustomPhraseAccordion } from './MobileCustomPhraseAccordion';
 import { useSettings } from '@/contexts/SettingsContext';
@@ -23,7 +22,7 @@ const PERSONAL_PHRASES: Phrase[] = [
   { id: 'personal-10', filipino: 'Hindi ko naiintindihan', english: 'I don\'t understand', category: 'personal', respectful: 'Hindi ko po naiintindihan', emoji: '❓' },
   { id: 'personal-11', filipino: 'Magandang umaga', english: 'Good morning', category: 'personal', respectful: 'Magandang umaga po', emoji: '🌅' },
   { id: 'personal-12', filipino: 'Magandang tanghali', english: 'Good afternoon', category: 'personal', respectful: 'Magandang tanghali po', emoji: '☀️' },
-  { id: 'personal-13', filipino: 'Magandang gabi', english: 'Good evening', category: 'personal', respectful: 'Magandang gabi po', emoji: '🌆' },
+  { id: 'personal-13', filipino: 'Magandang gabi po', english: 'Good evening', category: 'personal', respectful: 'Magandang gabi po', emoji: '🌆' },
 ];
 
 export function PersonalPhrasesInput() {
@@ -70,9 +69,6 @@ export function PersonalPhrasesInput() {
                 size={buttonSize}
               />
             ))}
-            
-            {/* Special Good Night button with variations */}
-            <GoodNightVariations />
           </div>
         </CardContent>
       </Card>

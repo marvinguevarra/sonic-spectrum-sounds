@@ -17,7 +17,6 @@ import { useSettings } from '@/contexts/SettingsContext';
 
 export function MainSoundboard() {
   const [respectMode, setRespectMode] = useState(true); // Default to true for Filipino language
-  const [mode, setMode] = useState<'phrases' | 'freestyle'>('phrases');
   const [activeTab, setActiveTab] = useState('personal');
   const isMobile = useIsMobile();
   const { isTablet } = useResponsive();
@@ -76,35 +75,19 @@ export function MainSoundboard() {
         </TabsContent>
 
         <TabsContent value="needs" className="mt-4">
-          <NeedsTab 
-            mode={mode} 
-            onModeChange={setMode} 
-            respectMode={respectMode} 
-          />
+          <NeedsTab respectMode={respectMode} />
         </TabsContent>
 
         <TabsContent value="family" className="mt-4">
-          <FamilyTab 
-            mode={mode} 
-            onModeChange={setMode} 
-            respectMode={respectMode} 
-          />
+          <FamilyTab respectMode={respectMode} />
         </TabsContent>
 
         <TabsContent value="food" className="mt-4">
-          <FoodTab 
-            mode={mode} 
-            onModeChange={setMode} 
-            respectMode={respectMode} 
-          />
+          <FoodTab respectMode={respectMode} />
         </TabsContent>
 
         <TabsContent value="feelings" className="mt-4">
-          <FeelingsTab 
-            mode={mode} 
-            onModeChange={setMode} 
-            respectMode={respectMode} 
-          />
+          <FeelingsTab respectMode={respectMode} />
         </TabsContent>
 
         <TabsContent value="actions" className="mt-4">

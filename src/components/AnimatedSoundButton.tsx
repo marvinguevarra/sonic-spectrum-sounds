@@ -7,6 +7,7 @@ import { elevenLabsService } from '@/services/elevenLabsService';
 import GraduationAnimation from './animations/GraduationAnimation';
 import WaveAnimation from './animations/WaveAnimation';
 import ConfettiAnimation from './animations/ConfettiAnimation';
+import { BeachImageModal } from './BeachImageModal';
 
 interface AnimatedSoundButtonProps {
   id: string;
@@ -29,6 +30,7 @@ export function AnimatedSoundButton({
   const [showGraduation, setShowGraduation] = useState(false);
   const [showWave, setShowWave] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [showBeachModal, setShowBeachModal] = useState(false);
 
   const displayLabel = bilingualMode && labelFilipino ? labelFilipino : label;
   const secondaryLabel = bilingualMode && labelFilipino ? label : labelFilipino;
@@ -55,6 +57,7 @@ export function AnimatedSoundButton({
     } else if (id === 'beach') {
       playClickSound();
       setShowWave(true);
+      setShowBeachModal(true); // Show beach image modal
     } else if (id === 'celebrate' || id === 'proud') {
       playCelebrationSound();
       setShowConfetti(true);
@@ -98,6 +101,10 @@ export function AnimatedSoundButton({
       <ConfettiAnimation 
         isActive={showConfetti} 
         onComplete={() => setShowConfetti(false)} 
+      />
+      <BeachImageModal 
+        isOpen={showBeachModal} 
+        onClose={() => setShowBeachModal(false)} 
       />
     </>
   );

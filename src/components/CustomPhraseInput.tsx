@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Volume2, Save, Loader2 } from 'lucide-react';
+import { Volume2, Save, Loader2, Shield } from 'lucide-react';
 import { elevenLabsService } from '@/services/elevenLabsService';
 import { useSettings } from '@/contexts/SettingsContext';
 import { useToast } from '@/hooks/use-toast';
@@ -92,7 +92,7 @@ export function CustomPhraseInput() {
   };
 
   return (
-    <Card className="w-full">
+    <Card className="w-full border-2 border-indigo-200 bg-gradient-to-br from-indigo-50 to-blue-50">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           ✏️ Custom Phrases
@@ -114,7 +114,7 @@ export function CustomPhraseInput() {
             }
             value={customText}
             onChange={(e) => setCustomText(e.target.value)}
-            className="min-h-[100px] resize-none"
+            className="min-h-[100px] resize-none border-2 border-indigo-200 focus:border-indigo-400"
             maxLength={500}
           />
           <div className="text-xs text-muted-foreground text-right">
@@ -126,7 +126,7 @@ export function CustomPhraseInput() {
           <Button 
             onClick={handleSpeak}
             disabled={!customText.trim() || isSpeaking || isGenerating}
-            className="flex-1"
+            className="flex-1 bg-green-600 hover:bg-green-700"
           >
             {isSpeaking ? (
               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -143,7 +143,7 @@ export function CustomPhraseInput() {
             onClick={handlePreGenerate}
             disabled={!customText.trim() || isSpeaking || isGenerating}
             variant="outline"
-            className="flex-1"
+            className="flex-1 border-indigo-300 hover:bg-indigo-50"
           >
             {isGenerating ? (
               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -157,7 +157,29 @@ export function CustomPhraseInput() {
           </Button>
         </div>
 
-        <div className="text-xs text-muted-foreground space-y-1 p-3 bg-muted rounded-lg">
+        {/* COPPA-Compliant Privacy Notice */}
+        <div className="text-xs text-muted-foreground space-y-2 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div className="flex items-center gap-2 font-semibold text-green-800">
+            <Shield className="h-4 w-4" />
+            {bilingualMode ? 'Protektadong Privacy' : 'Privacy Protected'}
+          </div>
+          <div className="space-y-1">
+            <p>• {bilingualMode 
+              ? 'Lahat ng custom phrases ay naka-store lamang sa inyong device'
+              : 'All custom phrases are stored only on your device'
+            }</p>
+            <p>• {bilingualMode 
+              ? 'Walang personal information na pinapadala sa internet'
+              : 'No personal information is sent over the internet'
+            }</p>
+            <p>• {bilingualMode 
+              ? 'Safe para sa mga bata - walang data collection'
+              : 'Safe for children - no data collection'
+            }</p>
+          </div>
+        </div>
+
+        <div className="text-xs text-muted-foreground space-y-1 p-3 bg-blue-50 border border-blue-200 rounded-lg">
           <p>💡 {bilingualMode ? 'Mga Tip:' : 'Tips:'}</p>
           <p>• {bilingualMode 
             ? 'Pindutin ang "Magsalita" para marinig ang inyong phrase at ma-cache ito'

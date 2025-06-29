@@ -22,10 +22,12 @@ export function SpecialButtons() {
   ];
 
   return (
-    <Card className="mb-4">
+    <Card className="mb-6 border-2 border-primary/20 bg-gradient-to-r from-blue-50 to-indigo-50">
       <CardContent className="p-4">
-        <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Special Messages</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <h3 className="text-lg font-bold mb-4 text-center text-primary flex items-center justify-center gap-2">
+          ⭐ Special Messages ⭐
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {specialButtons.map(button => (
             <AnimatedSoundButton key={button.id} {...button} />
           ))}

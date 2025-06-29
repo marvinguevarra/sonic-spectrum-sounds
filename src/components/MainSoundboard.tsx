@@ -34,9 +34,7 @@ export function MainSoundboard() {
       />
 
       {/* Special Buttons - Always visible at top */}
-      <div className="mb-4">
-        <SpecialButtons />
-      </div>
+      <SpecialButtons />
 
       {/* Mobile Accordion Navigation */}
       <MobileTabNavigation activeTab={activeTab} onTabChange={setActiveTab} />

@@ -123,12 +123,14 @@ export const COMMON_FOODS: Phrase[] = [
   },
 ];
 
-// Enhanced food-specific phrases with respectful versions
+// Enhanced food-specific phrases with respectful versions and cultural context
 export const FOOD_REQUESTS: Phrase[] = [
   { id: 'food-req-1', filipino: 'Pwede po ba kumuha ng', english: 'May I please have', category: 'food', respectful: 'Pwede po ba kumuha ng', emoji: '🙏' },
   { id: 'food-req-2', filipino: 'Gusto ko po ng', english: 'I would like', category: 'food', respectful: 'Gusto ko po ng', emoji: '😊' },
   { id: 'food-req-3', filipino: 'Pwede po ba uminom ng', english: 'May I please drink', category: 'food', respectful: 'Pwede po ba uminom ng', emoji: '🥤' },
   { id: 'food-req-4', filipino: 'Kailangan ko po ng', english: 'I need', category: 'food', respectful: 'Kailangan ko po ng', emoji: '🍽️' },
+  { id: 'food-req-5', filipino: 'Makakakuha po ba ako ng', english: 'Could I get', category: 'food', respectful: 'Makakakuha po ba ako ng', emoji: '🤲' },
+  { id: 'food-req-6', filipino: 'Pabigay po ng', english: 'Please give me', category: 'food', respectful: 'Pabigay po ng', emoji: '🙋' },
 ];
 
 export const FOOD_RESPONSES: Phrase[] = [
@@ -137,6 +139,9 @@ export const FOOD_RESPONSES: Phrase[] = [
   { id: 'food-res-3', filipino: 'Busog na po ako', english: 'I\'m full now', category: 'food', respectful: 'Busog na po ako', emoji: '😌' },
   { id: 'food-res-4', filipino: 'Ayaw ko na po', english: 'I don\'t want anymore', category: 'food', respectful: 'Ayaw ko na po', emoji: '✋' },
   { id: 'food-res-5', filipino: 'Gusto ko pa po', english: 'I want more', category: 'food', respectful: 'Gusto ko pa po', emoji: '➕' },
+  { id: 'food-res-6', filipino: 'Napakasarap po', english: 'Very delicious', category: 'food', respectful: 'Napakasarap po', emoji: '🤤' },
+  { id: 'food-res-7', filipino: 'Sapat na po', english: 'That\'s enough', category: 'food', respectful: 'Sapat na po', emoji: '👌' },
+  { id: 'food-res-8', filipino: 'Maraming salamat po', english: 'Thank you very much', category: 'food', respectful: 'Maraming salamat po', emoji: '🙏' },
 ];
 
 export const POLITE_PHRASES: Phrase[] = [

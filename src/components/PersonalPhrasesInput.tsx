@@ -7,6 +7,7 @@ import { CustomPhraseInput } from './CustomPhraseInput';
 import { MobileCustomPhraseAccordion } from './MobileCustomPhraseAccordion';
 import { useSettings } from '@/contexts/SettingsContext';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useResponsive } from '@/hooks/use-responsive';
 import { Phrase } from '@/types/phrase';
 
 const PERSONAL_PHRASES: Phrase[] = [
@@ -28,6 +29,20 @@ const PERSONAL_PHRASES: Phrase[] = [
 export function PersonalPhrasesInput() {
   const { bilingualMode } = useSettings();
   const isMobile = useIsMobile();
+  const { deviceType, getGridCols } = useResponsive();
+
+  // Enhanced responsive grid with better mobile optimization
+  const gridCols = getGridCols({
+    mobile: 'grid-cols-2', // 2 columns on mobile for better text wrapping
+    tablet: 'grid-cols-3', // 3 columns on tablet
+    desktop: 'grid-cols-4' // 4 columns on desktop
+  });
+
+  // Dynamic button size based on device
+  const buttonSize = deviceType === 'mobile' ? 'medium' : deviceType === 'tablet' ? 'medium' : 'medium';
+
+  // Enhanced gap spacing for different devices
+  const gapClass = deviceType === 'mobile' ? 'gap-3' : deviceType === 'tablet' ? 'gap-4' : 'gap-4';
 
   return (
     <div className="space-y-6">
@@ -46,13 +61,13 @@ export function PersonalPhrasesInput() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+          <div className={`grid ${gridCols} ${gapClass}`}>
             {PERSONAL_PHRASES.map((phrase) => (
               <EnhancedSoundButton
                 key={phrase.id}
                 phrase={phrase}
                 respectMode={true}
-                size="medium"
+                size={buttonSize}
               />
             ))}
             

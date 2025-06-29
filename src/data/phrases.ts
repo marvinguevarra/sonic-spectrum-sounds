@@ -123,6 +123,22 @@ export const COMMON_FOODS: Phrase[] = [
   },
 ];
 
+// Enhanced food-specific phrases with respectful versions
+export const FOOD_REQUESTS: Phrase[] = [
+  { id: 'food-req-1', filipino: 'Pwede po ba kumuha ng', english: 'May I please have', category: 'food', respectful: 'Pwede po ba kumuha ng', emoji: '🙏' },
+  { id: 'food-req-2', filipino: 'Gusto ko po ng', english: 'I would like', category: 'food', respectful: 'Gusto ko po ng', emoji: '😊' },
+  { id: 'food-req-3', filipino: 'Pwede po ba uminom ng', english: 'May I please drink', category: 'food', respectful: 'Pwede po ba uminom ng', emoji: '🥤' },
+  { id: 'food-req-4', filipino: 'Kailangan ko po ng', english: 'I need', category: 'food', respectful: 'Kailangan ko po ng', emoji: '🍽️' },
+];
+
+export const FOOD_RESPONSES: Phrase[] = [
+  { id: 'food-res-1', filipino: 'Salamat po', english: 'Thank you', category: 'food', respectful: 'Salamat po', emoji: '🙏' },
+  { id: 'food-res-2', filipino: 'Masarap po', english: 'It\'s delicious', category: 'food', respectful: 'Masarap po', emoji: '😋' },
+  { id: 'food-res-3', filipino: 'Busog na po ako', english: 'I\'m full now', category: 'food', respectful: 'Busog na po ako', emoji: '😌' },
+  { id: 'food-res-4', filipino: 'Ayaw ko na po', english: 'I don\'t want anymore', category: 'food', respectful: 'Ayaw ko na po', emoji: '✋' },
+  { id: 'food-res-5', filipino: 'Gusto ko pa po', english: 'I want more', category: 'food', respectful: 'Gusto ko pa po', emoji: '➕' },
+];
+
 export const POLITE_PHRASES: Phrase[] = [
   { id: 'polite-1', filipino: 'Salamat', english: 'Thank you', category: 'polite', respectful: 'Salamat po', emoji: '🙏' },
   { id: 'polite-2', filipino: 'Pasensya na', english: 'Sorry/Excuse me', category: 'polite', respectful: 'Pasensya na po', emoji: '🙏' },

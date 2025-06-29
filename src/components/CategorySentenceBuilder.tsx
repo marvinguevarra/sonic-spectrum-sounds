@@ -121,7 +121,7 @@ export function CategorySentenceBuilder({ category }: CategorySentenceBuilderPro
     const wordsByCategory: { [key: string]: string[] } = {
       needs: ['ng', 'sa', 'kanin', 'tubig', 'pagkain', 'kama', 'banyo'],
       family: ['kay', 'sa', 'Nanay', 'Tatay', 'Tita', 'Tito', 'Lola', 'Lolo'],
-      food: ['ng', 'sa', 'adobo', 'sinigang', 'kanin', 'ulam', 'dessert', 'tubig', 'kape', 'gatas'],
+      food: ['ng', 'sa', 'adobo', 'sinigang', 'kanin', 'ulam', 'dessert', 'tubig', 'kape', 'gatas', 'taho', 'pancit', 'lechon', 'halo-halo', 'saging', 'mansanas'],
       feelings: ['ng', 'dahil', 'masaya', 'malungkot', 'excited', 'proud']
     };
 
@@ -130,12 +130,14 @@ export function CategorySentenceBuilder({ category }: CategorySentenceBuilderPro
 
   const getFoodSentenceStarters = () => {
     return [
-      'Gusto ko kumain ng',
-      'Gusto ko uminom ng',
-      'Ayaw ko kumain ng',
-      'Ayaw ko uminom ng',
-      'Pwede ba kumain ng',
-      'Pwede ba uminom ng'
+      'Gusto ko po kumain ng',
+      'Gusto ko po uminom ng',
+      'Ayaw ko po kumain ng',
+      'Ayaw ko po uminom ng',
+      'Pwede po ba kumain ng',
+      'Pwede po ba uminom ng',
+      'Kailangan ko po ng',
+      'Salamat po sa'
     ];
   };
 

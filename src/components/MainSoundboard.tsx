@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { SoundboardHeader } from './SoundboardHeader';
 import { PersonalPhrasesInput } from './PersonalPhrasesInput';
+import { SpecialButtons } from './SpecialButtons';
 import { NeedsTab } from './NeedsTab';
 import { FamilyTab } from './FamilyTab';
 import { FoodTab } from './FoodTab';
@@ -31,6 +32,11 @@ export function MainSoundboard() {
         respectMode={respectMode} 
         onRespectModeChange={setRespectMode} 
       />
+
+      {/* Special Buttons - Always visible at top */}
+      <div className="mb-4">
+        <SpecialButtons />
+      </div>
 
       {/* Mobile Accordion Navigation */}
       <MobileTabNavigation activeTab={activeTab} onTabChange={setActiveTab} />

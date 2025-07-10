@@ -2,6 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Accessibility CSS Variables */
+:root {
+  --button-size: 3.5rem;
+  --grid-spacing: 1rem;
+  --base-font-size: 1rem;
+  --focus-ring-width: 2px;
+  --scan-highlight-color: hsl(var(--primary));
+}
+
+/* High Contrast Mode */
+.high-contrast {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 95%;
+  --secondary-foreground: 0 0% 0%;
+  --border: 0 0% 0%;
+  --ring: 0 0% 0%;
+}
+
+.high-contrast.dark {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 0 0% 10%;
+  --secondary-foreground: 0 0% 100%;
+  --border: 0 0% 100%;
+  --ring: 0 0% 100%;
+}
+
+/* Reduced Motion Support */
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Enhanced Focus Indicators */
+.show-focus *:focus-visible {
+  outline: var(--focus-ring-width) solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* Scanning Highlight */
+.scanning-highlight {
+  box-shadow: 0 0 0 4px var(--scan-highlight-color);
+  animation: scan-pulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes scan-pulse {
+  0% { box-shadow: 0 0 0 4px var(--scan-highlight-color); }
+  100% { box-shadow: 0 0 0 8px var(--scan-highlight-color); }
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
 
 @layer base {

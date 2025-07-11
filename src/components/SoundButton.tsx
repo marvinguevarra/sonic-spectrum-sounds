@@ -32,17 +32,46 @@ export function SoundButton({ phrase, respectMode, size = 'medium', onClick }: S
     playAudio(text);
   };
 
-  const sizeClasses = {
-    small: 'min-h-[120px] text-sm',
-    medium: 'min-h-[140px] text-base', 
-    large: 'min-h-[160px] text-lg'
+  // Dynamic sizing based on content and device
+  const getResponsiveClasses = () => {
+    const baseClasses = 'w-full flex flex-col items-center justify-center gap-1 p-3 hover:scale-105 transition-all duration-200 relative';
+    
+    // Mobile-optimized heights and text sizing
+    if (size === 'small') {
+      return `${baseClasses} min-h-[100px] sm:min-h-[120px]`;
+    } else if (size === 'medium') {
+      return `${baseClasses} min-h-[120px] sm:min-h-[140px] md:min-h-[160px]`;
+    } else {
+      return `${baseClasses} min-h-[140px] sm:min-h-[160px] md:min-h-[180px]`;
+    }
+  };
+
+  // Dynamic text sizing for better mobile readability
+  const getTextClasses = () => {
+    if (size === 'small') {
+      return 'text-xs sm:text-sm leading-tight';
+    } else if (size === 'medium') {
+      return 'text-sm sm:text-base leading-tight';
+    } else {
+      return 'text-base sm:text-lg leading-tight';
+    }
+  };
+
+  const getSecondaryTextClasses = () => {
+    if (size === 'small') {
+      return 'text-[10px] sm:text-xs leading-tight';
+    } else if (size === 'medium') {
+      return 'text-xs sm:text-sm leading-tight';
+    } else {
+      return 'text-sm sm:text-base leading-tight';
+    }
   };
 
   return (
     <Button
       onClick={handleClick}
       disabled={isButtonDisabled}
-      className={`${sizeClasses[size]} w-full flex flex-col items-center justify-center gap-1 p-2 hover:scale-105 transition-all duration-200 relative ${
+      className={`${getResponsiveClasses()} ${
         isCurrentlyPlaying ? 'ring-2 ring-primary' : ''
       } ${isInQueue ? 'bg-accent/50' : ''}`}
       variant="outline"
@@ -53,15 +82,27 @@ export function SoundButton({ phrase, respectMode, size = 'medium', onClick }: S
         </div>
       )}
       
-      {phrase.emoji && <span className="text-2xl flex-shrink-0">{phrase.emoji}</span>}
+      {phrase.emoji && (
+        <span className="text-xl sm:text-2xl flex-shrink-0 mb-1">
+          {phrase.emoji}
+        </span>
+      )}
       
-      <div className="flex flex-col items-center justify-center flex-1 w-full px-2 space-y-1">
-        <span className="font-semibold text-center leading-relaxed break-words max-w-full"
-              style={{ wordBreak: 'break-word', overflowWrap: 'anywhere', lineHeight: '1.3' }}>
+      <div className="flex flex-col items-center justify-center flex-1 w-full px-1 sm:px-2 space-y-0.5 sm:space-y-1">
+        <span className={`font-semibold text-center break-words max-w-full hyphens-auto ${getTextClasses()}`}
+              style={{ 
+                wordBreak: 'break-word', 
+                overflowWrap: 'anywhere',
+                lineHeight: '1.2'
+              }}>
           {text}
         </span>
-        <span className="text-xs text-muted-foreground text-center leading-relaxed break-words max-w-full"
-              style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
+        <span className={`text-muted-foreground text-center break-words max-w-full hyphens-auto ${getSecondaryTextClasses()}`}
+              style={{ 
+                wordBreak: 'break-word', 
+                overflowWrap: 'anywhere',
+                lineHeight: '1.1'
+              }}>
           {phrase.english}
         </span>
       </div>

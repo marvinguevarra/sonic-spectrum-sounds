@@ -13,8 +13,8 @@ export function LanguageCulturalSection() {
       </h3>
       <p className="text-sm text-blue-700 dark:text-blue-300 mb-4">
         {bilingualMode 
-          ? 'Ang app ay naka-set sa Filipino-first para sa mga batang Pilipino na may autism.'
-          : 'App is set to Filipino-first for Filipino children with autism.'
+          ? 'Ginawa para sa mga Pilipino, para tulungan ang mga kababayan nating may iba\'t ibang pangangailangan sa komunikasyon'
+          : 'Designed Filipino-first to support our kababayan and their diverse communication journeys'
         }
       </p>
       <div className="text-xs text-blue-600 dark:text-blue-400">

@@ -1,13 +1,13 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { useSettings } from '@/contexts/SettingsContext';
+import { useAudioControls } from '@/hooks/useAudioControls';
 import { useSoundFeedback } from '@/hooks/useSoundFeedback';
-import { elevenLabsService } from '@/services/elevenLabsService';
+import { useSettings } from '@/contexts/SettingsContext';
 import GraduationAnimation from './animations/GraduationAnimation';
 import WaveAnimation from './animations/WaveAnimation';
 import ConfettiAnimation from './animations/ConfettiAnimation';
 import { BeachImageModal } from './BeachImageModal';
+import { Clock } from 'lucide-react';
 
 interface AnimatedSoundButtonProps {
   id: string;
@@ -24,40 +24,36 @@ export function AnimatedSoundButton({
   icon, 
   soundFile 
 }: AnimatedSoundButtonProps) {
-  const { bilingualMode, soundEnabled, volume, voiceType } = useSettings();
+  const { bilingualMode, soundEnabled, volume } = useSettings();
   const { playClickSound, playCelebrationSound } = useSoundFeedback({ soundEnabled, volume });
+  const textToSpeak = bilingualMode && labelFilipino ? labelFilipino : label;
   
   const [showGraduation, setShowGraduation] = useState(false);
   const [showWave, setShowWave] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showBeachModal, setShowBeachModal] = useState(false);
 
-  const displayLabel = bilingualMode && labelFilipino ? labelFilipino : label;
-  const secondaryLabel = bilingualMode && labelFilipino ? label : labelFilipino;
-
-  const speakPhrase = async () => {
-    const text = bilingualMode && labelFilipino ? labelFilipino : label;
-    
-    try {
-      await elevenLabsService.speak(text, {
-        volume,
-        voiceType,
-        bilingualMode,
-      });
-    } catch (error) {
-      console.error('Speech failed:', error);
-    }
-  };
+  const {
+    playAudio,
+    isButtonDisabled,
+    isCurrentlyPlaying,
+    isInQueue,
+    timeUntilNextPlay
+  } = useAudioControls({
+    phraseId: id,
+    onPlayStart: () => console.log('AnimatedSoundButton playing:', textToSpeak),
+    onRateLimited: () => console.log('AnimatedSoundButton rate limited:', textToSpeak)
+  });
 
   const handleClick = async () => {
-    // Play different sounds and animations based on button type
+    // Play sound effects based on button type
     if (id === 'graduation') {
       playCelebrationSound();
       setShowGraduation(true);
     } else if (id === 'beach') {
       playClickSound();
       setShowWave(true);
-      setShowBeachModal(true); // Show beach image modal
+      setShowBeachModal(true);
     } else if (id === 'celebrate' || id === 'proud') {
       playCelebrationSound();
       setShowConfetti(true);
@@ -65,16 +61,26 @@ export function AnimatedSoundButton({
       playClickSound();
     }
     
-    await speakPhrase();
+    await playAudio(textToSpeak);
   };
+
+  const displayLabel = bilingualMode && labelFilipino ? labelFilipino : label;
 
   return (
     <>
       <Button
         onClick={handleClick}
-        className="h-20 w-full flex flex-col items-center justify-center gap-1 p-2 hover:scale-105 transition-all duration-200 bg-card hover:bg-primary/10 border border-primary/20 hover:border-primary/30"
+        disabled={isButtonDisabled}
+        className={`h-20 w-full flex flex-col items-center justify-center gap-1 p-2 hover:scale-105 transition-all duration-200 bg-card hover:bg-primary/10 border border-primary/20 hover:border-primary/30 relative ${
+          isCurrentlyPlaying ? 'ring-2 ring-primary' : ''
+        } ${isInQueue ? 'bg-accent/50' : ''}`}
         variant="outline"
       >
+        {isButtonDisabled && timeUntilNextPlay > 0 && (
+          <div className="absolute top-1 right-1">
+            <Clock className="h-3 w-3 text-muted-foreground" />
+          </div>
+        )}
         {icon && (
           <span className={`text-2xl mb-1 ${id === 'graduation' ? 'animate-pulse' : ''}`}>
             {icon}
@@ -83,10 +89,8 @@ export function AnimatedSoundButton({
         <span className="font-semibold text-sm leading-tight text-center text-card-foreground">
           {displayLabel}
         </span>
-        {secondaryLabel && (
-          <span className="text-xs text-muted-foreground text-center">
-            {secondaryLabel}
-          </span>
+        {isInQueue && (
+          <div className="absolute bottom-1 left-1 w-2 h-2 bg-primary rounded-full animate-pulse" />
         )}
       </Button>
 

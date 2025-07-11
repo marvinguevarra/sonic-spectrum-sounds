@@ -1,5 +1,6 @@
 
 import { audioCacheService } from './audioCacheService';
+import { audioManager } from './audioManager';
 
 interface ElevenLabsOptions {
   volume: number;
@@ -128,6 +129,9 @@ class ElevenLabsService {
     const audio = new Audio(audioUrl);
     
     audio.volume = volume / 100;
+    
+    // Register with audio manager for stopping capability
+    audioManager.setCurrentAudio(audio);
     
     return new Promise((resolve, reject) => {
       audio.onended = () => {

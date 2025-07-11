@@ -2,8 +2,8 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Phrase } from '@/types/phrase';
-import { elevenLabsService } from '@/services/elevenLabsService';
-import { useSettings } from '@/contexts/SettingsContext';
+import { useAudioControls } from '@/hooks/useAudioControls';
+import { Clock } from 'lucide-react';
 
 interface SoundButtonProps {
   phrase: Phrase;
@@ -13,30 +13,23 @@ interface SoundButtonProps {
 }
 
 export function SoundButton({ phrase, respectMode, size = 'medium', onClick }: SoundButtonProps) {
-  const { volume, voiceType } = useSettings();
+  const text = respectMode && phrase.respectful ? phrase.respectful : phrase.filipino;
+  
+  const {
+    playAudio,
+    isButtonDisabled,
+    isCurrentlyPlaying,
+    isInQueue,
+    timeUntilNextPlay
+  } = useAudioControls({
+    phraseId: phrase.id,
+    onPlayStart: () => console.log('Playing:', text),
+    onPlayEnd: () => onClick?.(),
+    onRateLimited: () => console.log('Rate limited:', text)
+  });
 
-  const speakPhrase = async () => {
-    const text = respectMode && phrase.respectful ? phrase.respectful : phrase.filipino;
-    
-    console.log('SoundButton speaking phrase:', {
-      phraseId: phrase.id,
-      text: text,
-      respectMode,
-      respectful: phrase.respectful,
-      filipino: phrase.filipino
-    }); // Debug log
-    
-    try {
-      await elevenLabsService.speak(text, {
-        volume,
-        voiceType,
-        bilingualMode: true, // Always true for Filipino phrases
-      });
-    } catch (error) {
-      console.error('Speech failed:', error);
-    }
-    
-    if (onClick) onClick();
+  const handleClick = () => {
+    playAudio(text);
   };
 
   const sizeClasses = {
@@ -47,13 +40,24 @@ export function SoundButton({ phrase, respectMode, size = 'medium', onClick }: S
 
   return (
     <Button
-      onClick={speakPhrase}
-      className={`${sizeClasses[size]} w-full flex flex-col items-center justify-center gap-1 p-2 hover:scale-105 transition-all duration-200`}
+      onClick={handleClick}
+      disabled={isButtonDisabled}
+      className={`${sizeClasses[size]} w-full flex flex-col items-center justify-center gap-1 p-2 hover:scale-105 transition-all duration-200 relative ${
+        isCurrentlyPlaying ? 'ring-2 ring-primary' : ''
+      } ${isInQueue ? 'bg-accent/50' : ''}`}
       variant="outline"
     >
+      {isButtonDisabled && timeUntilNextPlay > 0 && (
+        <div className="absolute top-1 right-1">
+          <Clock className="h-3 w-3 text-muted-foreground" />
+        </div>
+      )}
       {phrase.emoji && <span className="text-2xl">{phrase.emoji}</span>}
-      <span className="font-semibold">{respectMode && phrase.respectful ? phrase.respectful : phrase.filipino}</span>
+      <span className="font-semibold">{text}</span>
       <span className="text-xs text-muted-foreground">{phrase.english}</span>
+      {isInQueue && (
+        <div className="absolute bottom-1 left-1 w-2 h-2 bg-primary rounded-full animate-pulse" />
+      )}
     </Button>
   );
 }

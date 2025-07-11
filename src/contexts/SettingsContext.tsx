@@ -22,6 +22,13 @@ interface SettingsContextType {
   setBilingualMode: (enabled: boolean) => void;
   controlStyle: 'switches' | 'buttons';
   setControlStyle: (style: 'switches' | 'buttons') => void;
+  // Rate limiting settings
+  rateLimitEnabled: boolean;
+  setRateLimitEnabled: (enabled: boolean) => void;
+  rateLimitInterval: number;
+  setRateLimitInterval: (interval: number) => void;
+  maxQueueSize: number;
+  setMaxQueueSize: (size: number) => void;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -49,6 +56,10 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
   const [darkMode, setDarkMode] = useState(false);
   const [bilingualMode, setBilingualMode] = useState(true);
   const [controlStyle, setControlStyle] = useState<'switches' | 'buttons'>('buttons'); // Default to buttons for better accessibility
+  // Rate limiting settings
+  const [rateLimitEnabled, setRateLimitEnabled] = useState(true);
+  const [rateLimitInterval, setRateLimitInterval] = useState(500); // 500ms default
+  const [maxQueueSize, setMaxQueueSize] = useState(3);
 
   // Apply theme to document
   useEffect(() => {
@@ -77,6 +88,12 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
     setBilingualMode,
     controlStyle,
     setControlStyle,
+    rateLimitEnabled,
+    setRateLimitEnabled,
+    rateLimitInterval,
+    setRateLimitInterval,
+    maxQueueSize,
+    setMaxQueueSize,
   };
 
   return (

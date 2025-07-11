@@ -33,32 +33,34 @@ export function EnhancedSoundButton({ phrase, respectMode, size = 'medium', onCl
     playAudio(text);
   };
 
-  // Enhanced button heights with special desktop optimization
+  // Enhanced button heights with improved desktop spacing
   const getResponsiveHeight = () => {
     if (isMobile) {
       return size === 'small' ? 'min-h-[140px]' : size === 'medium' ? 'min-h-[160px]' : 'min-h-[180px]';
     } else if (isTablet) {
-      return size === 'small' ? 'min-h-[120px]' : size === 'medium' ? 'min-h-[140px]' : 'min-h-[160px]';
-    } else {
       return size === 'small' ? 'min-h-[140px]' : size === 'medium' ? 'min-h-[160px]' : 'min-h-[180px]';
+    } else {
+      // Significantly increased desktop heights to prevent text clipping
+      return size === 'small' ? 'min-h-[180px]' : size === 'medium' ? 'min-h-[220px]' : 'min-h-[260px]';
     }
   };
 
-  // Enhanced text sizes with better desktop optimization
+  // Optimized text sizes for better readability and space usage
   const getPrimaryTextSize = () => {
     if (isMobile) {
       return size === 'small' ? 'text-sm' : size === 'medium' ? 'text-base' : 'text-lg';
     } else if (isTablet) {
       return size === 'small' ? 'text-base' : size === 'medium' ? 'text-lg' : 'text-xl';
     } else {
-      return size === 'small' ? 'text-xl' : size === 'medium' ? 'text-2xl' : 'text-3xl';
+      // Slightly smaller desktop text to better fit in increased button heights
+      return size === 'small' ? 'text-lg' : size === 'medium' ? 'text-xl' : 'text-2xl';
     }
   };
 
   const getSecondaryTextSize = () => {
-    if (isMobile) return 'text-sm';
-    if (isTablet) return 'text-base';
-    return 'text-xl';
+    if (isMobile) return 'text-xs';
+    if (isTablet) return 'text-sm';
+    return 'text-base'; // Reduced from text-xl to prevent clipping
   };
 
   const getEmojiSize = () => {
@@ -130,16 +132,30 @@ export function EnhancedSoundButton({ phrase, respectMode, size = 'medium', onCl
         )}
       </div>
 
-      {/* Enhanced Text Content with better desktop spacing */}
-      <div className="flex flex-col items-center justify-center min-h-0 flex-1 w-full px-2 overflow-hidden">
-        <span className={`font-bold text-center leading-tight text-gray-900 ${getPrimaryTextSize()} break-words hyphens-auto overflow-wrap-anywhere max-w-full`}
-              style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
-          {text}
-        </span>
-        <span className={`text-center leading-tight text-gray-700 ${getSecondaryTextSize()} break-words overflow-wrap-anywhere max-w-full mt-2`}
-              style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
-          {phrase.english}
-        </span>
+      {/* Enhanced Text Content with improved wrapping and spacing */}
+      <div className="flex flex-col items-center justify-center flex-1 w-full px-1 py-2 space-y-2">
+        <div className="flex-1 flex items-center justify-center w-full">
+          <span className={`font-bold text-center leading-relaxed text-gray-900 ${getPrimaryTextSize()} 
+                           break-words hyphens-auto max-w-full px-1`}
+                style={{ 
+                  wordBreak: 'break-word', 
+                  overflowWrap: 'anywhere',
+                  lineHeight: isMobile ? '1.3' : '1.4'
+                }}>
+            {text}
+          </span>
+        </div>
+        <div className="flex items-center justify-center w-full">
+          <span className={`text-center leading-relaxed text-gray-700 ${getSecondaryTextSize()} 
+                           break-words max-w-full px-1`}
+                style={{ 
+                  wordBreak: 'break-word', 
+                  overflowWrap: 'anywhere',
+                  lineHeight: '1.3'
+                }}>
+            {phrase.english}
+          </span>
+        </div>
       </div>
       
       {isInQueue && (

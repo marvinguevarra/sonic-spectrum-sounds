@@ -75,16 +75,20 @@ const SoundboardButton = ({
             {icon}
           </div>
         )}
-        <div className="font-semibold text-sm sm:text-base lg:text-lg leading-tight text-foreground px-1">
-          {displayLabel}
-        </div>
-        {bilingualMode && labelFilipino && (
-          <div className="text-xs sm:text-sm text-muted-foreground mt-1 opacity-80">
-            {label}
+        <div className="flex-1 flex flex-col items-center justify-center w-full px-2 space-y-1">
+          <div className="font-semibold text-sm sm:text-base lg:text-lg leading-relaxed text-foreground text-center break-words max-w-full"
+               style={{ wordBreak: 'break-word', overflowWrap: 'anywhere', lineHeight: '1.3' }}>
+            {displayLabel}
           </div>
-        )}
-        <div className="text-xs text-muted-foreground mt-1 opacity-70 hidden sm:block">
-          {category}
+          {bilingualMode && labelFilipino && (
+            <div className="text-xs sm:text-sm text-muted-foreground opacity-80 text-center break-words max-w-full"
+                 style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
+              {label}
+            </div>
+          )}
+          <div className="text-xs text-muted-foreground opacity-70 hidden sm:block text-center">
+            {category}
+          </div>
         </div>
       </Card>
 

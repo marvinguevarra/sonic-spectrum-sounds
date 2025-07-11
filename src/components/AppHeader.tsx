@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Settings, Download, Wifi, WifiOff } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Settings, Download, Wifi, WifiOff, Bug } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import AccessibilitySettings from '@/components/AccessibilitySettings';
+import { BugReportForm } from '@/components/BugReportForm';
 import { useSettings } from '@/contexts/SettingsContext';
 import { audioCacheService } from '@/services/audioCacheService';
 import { elevenLabsService } from '@/services/elevenLabsService';
@@ -146,6 +148,31 @@ const AppHeader = () => {
                 </div>
               )}
             </div>
+
+            {/* Bug Report */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="font-medium"
+                  aria-label={bilingualMode ? 'Mag-report ng bug o mag-suggest ng feature' : 'Report bug or suggest feature'}
+                >
+                  <Bug className="h-4 w-4" aria-hidden="true" />
+                  <span className="hidden sm:inline ml-2">
+                    {bilingualMode ? 'Report' : 'Report'}
+                  </span>
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="sr-only">
+                    {bilingualMode ? 'Mag-report ng Bug o Mag-suggest ng Feature' : 'Report Bug or Suggest Feature'}
+                  </DialogTitle>
+                </DialogHeader>
+                <BugReportForm />
+              </DialogContent>
+            </Dialog>
 
             {/* Settings */}
             <Sheet>

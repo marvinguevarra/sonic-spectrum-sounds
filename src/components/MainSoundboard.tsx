@@ -16,7 +16,7 @@ import { useResponsive } from '@/hooks/use-responsive';
 import { useSettings } from '@/contexts/SettingsContext';
 
 export function MainSoundboard() {
-  const [respectMode, setRespectMode] = useState(true); // Default to true for Filipino language
+  const respectMode = true; // Po/Opo mode is now the default
   const [activeTab, setActiveTab] = useState('personal');
   const isMobile = useIsMobile();
   const { isTablet } = useResponsive();
@@ -30,10 +30,7 @@ export function MainSoundboard() {
   return (
     <div className={`${backgroundClass} safe-area-padding`}>
       {/* Header */}
-      <SoundboardHeader 
-        respectMode={respectMode} 
-        onRespectModeChange={setRespectMode} 
-      />
+      <SoundboardHeader />
 
       {/* Special Buttons - Moved to top, above all navigation */}
       <SpecialButtons />

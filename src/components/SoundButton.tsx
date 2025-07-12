@@ -34,36 +34,36 @@ export function SoundButton({ phrase, respectMode, size = 'medium', onClick }: S
 
   // Dynamic sizing based on content and device
   const getResponsiveClasses = () => {
-    const baseClasses = 'w-full flex flex-col items-center justify-center gap-1 p-3 hover:scale-105 transition-all duration-200 relative';
+    const baseClasses = 'w-full flex flex-col items-center justify-center gap-1 hover:scale-105 transition-all duration-200 relative';
     
-    // Mobile-optimized heights and text sizing
+    // Mobile-optimized heights with minimal padding
     if (size === 'small') {
-      return `${baseClasses} min-h-[100px] sm:min-h-[120px]`;
+      return `${baseClasses} min-h-[100px] sm:min-h-[120px] p-1 sm:p-3`;
     } else if (size === 'medium') {
-      return `${baseClasses} min-h-[120px] sm:min-h-[140px] md:min-h-[160px]`;
+      return `${baseClasses} min-h-[120px] sm:min-h-[140px] md:min-h-[160px] p-1.5 sm:p-3`;
     } else {
-      return `${baseClasses} min-h-[140px] sm:min-h-[160px] md:min-h-[180px]`;
+      return `${baseClasses} min-h-[140px] sm:min-h-[160px] md:min-h-[180px] p-2 sm:p-3`;
     }
   };
 
-  // Dynamic text sizing for better mobile readability
+  // Dynamic text sizing for better mobile readability - smaller on mobile
   const getTextClasses = () => {
     if (size === 'small') {
-      return 'text-xs sm:text-sm leading-tight';
+      return 'text-[10px] sm:text-sm leading-[1.1]';
     } else if (size === 'medium') {
-      return 'text-sm sm:text-base leading-tight';
+      return 'text-[11px] sm:text-base leading-[1.1]';
     } else {
-      return 'text-base sm:text-lg leading-tight';
+      return 'text-xs sm:text-lg leading-[1.1]';
     }
   };
 
   const getSecondaryTextClasses = () => {
     if (size === 'small') {
-      return 'text-[10px] sm:text-xs leading-tight';
+      return 'text-[9px] sm:text-xs leading-[1.0]';
     } else if (size === 'medium') {
-      return 'text-xs sm:text-sm leading-tight';
+      return 'text-[10px] sm:text-sm leading-[1.0]';
     } else {
-      return 'text-sm sm:text-base leading-tight';
+      return 'text-[11px] sm:text-base leading-[1.0]';
     }
   };
 
@@ -83,12 +83,12 @@ export function SoundButton({ phrase, respectMode, size = 'medium', onClick }: S
       )}
       
       {phrase.emoji && (
-        <span className="text-xl sm:text-2xl flex-shrink-0 mb-1">
+        <span className="text-lg sm:text-2xl flex-shrink-0 mb-0.5 sm:mb-1">
           {phrase.emoji}
         </span>
       )}
       
-      <div className="flex flex-col items-center justify-center flex-1 w-full px-1 sm:px-2 space-y-0.5 sm:space-y-1">
+      <div className="flex flex-col items-center justify-center flex-1 w-full px-0.5 sm:px-2 space-y-0 sm:space-y-1">
         <span className={`font-semibold text-center break-words max-w-full hyphens-auto ${getTextClasses()}`}
               style={{ 
                 wordBreak: 'break-word', 

@@ -3,8 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Phrase } from '@/types/phrase';
-import { elevenLabsService } from '@/services/elevenLabsService';
 import { useAccessibility } from '@/contexts/AccessibilityContext';
+import { useAudioControls } from '@/hooks/useAudioControls';
 import { cn } from '@/lib/utils';
 import { Volume2, Play, Pause, Clock, Eye } from 'lucide-react';
 
@@ -31,6 +31,14 @@ export function EnhancedHoverButton({
     currentScanIndex, 
     addToMessage 
   } = useAccessibility();
+
+  // Rate-limited audio controls
+  const { playAudio, isButtonDisabled } = useAudioControls({
+    phraseId: phrase.id,
+    onRateLimited: () => {
+      console.log('Hover interaction rate limited');
+    }
+  });
   
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dwellTimerRef = useRef<number>();
@@ -69,55 +77,40 @@ export function EnhancedHoverButton({
     return phrase.filipino;
   };
 
-  // Play audio preview on hover
+  // Play audio preview on hover (rate limited)
   const playHoverAudio = useCallback(async () => {
     if (!hoverSettings.audioPreviewEnabled || hoverAudioPlayed) return;
     
     try {
       const textToSpeak = getDisplayText();
-      const voiceType = settings.voiceType === 'adult-male' || settings.voiceType === 'default' ? 'male' : 'female';
+      const played = await playAudio(textToSpeak);
       
-      await elevenLabsService.speak(textToSpeak, {
-        volume: (settings.speechVolume * 100) * 0.6, // Lower volume for preview
-        voiceType,
-        bilingualMode: settings.bilingualMode,
-      });
-      
-      setHoverAudioPlayed(true);
+      if (played) {
+        setHoverAudioPlayed(true);
+      }
     } catch (error) {
       console.error('Hover audio preview failed:', error);
     }
-  }, [hoverAudioPlayed, settings, phrase]);
+  }, [hoverAudioPlayed, hoverSettings.audioPreviewEnabled, getDisplayText, playAudio]);
 
-  // Main interaction handler
+  // Main interaction handler (rate limited)
   const handleInteraction = async () => {
+    // Skip if already rate limited
+    if (isButtonDisabled) {
+      return;
+    }
+
     const textToSpeak = getDisplayText();
     
     if (variant === 'message') {
       addToMessage(textToSpeak);
     }
     
-    try {
-      const voiceType = settings.voiceType === 'adult-male' || settings.voiceType === 'default' ? 'male' : 'female';
-      
-      await elevenLabsService.speak(textToSpeak, {
-        volume: settings.speechVolume * 100,
-        voiceType,
-        bilingualMode: settings.bilingualMode,
-      });
-    } catch (error) {
-      console.error('Speech failed:', error);
-      
-      if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(textToSpeak);
-        utterance.rate = settings.speechRate;
-        utterance.volume = settings.speechVolume;
-        speechSynthesis.speak(utterance);
-      }
-    }
+    // Use rate-limited audio playback
+    const played = await playAudio(textToSpeak);
     
-    // Audio feedback for button press
-    if (settings.audioFeedback) {
+    // Audio feedback for button press (only if audio played successfully)
+    if (played && settings.audioFeedback) {
       const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();

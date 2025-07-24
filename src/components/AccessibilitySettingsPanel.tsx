@@ -6,8 +6,9 @@ import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { useAccessibility } from '@/contexts/AccessibilityContext';
-import { RotateCcw, Eye, Hand, Scan, Volume2, Brain } from 'lucide-react';
+import { RotateCcw, Eye, Hand, Scan, Volume2, Brain, MousePointer } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { HoverAccessibilitySection } from './accessibility/HoverAccessibilitySection';
 
 export function AccessibilitySettingsPanel() {
   const { settings, updateSetting, resetToDefaults } = useAccessibility();
@@ -233,6 +234,9 @@ export function AccessibilitySettingsPanel() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Enhanced Hover Functionality */}
+      <HoverAccessibilitySection />
 
       {/* Scanning */}
       <Card>

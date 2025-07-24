@@ -7,6 +7,12 @@ export interface AccessibilitySettings {
   dwellTime: number; // in milliseconds
   debounceTime: number; // in milliseconds
   
+  // Enhanced hover functionality
+  hoverPreviewDelay: number;
+  audioPreviewEnabled: boolean;
+  progressiveHover: boolean;
+  hoverLockEnabled: boolean;
+  
   // Visual Accessibility
   highContrast: boolean;
   fontSize: 'small' | 'medium' | 'large' | 'extra-large';
@@ -67,6 +73,12 @@ const defaultSettings: AccessibilitySettings = {
   gridSize: 'comfortable',
   dwellTime: 1000,
   debounceTime: 300,
+  
+  // Enhanced hover functionality
+  hoverPreviewDelay: 500,
+  audioPreviewEnabled: false,
+  progressiveHover: true,
+  hoverLockEnabled: false,
   
   // Visual
   highContrast: false,

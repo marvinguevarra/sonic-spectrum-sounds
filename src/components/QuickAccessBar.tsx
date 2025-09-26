@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Check, X, AlertTriangle, Volume2 } from 'lucide-react';
+import { Check, X, AlertTriangle, Volume2, ChevronUp, ChevronDown } from 'lucide-react';
 import { useAccessibility } from '@/contexts/AccessibilityContext';
 import { AccessibleSoundButton } from '@/components/AccessibleSoundButton';
 import { cn } from '@/lib/utils';
@@ -92,24 +92,46 @@ export function QuickAccessBar() {
           variant={mode === 'emergency' ? 'default' : 'outline'}
           size="sm"
           className={cn(
-            "flex items-center gap-2",
+            "flex items-center gap-2 transition-all",
             mode === 'emergency' && "bg-destructive text-destructive-foreground hover:bg-destructive/90"
           )}
-          aria-label={settings.bilingualMode ? "Emergency phrases • Mga pang-emergency" : "Emergency phrases"}
+          aria-label={
+            mode === 'emergency' 
+              ? (settings.bilingualMode ? "Collapse emergency phrases • Itago ang pang-emergency" : "Collapse emergency phrases")
+              : (settings.bilingualMode ? "Emergency phrases • Mga pang-emergency" : "Emergency phrases")
+          }
         >
           <AlertTriangle className="h-4 w-4" />
-          {settings.bilingualMode ? 'Emergency • Pang-Emergency' : 'Emergency'}
+          <span className="flex items-center gap-1">
+            {settings.bilingualMode ? 'Emergency • Pang-Emergency' : 'Emergency'}
+            {mode === 'emergency' ? (
+              <ChevronUp className="h-3 w-3 ml-1" />
+            ) : (
+              <ChevronDown className="h-3 w-3 ml-1" />
+            )}
+          </span>
         </Button>
 
         <Button
           onClick={() => setMode(mode === 'yes-no' ? 'normal' : 'yes-no')}
           variant={mode === 'yes-no' ? 'default' : 'outline'}
           size="sm"
-          className="flex items-center gap-2"
-          aria-label={settings.bilingualMode ? "Yes/No responses • Oo/Hindi" : "Yes/No responses"}
+          className="flex items-center gap-2 transition-all"
+          aria-label={
+            mode === 'yes-no'
+              ? (settings.bilingualMode ? "Collapse yes/no responses • Itago ang oo/hindi" : "Collapse yes/no responses")
+              : (settings.bilingualMode ? "Yes/No responses • Oo/Hindi" : "Yes/No responses")
+          }
         >
           <Check className="h-4 w-4" />
-          {settings.bilingualMode ? 'Yes/No • Oo/Hindi' : 'Yes/No'}
+          <span className="flex items-center gap-1">
+            {settings.bilingualMode ? 'Yes/No • Oo/Hindi' : 'Yes/No'}
+            {mode === 'yes-no' ? (
+              <ChevronUp className="h-3 w-3 ml-1" />
+            ) : (
+              <ChevronDown className="h-3 w-3 ml-1" />
+            )}
+          </span>
         </Button>
 
         {/* Speak Message Button */}

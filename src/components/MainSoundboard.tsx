@@ -1,96 +1,68 @@
-
 import React, { useState } from 'react';
+import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { SoundboardHeader } from './SoundboardHeader';
-import { PersonalPhrasesInput } from './PersonalPhrasesInput';
-import { SpecialButtons } from './SpecialButtons';
-import { NeedsTab } from './NeedsTab';
-import { FamilyTab } from './FamilyTab';
-import { FoodTab } from './FoodTab';
-import { FeelingsTab } from './FeelingsTab';
-import { ActionsTab } from './ActionsTab';
-import { MobileTabNavigation } from './MobileTabNavigation';
-import { TabletTabNavigation } from './TabletTabNavigation';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { useResponsive } from '@/hooks/use-responsive';
-import { useSettings } from '@/contexts/SettingsContext';
+import { KeyboardNavigationGrid } from '@/components/KeyboardNavigationGrid';
+import { useAccessibility } from '@/contexts/AccessibilityContext';
+import { categories } from '@/data/aac-categories';
+import { phrases } from '@/data/aac-phrases';
+import { cn } from '@/lib/utils';
 
 export function MainSoundboard() {
-  const respectMode = true; // Po/Opo mode is now the default
-  const [activeTab, setActiveTab] = useState('personal');
-  const isMobile = useIsMobile();
-  const { isTablet } = useResponsive();
-  const { theme, darkMode } = useSettings();
-
-  // Use seamless background for autism dark mode - no gaps
-  const backgroundClass = theme === 'autism' && darkMode 
-    ? 'min-h-screen bg-background' 
-    : 'min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50';
-
+  const { settings } = useAccessibility();
+  const [activeCategory, setActiveCategory] = useState(categories[0]?.id);
+  
   return (
-    <div className={`${backgroundClass} safe-area-padding`}>
-      {/* Header */}
-      <SoundboardHeader />
-
-      {/* Special Buttons - Moved to top, above all navigation */}
-      <SpecialButtons />
-
-      {/* Mobile Accordion Navigation */}
-      <MobileTabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
-
-      {/* Tablet Horizontal Scroll Navigation */}
-      <TabletTabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
-
-      {/* Categories */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        {/* Desktop Tab List - Hidden on Mobile and Tablet */}
-        {!isMobile && !isTablet && (
-          <TabsList className="grid grid-cols-6 w-full h-auto p-1">
-            <TabsTrigger value="personal" className="text-xs sm:text-sm">
-              ⭐ Personal
-            </TabsTrigger>
-            <TabsTrigger value="needs" className="text-xs sm:text-sm">
-              🍽️ Pangangailangan
-            </TabsTrigger>
-            <TabsTrigger value="family" className="text-xs sm:text-sm">
-              👨‍👩‍👧‍👦 Pamilya
-            </TabsTrigger>
-            <TabsTrigger value="food" className="text-xs sm:text-sm">
-              🍚 Pagkain
-            </TabsTrigger>
-            <TabsTrigger value="feelings" className="text-xs sm:text-sm">
-              😊 Damdamin
-            </TabsTrigger>
-            <TabsTrigger value="actions" className="text-xs sm:text-sm">
-              ⚡ Aksyon
-            </TabsTrigger>
+    <Card className="p-6">
+      <Tabs value={activeCategory} onValueChange={setActiveCategory}>
+        {/* Category Navigation */}
+        <nav 
+          role="navigation" 
+          aria-label={settings.bilingualMode ? "Phrase categories • Mga kategorya ng salita" : "Phrase categories"}
+        >
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 h-auto p-2 bg-muted/20">
+            {categories.map((category) => (
+              <TabsTrigger
+                key={category.id}
+                value={category.id}
+                className={cn(
+                  "flex flex-col items-center gap-2 p-3 h-auto min-h-[64px] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground",
+                  "focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-purple-500 focus-visible:ring-offset-2",
+                  settings.highContrast && "focus-visible:ring-yellow-400"
+                )}
+                aria-label={`${category.name}${settings.bilingualMode && category.nameFilipino ? ` • ${category.nameFilipino}` : ''}`}
+              >
+                <span className="text-2xl" aria-hidden="true">{category.emoji}</span>
+                <div className="text-xs text-center leading-tight">
+                  <div>{category.name}</div>
+                  {settings.bilingualMode && category.nameFilipino && (
+                    <div lang="fil" className="text-muted-foreground">
+                      {category.nameFilipino}
+                    </div>
+                  )}
+                </div>
+              </TabsTrigger>
+            ))}
           </TabsList>
-        )}
+        </nav>
 
-        <TabsContent value="personal" className="mt-4">
-          <PersonalPhrasesInput />
-        </TabsContent>
-
-        <TabsContent value="needs" className="mt-4">
-          <NeedsTab respectMode={respectMode} />
-        </TabsContent>
-
-        <TabsContent value="family" className="mt-4">
-          <FamilyTab respectMode={respectMode} />
-        </TabsContent>
-
-        <TabsContent value="food" className="mt-4">
-          <FoodTab respectMode={respectMode} />
-        </TabsContent>
-
-        <TabsContent value="feelings" className="mt-4">
-          <FeelingsTab respectMode={respectMode} />
-        </TabsContent>
-
-        <TabsContent value="actions" className="mt-4">
-          <ActionsTab respectMode={respectMode} />
-        </TabsContent>
+        {/* Phrase Buttons Grid */}
+        {categories.map((category) => (
+          <TabsContent key={category.id} value={category.id} className="mt-6">
+            <KeyboardNavigationGrid
+              phrases={phrases.filter(phrase => phrase.category === category.id)}
+              aria-label={`${category.name} phrases${settings.bilingualMode && category.nameFilipino ? ` • ${category.nameFilipino}` : ''}`}
+            />
+          </TabsContent>
+        ))}
       </Tabs>
-    </div>
+      
+      {/* Live Region for Screen Reader Announcements */}
+      <div 
+        id="aac-live-region"
+        aria-live="polite" 
+        aria-atomic="true"
+        className="sr-only"
+      />
+    </Card>
   );
 }

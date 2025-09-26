@@ -47,13 +47,19 @@ export function AccessibleSoundButton({
     return phrase.filipino;
   };
 
-  // Handle button interaction
+  // Main interaction handler
   const handleInteraction = async () => {
     const textToSpeak = getDisplayText();
     
     // Add to message queue if in message mode
     if (variant === 'message') {
       addToMessage(textToSpeak);
+    }
+    
+    // Announce to screen readers via live region
+    const liveRegion = document.getElementById('aac-live-region');
+    if (liveRegion) {
+      liveRegion.textContent = `${textToSpeak} - ${phrase.english}`;
     }
     
     // Always speak the phrase immediately
@@ -190,6 +196,7 @@ export function AccessibleSoundButton({
           settings.fontSize === 'large' && "text-lg",
           settings.fontSize === 'extra-large' && "text-xl"
         )}
+        lang="fil"
       >
         {displayText}
       </span>
@@ -204,6 +211,7 @@ export function AccessibleSoundButton({
             settings.fontSize === 'large' && "text-base",
             settings.fontSize === 'extra-large' && "text-lg"
           )}
+          lang="en"
         >
           {phrase.english}
         </span>
